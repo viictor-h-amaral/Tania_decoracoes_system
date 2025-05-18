@@ -1,0 +1,21 @@
+# Arquivos do Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Builds
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+
+# Outros
+*.cache
+*.log
+*.nupkg
+*.pdb
+*.bak

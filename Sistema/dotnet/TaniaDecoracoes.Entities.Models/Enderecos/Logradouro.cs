@@ -1,15 +1,15 @@
-﻿namespace TaniaDecoracoesSystem.Entities.Models.Enderecos
+﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
     public class Logradouro
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados
         /// </summary>
-        public required int Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Retorna o Id do registro do bairro do logradouro
         /// </summary>
-        public required int BairroId { get; set; }
+        public int BairroId { get; set; }
         /// <summary>
         /// Instância do bairro do logradouro
         /// </summary>

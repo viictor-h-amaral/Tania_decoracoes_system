@@ -1,4 +1,4 @@
-﻿namespace TaniaDecoracoesSystem.Entities.Models.TabelasGerais
+﻿namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 {
     public class TipoCombustivel
     {

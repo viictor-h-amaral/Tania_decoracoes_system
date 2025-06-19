@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mapeamento\Associacao\" />
-    <Folder Include="Mapeamento\Clientes\" />
-    <Folder Include="Mapeamento\Decoracoes\" />
-    <Folder Include="Mapeamento\Enderecos\" />
-    <Folder Include="Mapeamento\Itens\" />
-    <Folder Include="Mapeamento\Pagamentos\" />
-    <Folder Include="Mapeamento\TabelasGerais\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.16">
       <PrivateAssets>all</PrivateAssets>
@@ -26,6 +16,10 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaniaDecoracoes.Entities.Models\TaniaDecoracoes.Entities.Models.csproj" />
   </ItemGroup>
 
 </Project>

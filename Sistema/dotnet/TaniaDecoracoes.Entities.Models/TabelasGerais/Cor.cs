@@ -1,10 +1,10 @@
-﻿using TaniaDecoracoesSystem.Entities.Models.Itens;
+﻿using TaniaDecoracoes.Entities.Models.Itens;
 
-namespace TaniaDecoracoesSystem.Entities.Models.TabelasGerais
+namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 {
     public class Cor
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required string Nome { get; set; }
         public required string CodigoHex { get; set; }
 

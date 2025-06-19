@@ -1,8 +1,8 @@
-﻿namespace TaniaDecoracoesSystem.Entities.Models.Enderecos
+﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
     public class Estado
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required string Nome { get; set; }
         public required string Sigla { get; set; }
 

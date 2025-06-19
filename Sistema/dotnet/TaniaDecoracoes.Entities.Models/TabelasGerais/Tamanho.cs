@@ -1,10 +1,10 @@
-﻿using TaniaDecoracoesSystem.Entities.Models.Itens;
+﻿using TaniaDecoracoes.Entities.Models.Itens;
 
-namespace TaniaDecoracoesSystem.Entities.Models.TabelasGerais
+namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 {
     public class Tamanho
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required string Valor { get; set; }
 
         public ICollection<Item>? Itens { get; set; }

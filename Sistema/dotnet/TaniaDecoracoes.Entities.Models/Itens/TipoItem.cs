@@ -1,9 +1,9 @@
-﻿namespace TaniaDecoracoesSystem.Entities.Models.Itens
+﻿namespace TaniaDecoracoes.Entities.Models.Itens
 {
     public class TipoItem
     {
-        public required int Id { get; set; }
-        public required string Nome { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
 
         public ICollection<Item>? Itens { get; set; }
     }

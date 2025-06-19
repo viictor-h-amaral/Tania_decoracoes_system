@@ -1,30 +1,32 @@
-﻿using TaniaDecoracoesSystem.Entities.Models.Clientes;
-using TaniaDecoracoesSystem.Entities.Models.Enderecos;
-using TaniaDecoracoesSystem.Entities.Models.TabelasGerais;
+﻿using TaniaDecoracoes.Entities.Models.Associacao;
+using TaniaDecoracoes.Entities.Models.Clientes;
+using TaniaDecoracoes.Entities.Models.Enderecos;
+using TaniaDecoracoes.Entities.Models.Pagamentos;
+using TaniaDecoracoes.Entities.Models.TabelasGerais;
 
-namespace TaniaDecoracoesSystem.Entities.Models.Decoracoes
+namespace TaniaDecoracoes.Entities.Models.Decoracoes
 {
     public class Decoracao
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required DateOnly DataCadastro { get; set; }
 
-        public required int ClienteId { get; set; }
+        public int ClienteId { get; set; }
         public required Cliente ClienteInstance { get; set; }
 
         public int? ComemorandoId { get; set; }
-        public DependentesCliente? ComemorandoInstance { get; set; }
+        public DependenteCliente? ComemorandoInstance { get; set; }
 
         public int? EnderecoEventoId { get; set; }
         public EnderecoEvento? EnderecoEventoInstance { get; set; }
 
-        public required int TipoEventoId { get; set; }
+        public int TipoEventoId { get; set; }
         public required TipoEvento TipoEventoInstance { get; set; }
 
         public int? TemaAniversarioId { get; set; }
         public TemaAniversario? TemaAniversarioInstance { get; set; }
 
-        public required int CarroUtilizadoId { get; set; }
+        public int CarroUtilizadoId { get; set; }
         public required Carro CarroUtilizadoInstance { get; set; }
 
         public float? DistanciaDeCasa { get; set; }
@@ -33,5 +35,23 @@ namespace TaniaDecoracoesSystem.Entities.Models.Decoracoes
         public decimal? Lucro {  get; set; }
         public DateTime? DataEvento { get; set; }
         public DateTime? DataHoraMontagem { get; set; }
+
+        /*public required byte _pegueEMonte;
+        public bool PegueEMonte {
+
+            get => _pegueEMonte == 1;
+
+            set 
+            { 
+                _pegueEMonte = (byte)(value ? 1 : 0); 
+            }
+        }*/
+
+        public bool PegueEMonte { get; set; }
+
+        public DecoracaoPagamento? DecoracaoPagamentosInstance { get; set; }
+        public DecoracaoCustos? DecoracaoCustosInstance { get; set; }
+        public ICollection<AssociacaoDecoracaoFlores>? AssociacaoDecoracaoFlores { get; set; }
+        public ICollection<AssociacaoDecoracaoItens>? AssociacaoDecoracaoItens { get; set; }
     }
 }

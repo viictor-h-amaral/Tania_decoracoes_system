@@ -9,7 +9,7 @@ namespace TaniaDecoracoes.Entities.Data
         static AppSettings()
         {
             Configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath("C:\\Desenvolvimento\\TaniaDecoracoes_System\\Projeto\\Sistema\\dotnet\\TaniaDecoracoes.Entities.Data")
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
         }

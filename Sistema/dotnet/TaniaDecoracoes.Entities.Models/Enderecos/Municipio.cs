@@ -1,10 +1,10 @@
-﻿namespace TaniaDecoracoesSystem.Entities.Models.Enderecos
+﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
     public class Municipio
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
 
-        public required int EstadoId { get; set; }
+        public int EstadoId { get; set; }
         public required Estado EstadoInstance { get; set; }
 
         public required string Nome { get; set; }

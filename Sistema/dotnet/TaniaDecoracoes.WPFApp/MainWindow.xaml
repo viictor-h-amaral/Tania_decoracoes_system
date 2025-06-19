@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="btnAdicionar" Content="Adicionar" Margin="10,10,588,336"/>
+        <Button x:Name="btnRemover" Content="Remover" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="62" Width="162"/>
+        <Button x:Name="btnAlterar" Content="Alterar" HorizontalAlignment="Left" Margin="384,8,0,0" VerticalAlignment="Top" Height="64" Width="162"/>
+        <DataGrid x:Name="DataGrid" Margin="0,217,0,0"/>
+        <Button x:Name="btnCarregar" Content="Carregar" HorizontalAlignment="Left" Margin="647,119,0,0" VerticalAlignment="Top" Height="57" Width="131" Click="btnCarregar_Click"/>
 
     </Grid>
 </Window>

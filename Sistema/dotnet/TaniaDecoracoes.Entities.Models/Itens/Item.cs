@@ -1,16 +1,17 @@
-﻿using TaniaDecoracoesSystem.Entities.Models.TabelasGerais;
+﻿using TaniaDecoracoes.Entities.Models.Associacao;
+using TaniaDecoracoes.Entities.Models.TabelasGerais;
 
-namespace TaniaDecoracoesSystem.Entities.Models.Itens
+namespace TaniaDecoracoes.Entities.Models.Itens
 {
     public class Item
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public string? Apelido { get; set; }
 
-        public required int TipoItemId { get; set; }
+        public int TipoItemId { get; set; }
         public required TipoItem TipoItemInstance { get; set; }
 
-        public required int quantidadeEstoque { get; set; }
+        public int QuantidadeEstoque { get; set; }
         public decimal? Preco {  get; set; }
 
         public int? CorId { get; set; }
@@ -23,5 +24,8 @@ namespace TaniaDecoracoesSystem.Entities.Models.Itens
         public float? Comprimento { get; set; }
         public float? Largura { get; set; }
         public string? EnderecoImagem { get; set; }
+
+        public ICollection<AssociacaoDecoracaoItens>? AssociacaoDecoracaoItens { get; set; }
+
     }
 }

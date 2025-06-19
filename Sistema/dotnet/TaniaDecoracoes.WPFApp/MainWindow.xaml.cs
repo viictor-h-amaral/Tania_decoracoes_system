@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaniaDecoracoes.Entities.Data.Contexto;
+using TaniaDecoracoes.Entities.Models.Enderecos;
 
 namespace TaniaDecoracoes.WPFApp
 {
@@ -16,9 +18,28 @@ namespace TaniaDecoracoes.WPFApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+       public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private List<Estado> _listaItens;
+
+        public List<Estado> ListaItens
+        {
+            get { return _listaItens; }
+            set { _listaItens = value; }
+        }
+
+
+        private void btnCarregar_Click(object sender, RoutedEventArgs e)
+        {
+            _listaItens = new List<Estado>();
+
+            using (var cxt = new TaniaDecoracoesDbContext())
+            {
+                DataGrid.ItemsSource = cxt.Estados.ToList();
+            }
         }
     }
 }

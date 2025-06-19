@@ -1,8 +1,8 @@
-﻿namespace TaniaDecoracoesSystem.Entities.Models.Enderecos
+﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
     public class TipoEnderecoEvento
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required string TipoEndereco { get; set; }
 
         public ICollection<EnderecoEvento>? EnderecosEventos { get; set; }

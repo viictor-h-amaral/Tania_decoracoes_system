@@ -19,16 +19,7 @@ namespace TaniaDecoracoes.WPFApp
 
         public MainWindow()
         {
-            _listaItens = [];
             InitializeComponent();
-        }
-
-        private List<Estado> _listaItens;
-
-        public List<Estado> ListaItens
-        {
-            get { return _listaItens; }
-            set { _listaItens = value; }
         }
 
         private void Minimizar_Click(object sender, RoutedEventArgs e)
@@ -44,12 +35,16 @@ namespace TaniaDecoracoes.WPFApp
         private void MaximizarMinimizar()
         {
             var window = Window.GetWindow(this);
-            window.WindowState = window.WindowState == WindowState.Maximized
-                ? WindowState.Normal
-                : WindowState.Maximized;
+
+            window.WindowState = window.WindowState == WindowState.Maximized ?
+                WindowState.Normal : WindowState.Maximized;
+
+            //ToolBarRow.Height = window.WindowState == WindowState.Maximized ?
+            //    new GridLength(40) : new GridLength(30);
 
             // Atualiza ícone do botão
-            Maximizar.Content = window.WindowState == WindowState.Maximized ? "❐" : "□";
+            Maximizar.Content = window.WindowState == WindowState.Maximized ?
+                "❐" : "☐";
         }
 
         private void Fechar_Click(object sender, RoutedEventArgs e)

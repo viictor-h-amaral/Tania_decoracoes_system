@@ -5,53 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaniaDecoracoes.WPFApp"  
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True"
-        Background="White"
+        Background="Transparent"
         Title="MainWindow" Height="450" Width="800" >
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" CornerRadius="10" GlassFrameThickness="0" ResizeBorderThickness="5" />
+        <WindowChrome CaptionHeight="0" 
+                  GlassFrameThickness="0"
+                  ResizeBorderThickness="10"
+                  UseAeroCaptionButtons="False" />
     </WindowChrome.WindowChrome>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Border BorderThickness="5" BorderBrush="Transparent">
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="ToolBarRow" Height="30"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+            <Grid x:Name="ToolBar" Grid.Row="0">
             
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" x:Name="GridControles"
-                    MouseLeftButtonDown="GridControles_MouseLeftButtonDown"
-                    MouseMove="Grid_MouseMove"
-                    MouseLeftButtonUp="Grid_MouseLeftButtonUp"
-                    Background="White">
-            </Grid>   
+                <Grid Grid.Column="0" x:Name="GridControles"
+                        MouseLeftButtonDown="GridControles_MouseLeftButtonDown"
+                        MouseMove="Grid_MouseMove"
+                        MouseLeftButtonUp="Grid_MouseLeftButtonUp"
+                        Background="White">
+                </Grid>   
             
-            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="1,0,0,0">
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="1,0,0,0">
 
-                <StackPanel.Resources>
-                    <ResourceDictionary>
-                        <ResourceDictionary.MergedDictionaries>
-                            <ResourceDictionary Source="/TaniaDecoracoes.WPFApp;component/Styles/ControleJanelaStyle.xaml" />
-                        </ResourceDictionary.MergedDictionaries>
-                    </ResourceDictionary>
-                </StackPanel.Resources>
+                    <StackPanel.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="/TaniaDecoracoes.WPFApp;component/Styles/ControleJanelaStyle.xaml" />
+                            </ResourceDictionary.MergedDictionaries>
+                        </ResourceDictionary>
+                    </StackPanel.Resources>
 
-                <Button x:Name="Minimizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="―" Click="Minimizar_Click" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                <Button x:Name="Maximizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="☐" Click="Maximizar_Click" FontSize="16" />
-                <Button x:Name="Fechar" Style="{StaticResource ControleJanelaClose}" Height="Auto" Width="50" BorderThickness="0" Content="×" Click="Fechar_Click" FontSize="20"/>
-            </StackPanel>
+                    <Button x:Name="Minimizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="―" Click="Minimizar_Click" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Button x:Name="Maximizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="☐" Click="Maximizar_Click" FontSize="16" />
+                    <Button x:Name="Fechar" Style="{StaticResource ControleJanelaClose}" Height="Auto" Width="50" BorderThickness="0" Content="×" Click="Fechar_Click" FontSize="20"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1" Background="BlueViolet">
+                
+            </Grid>
         </Grid>
-
-        <Grid Grid.Row="1" Background="BlueViolet">
-
-        </Grid>
-    </Grid>
-
+    </Border>
 
 </Window>

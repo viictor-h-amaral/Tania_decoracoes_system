@@ -22,4 +22,8 @@
     <ProjectReference Include="..\TaniaDecoracoes.Entities.Models\TaniaDecoracoes.Entities.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UserControls\" />
+  </ItemGroup>
+
 </Project>

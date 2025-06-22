@@ -23,10 +23,10 @@
             </Grid.RowDefinitions>
 
             <Grid x:Name="ToolBar" Grid.Row="0">
-            
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition x:Name="BotoesTarefasColumn"  Width="*" />
+                    <ColumnDefinition x:Name="ControlesColumn" Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0" x:Name="GridControles"
@@ -34,8 +34,8 @@
                         MouseMove="Grid_MouseMove"
                         MouseLeftButtonUp="Grid_MouseLeftButtonUp"
                         Background="White">
-                </Grid>   
-            
+                </Grid>
+
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="1,0,0,0">
 
                     <StackPanel.Resources>
@@ -52,8 +52,41 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="1" Background="BlueViolet">
-                
+            <Grid Grid.Row="1" x:Name="ContentBigRow" Background="BlueViolet">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="ModulosColumn" Width="2*" />
+                    <ColumnDefinition x:Name="ConteudoColumn" Width="8*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" x:Name="ModulosStackPanel" 
+                            Background="CadetBlue" Orientation="Vertical"
+                            VerticalAlignment="Top">
+
+                    <Label x:Name="Logo" Grid.Column="0" VerticalAlignment="Top"
+                        Content="LOGO">
+                    </Label>
+
+                    <Button Content="Módulo 1" BorderThickness="0"/>
+                    <Button Content="Módulo 2" BorderThickness="0"/>
+                    <Button Content="Módulo 3" BorderThickness="0"/>
+
+                </StackPanel>
+
+                <Grid Grid.Column="1" Background="Beige">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="ConfigOptionsRow" Height="20" />
+                        <RowDefinition x:Name="ContentRow" Height="*" />
+                    </Grid.RowDefinitions>
+
+
+                    <Grid Grid.Row="0" x:Name="ConfigOptions" Background="Black">
+                    </Grid>
+                    <Grid Grid.Row="1" x:Name="ContudoGrid">
+                    </Grid>
+
+                </Grid>
             </Grid>
         </Grid>
     </Border>

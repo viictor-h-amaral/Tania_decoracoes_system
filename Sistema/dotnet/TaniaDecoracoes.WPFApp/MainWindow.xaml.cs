@@ -39,8 +39,8 @@ namespace TaniaDecoracoes.WPFApp
             window.WindowState = window.WindowState == WindowState.Maximized ?
                 WindowState.Normal : WindowState.Maximized;
 
-            ToolBarRow.Height = window.WindowState == WindowState.Maximized ?
-                new GridLength(40) : new GridLength(30);
+            //ToolBarRow.Height = window.WindowState == WindowState.Maximized ?
+            //    new GridLength(40) : new GridLength(30);
 
             // Atualiza ícone do botão
             Maximizar.Content = window.WindowState == WindowState.Maximized ?

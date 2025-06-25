@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TaniaDecoracoes.WPFApp"  
+        xmlns:local="clr-namespace:TaniaDecoracoes.WPFApp" 
+        xmlns:userControls="clr-namespace:TaniaDecoracoes.WPFApp.UserControls"
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
         Title="MainWindow" Height="450" Width="800" >
@@ -46,43 +47,34 @@
                         </ResourceDictionary>
                     </StackPanel.Resources>
 
-                    <Button x:Name="Minimizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="―" Click="Minimizar_Click" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Button x:Name="Maximizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="☐" Click="Maximizar_Click" FontSize="16" />
-                    <Button x:Name="Fechar" Style="{StaticResource ControleJanelaClose}" Height="Auto" Width="50" BorderThickness="0" Content="×" Click="Fechar_Click" FontSize="20"/>
+                    <Button x:Name="Minimizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="―" Click="Minimizar_Click" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Button x:Name="Maximizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="☐" Click="Maximizar_Click" FontSize="12" />
+                    <Button x:Name="Fechar" Style="{StaticResource ControleJanelaClose}" Height="Auto" Width="50" BorderThickness="0" Content="×" Click="Fechar_Click" FontSize="18"/>
                 </StackPanel>
             </Grid>
 
             <Grid Grid.Row="1" x:Name="ContentBigRow" Background="BlueViolet">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="ModulosColumn" Width="2*" />
+                    <ColumnDefinition x:Name="ModulosColumn" Width="Auto"/>
                     <ColumnDefinition x:Name="ConteudoColumn" Width="8*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" x:Name="ModulosStackPanel" 
-                            Background="CadetBlue" Orientation="Vertical"
-                            VerticalAlignment="Top">
+                <userControls:MenuModulos Grid.Column="0" Background="#F8D7E6"/>
 
-                    <Label x:Name="Logo" Grid.Column="0" VerticalAlignment="Top"
-                        Content="LOGO">
-                    </Label>
 
-                    <Button Content="Módulo 1" BorderThickness="0"/>
-                    <Button Content="Módulo 2" BorderThickness="0"/>
-                    <Button Content="Módulo 3" BorderThickness="0"/>
-
-                </StackPanel>
-
-                <Grid Grid.Column="1" Background="Beige">
+                <Grid Grid.Column="1" Background="White">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition x:Name="ConfigOptionsRow" Height="20" />
+                        <RowDefinition x:Name="ConfigOptionsRow" Height="30" />
                         <RowDefinition x:Name="ContentRow" Height="*" />
                     </Grid.RowDefinitions>
 
 
-                    <Grid Grid.Row="0" x:Name="ConfigOptions" Background="Black">
+                    <Grid Grid.Row="0" x:Name="ConfigOptions" Background="#8A446C">
+                        <userControls:MenuSuperiorConfiguracoes />
                     </Grid>
+                    
                     <Grid Grid.Row="1" x:Name="ContudoGrid">
                     </Grid>
 

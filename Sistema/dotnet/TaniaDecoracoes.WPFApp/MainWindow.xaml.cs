@@ -1,7 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using TaniaDecoracoes.Entities.Models.Enderecos;
+using TaniaDecoracoes.WPFApp.DialogWindows;
 
 namespace TaniaDecoracoes.WPFApp
 {
@@ -29,10 +28,10 @@ namespace TaniaDecoracoes.WPFApp
 
         private void Maximizar_Click(object sender, RoutedEventArgs e)
         {
-            MaximizarMinimizar();
+            MaximizarNormalizar();
         }
 
-        private void MaximizarMinimizar()
+        private void MaximizarNormalizar()
         {
             var window = Window.GetWindow(this);
 
@@ -43,13 +42,17 @@ namespace TaniaDecoracoes.WPFApp
             //    new GridLength(40) : new GridLength(30);
 
             // Atualiza ícone do botão
-            Maximizar.Content = window.WindowState == WindowState.Maximized ?
+            btnMaximizar.Content = window.WindowState == WindowState.Maximized ?
                 "❐" : "☐";
         }
 
         private void Fechar_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            FecharAplicacao janelaConfirmacao = new FecharAplicacao(this);
+            janelaConfirmacao.Owner = this;
+            janelaConfirmacao.ShowDialog();
+            if (janelaConfirmacao.Fechar)
+                this.Close();
         }
 
         private void GridControles_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -63,7 +66,7 @@ namespace TaniaDecoracoes.WPFApp
             if ((currentTime - _lastClickTime).TotalMilliseconds < 300 &&
                 (currentPosition - _lastClickPosition).Length < 10)
             {
-                MaximizarMinimizar();
+                MaximizarNormalizar();
                 e.Handled = true;
                 return;
             }
@@ -104,7 +107,7 @@ namespace TaniaDecoracoes.WPFApp
                     var widthPercent = mouseRelativeToWindow.X / window.ActualWidth;
 
                     // 2. Restaura a janela para o estado normal
-                    MaximizarMinimizar();
+                    MaximizarNormalizar();
 
                     
                     // 3. Reposiciona a janela para manter a posição relativa do mouse

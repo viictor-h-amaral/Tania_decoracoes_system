@@ -14,10 +14,11 @@
             Margin="0,0,10,0">
 
             <local:FontAwesomeIcon 
-                IconCode="&#xf013;" 
+                IconCode="&#xf0ad;" 
                 Foreground="Gold"
                 Margin="20,0,20,0"
                 FontSize="16"/>
+            
             <local:FontAwesomeIcon 
                 IconCode="&#xf188;" 
                 Foreground="Gold" 

@@ -7,16 +7,16 @@
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados
-        /// 
-        /// Required
+        /// <para>Required</para>
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// Retorna o nome do tipo de evento
-        /// 
-        /// Required
+        /// <para>Required</para>
         /// </summary>
         public required string Nome { get; set; }
+
 
         /// <summary>
         /// Decorações com este tipo de evento

@@ -10,26 +10,27 @@ namespace TaniaDecoracoes.Entities.Models.Associacao
     {
         /// <summary>
         /// Retotorna o Id do registro no banco de dados
-        /// 
-        /// Required
+        /// <para>Required</para>
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// Retorna o Id do registro da decoração da associação
-        /// 
-        /// Required
+        /// <para>Required</para>
         /// </summary>
         public int DecoracaoId { get; set; }
+
         /// <summary>
         /// Instância da decoração associada
         /// </summary>
         public required Decoracao DecoracaoInstance { get; set; }
+
         /// <summary>
         /// Retorna o Id do registro do item associado
-        /// 
-        /// Required
+        /// <para>Required</para>
         /// </summary>
         public int ItemId { get; set; }
+
         /// <summary>
         /// Instância do item associado
         /// </summary>

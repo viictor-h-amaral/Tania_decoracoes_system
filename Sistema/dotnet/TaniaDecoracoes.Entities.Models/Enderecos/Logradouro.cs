@@ -1,5 +1,8 @@
 ﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
+    /// <summary>
+    /// Classe referente aos logradouros
+    /// </summary>
     public class Logradouro
     {
         /// <summary>
@@ -15,7 +18,7 @@
         /// </summary>
         public required Bairro BairroInstance { get; set; }
         /// <summary>
-        /// Nome do logradouro
+        /// Retorna o Nome do logradouro
         /// </summary>
         public required string Nome { get; set; }
         /// <summary>
@@ -27,8 +30,17 @@
         /// </summary>
         public TipoLogradouro? TipoLogradouroInstance { get; set; }
 
+        /// <summary>
+        /// Reotorna a lista de CEPs associados a este logradouro
+        /// </summary>
         public ICollection<Cep>? Ceps { get; set; }
+        /// <summary>
+        /// Retorna a lista de endereços de clientes associados a este logradouro
+        /// </summary>
         public ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
+        /// <summary>
+        /// Retorna a lista de endereços de eventos associados a este logradouro
+        /// </summary>
         public ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
 
     }

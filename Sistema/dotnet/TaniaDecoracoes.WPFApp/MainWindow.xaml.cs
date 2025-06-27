@@ -38,10 +38,6 @@ namespace TaniaDecoracoes.WPFApp
             window.WindowState = window.WindowState == WindowState.Maximized ?
                 WindowState.Normal : WindowState.Maximized;
 
-            //ToolBarRow.Height = window.WindowState == WindowState.Maximized ?
-            //    new GridLength(40) : new GridLength(30);
-
-            // Atualiza ícone do botão
             btnMaximizar.Content = window.WindowState == WindowState.Maximized ?
                 "❐" : "☐";
         }
@@ -49,7 +45,6 @@ namespace TaniaDecoracoes.WPFApp
         private void Fechar_Click(object sender, RoutedEventArgs e)
         {
             FecharAplicacao janelaConfirmacao = new FecharAplicacao(this);
-            janelaConfirmacao.Owner = this;
             janelaConfirmacao.ShowDialog();
             if (janelaConfirmacao.Fechar)
                 this.Close();
@@ -62,7 +57,6 @@ namespace TaniaDecoracoes.WPFApp
             var currentTime = DateTime.Now;
             var currentPosition = e.GetPosition(this);
 
-            // Verificação de duplo clique (300ms é o padrão Windows)
             if ((currentTime - _lastClickTime).TotalMilliseconds < 300 &&
                 (currentPosition - _lastClickPosition).Length < 10)
             {
@@ -101,16 +95,12 @@ namespace TaniaDecoracoes.WPFApp
 
                 if (window.WindowState == WindowState.Maximized)
                 {
-                    // 1. Calcula a posição relativa do mouse na janela maximizada
                     var mouseRelativeToScreen = PointToScreen(e.GetPosition(this));
                     var mouseRelativeToWindow = e.GetPosition(window);
                     var widthPercent = mouseRelativeToWindow.X / window.ActualWidth;
 
-                    // 2. Restaura a janela para o estado normal
                     MaximizarNormalizar();
 
-                    
-                    // 3. Reposiciona a janela para manter a posição relativa do mouse
                     window.Left = mouseRelativeToScreen.X - (window.ActualWidth * widthPercent);
                     window.Top = mouseRelativeToScreen.Y - mouseRelativeToWindow.Y;
 

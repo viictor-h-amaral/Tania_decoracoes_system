@@ -7,14 +7,11 @@
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados
-        /// 
-        /// Required
         /// </summary>
         public int Id { get; set; }
         /// <summary>
         /// Retorna o Id do registro do município do bairro
-        /// 
-        /// Required
+        /// <para>Required</para>
         /// </summary>
         public int MunicipioId { get; set; }
         /// <summary>
@@ -23,8 +20,7 @@
         public required Municipio MunicipioInstance { get; set; }
         /// <summary>
         /// Retorna o Nome do bairro
-        /// 
-        /// Required
+        /// <para>Required</para>
         /// </summary>
         public required string Nome { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using TaniaDecoracoes.WPFApp.DialogWindows;
+using TaniaDecoracoes.Entities.Models.Decoracoes;
+using TaniaDecoracoes.WPFApp.WindowsPattern.DialogWindows;
 
 namespace TaniaDecoracoes.WPFApp
 {

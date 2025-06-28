@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace TaniaDecoracoes.WPFApp.DialogWindows
+namespace TaniaDecoracoes.WPFApp.WindowsPattern.DialogWindows
 {
     /// <summary>
     /// Lógica interna para FecharAplicacao.xaml

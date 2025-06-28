@@ -7,18 +7,37 @@ using System.Threading.Tasks;
 
 namespace TaniaDecoracoes.Entities.Models.Pagamentos
 {
+    /// <summary>
+    /// Classe referente à taxa de parcelamento
+    /// </summary>
     public class TaxaParcelamento
     {
+        /// <summary>
+        /// Retorna o Id da taxa de parcelamento
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Retorna os Juros da taxa de parcelamento
+        /// <para>Required</para>
+        /// </summary>
         public decimal Juros { get; set; }
+
+        /// <summary>
+        /// Retorna a quantidade de meses para essa taxa de parcelamento
+        /// <para>Required</para>
+        /// </summary>
         public int Meses { get; set; }
 
-        private byte? _jurosCompostos;
-        public bool? JurosCompostos {
-            get => _jurosCompostos is null ? null : _jurosCompostos == 1 ;
-            set => _jurosCompostos = (value is null ? null : (value.Value ? (byte)1 : (byte)0));
-        }
+        /// <summary>
+        /// Retorna se a taxa de parcelamento será, ou não, por Juros compostos
+        /// <para>Required</para>
+        /// </summary>
+        public bool JurosCompostos { get; set; }
 
+        /// <summary>
+        /// Coleção das formas de pagamentos associadas à essa taxa de parcelamento
+        /// </summary>
         public ICollection<FormaPagamento>? FormasPagamento { get; set; }
     }
 }

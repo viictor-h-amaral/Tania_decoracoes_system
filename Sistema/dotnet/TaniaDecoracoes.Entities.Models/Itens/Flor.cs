@@ -10,7 +10,6 @@ namespace TaniaDecoracoes.Entities.Models.Itens
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados
-        /// <para>Required</para>
         /// </summary>
         public int Id { get; set; }
 

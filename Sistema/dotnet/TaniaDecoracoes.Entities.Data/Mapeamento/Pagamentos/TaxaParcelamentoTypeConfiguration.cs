@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TaniaDecoracoes.Entities.Data.Mapeamento.Utilitários;
 using TaniaDecoracoes.Entities.Models.Pagamentos;
 
 namespace TaniaDecoracoes.Entities.Data.Mapeamento.Pagamentos
@@ -41,6 +42,12 @@ namespace TaniaDecoracoes.Entities.Data.Mapeamento.Pagamentos
                 .HasColumnName("JurosCompostos")
                 .HasColumnType("TinyInt(1)")
                 .IsRequired(false);
+
+            entity
+                .Property(t => t.JurosCompostos)
+                .HasColumnName("JurosCompostos")
+                .HasColumnType("TinyInt")
+                .HasConversion(new TinyIntToBoolConverter());
 
             #endregion Propriedades
 

@@ -1,9 +1,10 @@
-﻿<Window x:Class="TaniaDecoracoes.WPFApp.MainWindow"  
+﻿<base:WindowBase x:Class="TaniaDecoracoes.WPFApp.MainWindow"  
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaniaDecoracoes.WPFApp" 
+        xmlns:base="clr-namespace:TaniaDecoracoes.WPFApp.WindowsPattern" 
         xmlns:userControls="clr-namespace:TaniaDecoracoes.WPFApp.UserControls"
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
@@ -31,9 +32,9 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0" x:Name="GridControles"
-                        MouseLeftButtonDown="GridControles_MouseLeftButtonDown"
-                        MouseMove="Grid_MouseMove"
-                        MouseLeftButtonUp="Grid_MouseLeftButtonUp"
+                        MouseLeftButtonDown="GridBarraTarefas_MouseLeftButtonDown"
+                        MouseMove="GridBarraTarefas_MouseMove"
+                        MouseLeftButtonUp="GridBarraTarefas_MouseLeftButtonUp"
                         Background="White">
                 </Grid>
 
@@ -47,9 +48,16 @@
                         </ResourceDictionary>
                     </StackPanel.Resources>
 
-                    <Button x:Name="btnMinimizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="―" Click="Minimizar_Click" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Button x:Name="btnMaximizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="☐" Click="Maximizar_Click" FontSize="12" />
-                    <Button x:Name="btnFechar" Style="{StaticResource ControleJanelaClose}" Height="Auto" Width="50" BorderThickness="0" Content="×" Click="Fechar_Click" FontSize="18"/>
+                    <Button x:Name="btnMinimizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="―" 
+                            Command="{Binding MinimizeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                            FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Button x:Name="btnMaximizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" 
+                            Command="{Binding MaximizeNormalizeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            Content="{Binding MaximizeNormalizeButtonContent, RelativeSource={RelativeSource AncestorType=Window}}"
+                            FontSize="12" />
+                    <Button x:Name="btnFechar" Style="{StaticResource ControleJanelaClose}" Height="Auto" Width="50" BorderThickness="0" Content="×" 
+                            Command="{Binding CloseWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                            FontSize="18"/>
                 </StackPanel>
             </Grid>
 
@@ -83,4 +91,4 @@
         </Grid>
     </Border>
 
-</Window>
+</base:WindowBase>

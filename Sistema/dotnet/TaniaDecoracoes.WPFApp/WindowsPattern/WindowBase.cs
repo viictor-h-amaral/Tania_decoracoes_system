@@ -3,12 +3,12 @@ using System.Windows.Input;
 using TaniaDecoracoes.WPFApp.Utils;
 using TaniaDecoracoes.WPFApp.WindowsPattern.DialogWindows;
 
-namespace TaniaDecoracoes.WPFApp.WindowsPatters
+namespace TaniaDecoracoes.WPFApp.WindowsPattern
 {
     /// <summary>
     /// Lógica interna para WindowBase.xaml e suas derivadas
     /// </summary>
-    public abstract class WindowBase : Window
+    public partial class WindowBase : Window
     {
         public WindowBase()
         {

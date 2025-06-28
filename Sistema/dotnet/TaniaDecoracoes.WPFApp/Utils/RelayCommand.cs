@@ -9,7 +9,7 @@ namespace TaniaDecoracoes.WPFApp.Utils
 
         public RelayCommand(Action Acao, Func<bool>? PodeExecutar = null)
         {
-            Acao = _acao ?? throw new ArgumentNullException(nameof(_acao));
+            _acao = Acao ?? throw new ArgumentNullException(nameof(_acao));
             _podeExecutar = PodeExecutar;
         }
 

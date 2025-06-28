@@ -7,13 +7,6 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern.DialogWindows
     /// </summary>
     public partial class FecharAplicacao : Window
     {
-        private bool _fechar = false;
-        public bool Fechar
-        {
-            get { return _fechar; }
-            set { _fechar = value; }
-        }
-
         public FecharAplicacao(Window parent)
         {
             this.Owner = parent;
@@ -22,13 +15,13 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern.DialogWindows
 
         private void btnFechar_Click(object sender, RoutedEventArgs e)
         {
-            Fechar = true;
+            DialogResult = true;
             this.Close();
         }
 
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            Fechar = false;
+            DialogResult = false;
             this.Close();
         }
     }

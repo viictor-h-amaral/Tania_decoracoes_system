@@ -35,6 +35,11 @@
                 Content="Decorações"
                 Tag="&#xe682;"/>
 
+            <Button x:Name="modBtnImagens"
+                Style="{StaticResource ModuloButtonsStyle}" 
+                Content="Imagens"
+                Tag="&#xf03e;"/>
+            
             <Button x:Name="modBtnCalendario"
                 Style="{StaticResource ModuloButtonsStyle}" 
                 Content="Calendário"
@@ -65,6 +70,15 @@
                 Content="Itens"
                 Tag="&#xf02b;"/>
 
+            <Button x:Name="modBtnEnderecos"
+                Style="{StaticResource ModuloButtonsStyle}" 
+                Content="Endereços"
+                Tag="&#xf3c5;"/>
+            
+            <Button x:Name="modBtnGerais"
+                Style="{StaticResource ModuloButtonsStyle}" 
+                Content="Gerais"
+                Tag="&#xf5fd;"/>
         </StackPanel>  
     </ScrollViewer>  
 </UserControl>

@@ -29,7 +29,7 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
         {
             FecharAplicacao janelaConfirmacao = new FecharAplicacao(this);
             janelaConfirmacao.ShowDialog();
-            if (janelaConfirmacao.Fechar)
+            if (janelaConfirmacao.DialogResult ?? false)
                 this.Close();
         }
 

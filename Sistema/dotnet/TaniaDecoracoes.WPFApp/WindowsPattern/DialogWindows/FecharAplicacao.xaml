@@ -23,7 +23,7 @@
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="/Styles/ConfimationButtonStyle.xaml" />
+                    <ResourceDictionary Source="/Styles/ConfirmationButtonStyle.xaml" />
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>

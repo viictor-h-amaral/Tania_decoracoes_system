@@ -10,7 +10,7 @@ using TaniaDecoracoes.WPFApp.Utils;
 
 namespace TaniaDecoracoes.WPFApp.WindowsPattern
 {
-    internal class YesNoWindowBase : Window
+    public class YesNoWindowBase : Window
     {
 
         #region Conteudos
@@ -94,7 +94,9 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
             // Configurações padrão
             WindowStyle = WindowStyle.None;
             ResizeMode = ResizeMode.NoResize;
-            SizeToContent = SizeToContent.WidthAndHeight;
+            Height = 300;
+            Width = 400;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             var chrome = new WindowChrome
             {
@@ -108,7 +110,7 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
 
             _resourceDictionary = new ResourceDictionary
             {
-                Source = new Uri("/TaniaDecoracoes.WPFApp;component/Styles/ConfirmationButtonStyle.xaml", UriKind.Relative)
+                Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFApp;component/Styles/ConfirmationButtonStyle.xaml", UriKind.Absolute)
             };
 
         }

@@ -3,40 +3,38 @@
                     xmlns:userControls="clr-namespace:TaniaDecoracoes.WPFApp.UserControls"
                     xmlns:janelasPadroes="clr-namespace:TaniaDecoracoes.WPFApp.WindowsPattern">
 
-    <Style x:Key="YesNoWindow" TargetType="{x:Type janelasPadroes:YesNoWindowBase}">  
-        
+    <Style x:Key="YesNoWindow" TargetType="{x:Type janelasPadroes:YesNoWindowBase}">
         <Setter Property="Template">  
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type janelasPadroes:YesNoWindowBase}">  
-                    <Border Background="{TemplateBinding Background}">
-                        <Grid>
-                            
-                            <Grid.Resources>
-                                <ResourceDictionary>
-                                    <ResourceDictionary.MergedDictionaries>
-                                        <ResourceDictionary Source="/Styles/ConfimationButton.xaml" />
-                                    </ResourceDictionary.MergedDictionaries>
-                                </ResourceDictionary>
-                            </Grid.Resources>
+                <ControlTemplate TargetType="{x:Type janelasPadroes:YesNoWindowBase}">
+                    <Grid Background="#F3F3F3">
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition x:Name="IconRow" Height="40"/>
-                                <RowDefinition x:Name="contentRow" Height="2*"/>
-                                <RowDefinition x:Name="optionsRow" Height="*"/>
-                            </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.MergedDictionaries>
+                                    <ResourceDictionary Source="/Styles/ConfirmationButtonStyle.xaml" />
+                                </ResourceDictionary.MergedDictionaries>
+                            </ResourceDictionary>
+                        </Grid.Resources>
 
-                            <Grid Grid.Row="0" x:Name="gridSuperior" Background="{TemplateBinding Background}">
-                                <userControls:FontAwesomeIcon
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="IconRow" Height="40"/>
+                            <RowDefinition x:Name="contentRow" Height="2*"/>
+                            <RowDefinition x:Name="optionsRow" Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" x:Name="gridSuperior" Background="#FFB521">
+                            <userControls:FontAwesomeIcon
                                     IconCode="&#xf071;"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="30"
                                     Foreground="White"
                                     Margin="10,0,10,0">
-                                </userControls:FontAwesomeIcon>
-                            </Grid>
+                            </userControls:FontAwesomeIcon>
+                        </Grid>
 
-                            <TextBlock x:Name="txtConteudo"
+                        <TextBlock x:Name="txtConteudo"
                                 Grid.Row="1"
                                 Text="{TemplateBinding QuestionText}"
                                 HorizontalAlignment="Center"
@@ -44,37 +42,37 @@
                                 FontFamily="Quicksand"
                                 FontSize="30"
                                 Margin="10,10,10,10">
-                            </TextBlock>
+                        </TextBlock>
 
-                            <Grid Grid.Row="2">
+                        <Grid Grid.Row="2">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
 
-                                <Button x:Name="btnConfirmation"
+                            <Button x:Name="btnConfirmation"
                                     Grid.Column="0"
                                     Content="{TemplateBinding YesButtonText}"
                                     FontSize="20"
                                     Style="{StaticResource btnStylePositive}"
                                     Margin="10,10,10,10"
                                     Command="{Binding YesCommand, RelativeSource={RelativeSource AncestorType={x:Type janelasPadroes:YesNoWindowBase}}}">
-                                </Button>
+                            </Button>
 
-                                <Button x:Name="btnNegation"
+                            <Button x:Name="btnNegation"
                                     Grid.Column="1"
                                     Content="{TemplateBinding NoButtonText}"
                                     FontSize="20"
                                     Style="{TemplateBinding NoButtonStyle}"
                                     Margin="10,10,10,10"
                                     Command="{Binding NoCommand, RelativeSource={RelativeSource AncestorType={x:Type janelasPadroes:YesNoWindowBase}}}">
-                                </Button>
-                            </Grid>
-
-                            <ContentPresenter/>
+                            </Button>
                         </Grid>
-                    </Border>  
+
+                        <ContentPresenter/>
+                    </Grid>
+                    
                 </ControlTemplate>  
             </Setter.Value>  
         </Setter>  

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using TaniaDecoracoes.WPFApp.Utils;
-using TaniaDecoracoes.WPFApp.WindowsPattern.DialogWindows;
+using TaniaDecoracoes.WPFApp.Windows;
 
 namespace TaniaDecoracoes.WPFApp.WindowsPattern
 {
@@ -27,7 +27,7 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
 
         protected void Fechar()
         {
-            FecharAplicacao janelaConfirmacao = new FecharAplicacao(this);
+            FecharAplicacao janelaConfirmacao = new FecharAplicacao();
             janelaConfirmacao.ShowDialog();
             if (janelaConfirmacao.DialogResult ?? false)
                 this.Close();

@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Styles\ConfirmationButtonStyle.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Fonts\FontAwesome\Font Awesome 6 Brands-Regular-400.otf" />
     <Resource Include="Fonts\FontAwesome\Font Awesome 6 Free-Regular-400.otf" />
     <Resource Include="Fonts\FontAwesome\Font Awesome 6 Free-Solid-900.otf">
@@ -26,6 +30,7 @@
     <Resource Include="Resources\logo.jpg" />
     <Resource Include="Resources\tania_decoracoes_system_logo.png" />
     <Resource Include="Resources\tania_decoracoes_system_logo2.png" />
+    <Resource Include="Styles\ConfirmationButtonStyle.xaml" />
   </ItemGroup>
 
   <ItemGroup>

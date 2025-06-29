@@ -4,22 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"   
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
              xmlns:local="clr-namespace:TaniaDecoracoes.WPFApp.UserControls"              
-             mc:Ignorable="d" >  
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">  
+             mc:Ignorable="d" >
+
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Auto">
 
         <StackPanel x:Name="ModulosStackPanel"   
             Background="Transparent" Orientation="Vertical"  
-            VerticalAlignment="Top" HorizontalAlignment="Left" Height="Auto" Width="Auto" MaxWidth="250" MinWidth="150">  
+            VerticalAlignment="Top" HorizontalAlignment="Left" Height="Auto" Width="Auto" MaxWidth="250" MinWidth="150">
 
-            <StackPanel.Resources>  
+            <StackPanel.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="/TaniaDecoracoes.WPFApp;component/Styles/ModuloButtonsStyle.xaml" />  
-                    </ResourceDictionary.MergedDictionaries>  
-                </ResourceDictionary>  
+                        <ResourceDictionary Source="/TaniaDecoracoes.WPFApp;component/Styles/ModuloButtonsStyle.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
             </StackPanel.Resources>
 
-            <Image x:Name="Logo" Grid.Column="0" 
+            <Image x:Name="Logo" 
                    VerticalAlignment="Top" 
                    HorizontalAlignment="Center"  
                 Source="/Resources/tania_decoracoes_system_logo.png">
@@ -29,7 +30,7 @@
                 Style="{StaticResource ModuloButtonsStyle}" 
                 Content="Home"
                 Tag="&#xf015;"/>
-                
+
             <Button x:Name="modBtnDecoracoes"
                 Style="{StaticResource ModuloButtonsStyle}" 
                 Content="Decorações"
@@ -39,7 +40,7 @@
                 Style="{StaticResource ModuloButtonsStyle}" 
                 Content="Imagens"
                 Tag="&#xf03e;"/>
-            
+
             <Button x:Name="modBtnCalendario"
                 Style="{StaticResource ModuloButtonsStyle}" 
                 Content="Calendário"
@@ -53,7 +54,12 @@
             <Button x:Name="modBtnPagamentos"
                 Style="{StaticResource ModuloButtonsStyle}" 
                 Content="Pagamento"
-                Tag="&#xf81d;"/> 
+                Tag="&#xf81d;"/>
+
+            <Button x:Name="modBtnRelatórios"
+                Style="{StaticResource ModuloButtonsStyle}" 
+                Content="Relatórios"
+                Tag="&#xf1c1;"/>
 
             <Button x:Name="modBtnMídia"
                 Style="{StaticResource ModuloButtonsStyle}" 
@@ -74,11 +80,17 @@
                 Style="{StaticResource ModuloButtonsStyle}" 
                 Content="Endereços"
                 Tag="&#xf3c5;"/>
-            
+
             <Button x:Name="modBtnGerais"
                 Style="{StaticResource ModuloButtonsStyle}" 
                 Content="Gerais"
                 Tag="&#xf5fd;"/>
-        </StackPanel>  
-    </ScrollViewer>  
+
+            <Button x:Name="modBtnParceiros"
+                Style="{StaticResource ModuloButtonsStyle}" 
+                Content="Parceiros"
+                Tag="&#xe533;"/>
+
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

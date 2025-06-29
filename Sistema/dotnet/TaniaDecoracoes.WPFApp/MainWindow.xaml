@@ -10,13 +10,6 @@
         Background="Transparent"
         Title="MainWindow" Height="450" Width="800" >
 
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" 
-                  GlassFrameThickness="0"
-                  ResizeBorderThickness="10"
-                  UseAeroCaptionButtons="False" />
-    </WindowChrome.WindowChrome>
-
     <Border BorderThickness="5" BorderBrush="Transparent">
         <Grid Background="White">
             <Grid.RowDefinitions>

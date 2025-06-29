@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shell;
 using TaniaDecoracoes.WPFApp.Utils;
 using TaniaDecoracoes.WPFApp.Windows;
 
@@ -18,6 +19,17 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
             CloseWindowCommand = new RelayCommand(Fechar);
             MinimizeWindowCommand = new RelayCommand(() => this.WindowState = WindowState.Minimized);
             MaximizeNormalizeWindowCommand = new RelayCommand(MaximizarNormalizar);
+
+            var chrome = new WindowChrome
+            {
+                CornerRadius = new CornerRadius(20),
+                GlassFrameThickness = new Thickness(-1),
+                ResizeBorderThickness = new Thickness(5),
+                CaptionHeight = 0
+            };
+
+            WindowChrome.SetWindowChrome(this, chrome);
+
         }
 
         #region ControlesJanela
@@ -27,7 +39,13 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
 
         protected void Fechar()
         {
-            FecharAplicacao janelaConfirmacao = new FecharAplicacao();
+            ConfirmattionWindow janelaConfirmacao = new ConfirmattionWindow()
+            {
+                QuestionText = "Fechar a aplicação?",
+                YesButtonText = "Fechar",
+                NoButtonText = "Cancelar",
+                UseAlternativeNoButtonStyle = true
+            };
             janelaConfirmacao.ShowDialog();
             if (janelaConfirmacao.DialogResult ?? false)
                 this.Close();

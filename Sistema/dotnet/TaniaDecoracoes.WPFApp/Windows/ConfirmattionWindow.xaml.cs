@@ -3,11 +3,11 @@
 namespace TaniaDecoracoes.WPFApp.Windows
 {
     /// <summary>
-    /// Lógica interna para FecharAplicacao.xaml
+    /// Lógica interna para ConfirmattionWindow.xaml
     /// </summary>
-    public partial class FecharAplicacao : YesNoWindowBase
+    public partial class ConfirmattionWindow : YesNoWindowBase
     {
-        public FecharAplicacao()
+        public ConfirmattionWindow()
         {
             InitializeComponent();
         }

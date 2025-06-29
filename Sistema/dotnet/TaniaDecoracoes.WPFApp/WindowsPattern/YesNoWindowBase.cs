@@ -49,11 +49,19 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
 
         #region Style
 
-        private readonly ResourceDictionary _resourceDictionary;
+        private static readonly ResourceDictionary _resourceDictionary = new ResourceDictionary
+        {
+            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFApp;component/Styles/ConfirmationButtonStyle.xaml", UriKind.Absolute)
+        };
+
+        private static readonly ResourceDictionary _resourceWindowStyleDictionary = new ResourceDictionary
+        {
+            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFApp;component/Styles/Windows/YesNoWindowStyle.xaml", UriKind.Absolute)
+        };
 
         public static readonly DependencyProperty NoButtonStyleProperty =
             DependencyProperty.Register("NoButtonStyle", typeof(Style), typeof(YesNoWindowBase),
-            new PropertyMetadata((Style)Application.Current.Resources["btnStyleNegative"]));
+            new PropertyMetadata((Style)_resourceDictionary["btnStyleNegative"]));
 
         // Propriedade para alternar entre estilos
         public static readonly DependencyProperty UseAlternativeNoButtonStyleProperty =
@@ -64,8 +72,8 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
         {
             var window = (YesNoWindowBase)d;
             window.NoButtonStyle = (bool)e.NewValue ?
-                (Style)window._resourceDictionary["btnStyleNeutral"]
-                : (Style)window._resourceDictionary["btnStyleNegative"];
+                (Style)_resourceDictionary["btnStyleNeutral"]
+                : (Style)_resourceDictionary["btnStyleNegative"];
         }
 
         public bool UseAlternativeNoButtonStyle
@@ -97,6 +105,7 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
             Height = 300;
             Width = 400;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Style = (Style)_resourceWindowStyleDictionary["YesNoWindow"];
 
             var chrome = new WindowChrome
             {
@@ -108,10 +117,6 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
 
             WindowChrome.SetWindowChrome(this, chrome);
 
-            _resourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFApp;component/Styles/ConfirmationButtonStyle.xaml", UriKind.Absolute)
-            };
 
         }
     }

@@ -50,7 +50,6 @@
   <ItemGroup>
     <Folder Include="Pages\Clientes\" />
     <Folder Include="Pages\Decoracoes\" />
-    <Folder Include="Pages\Enderecos\" />
     <Folder Include="Pages\Itens\" />
     <Folder Include="Pages\Estatisticas\" />
     <Folder Include="Pages\Home\" />

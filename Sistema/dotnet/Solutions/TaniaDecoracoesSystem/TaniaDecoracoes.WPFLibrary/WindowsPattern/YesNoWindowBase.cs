@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
-using TaniaDecoracoes.WPFApp.Utils;
+using TaniaDecoracoes.WPFLibrary.Utils;
+using TaniaDecoracoes.WPFLibrary.WindowsPattern;
 
-namespace TaniaDecoracoes.WPFApp.WindowsPattern
+namespace TaniaDecoracoes.WPFLibrary.WindowsPattern
 {
     public class YesNoWindowBase : Window
     {
@@ -46,17 +42,16 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
 
         #endregion Conteudos
 
-
         #region Style
 
         private static readonly ResourceDictionary _resourceDictionary = new ResourceDictionary
         {
-            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFApp;component/Styles/ConfirmationButtonStyle.xaml", UriKind.Absolute)
+            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFLibrary;component/Styles/ConfirmationButtonStyle.xaml", UriKind.Absolute)
         };
 
         private static readonly ResourceDictionary _resourceWindowStyleDictionary = new ResourceDictionary
         {
-            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFApp;component/Styles/Windows/YesNoWindowStyle.xaml", UriKind.Absolute)
+            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFLibrary;component/Styles/Windows/YesNoWindowStyle.xaml", UriKind.Absolute)
         };
 
         public static readonly DependencyProperty NoButtonStyleProperty =
@@ -90,7 +85,6 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
 
         #endregion Style
 
-
         public ICommand YesCommand { get; }
         public ICommand NoCommand { get; }
 
@@ -116,7 +110,6 @@ namespace TaniaDecoracoes.WPFApp.WindowsPattern
             };
 
             WindowChrome.SetWindowChrome(this, chrome);
-
 
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace TaniaDecoracoes.WPFApp.UserControls
+namespace TaniaDecoracoes.WPFLibrary.UserControls
 {
     /// <summary>
     /// Interação lógica para FontAwesomeIcon.xam

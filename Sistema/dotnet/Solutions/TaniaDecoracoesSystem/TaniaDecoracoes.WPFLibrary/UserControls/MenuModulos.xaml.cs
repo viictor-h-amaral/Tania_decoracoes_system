@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace TaniaDecoracoes.WPFApp.UserControls
+namespace TaniaDecoracoes.WPFLibrary.UserControls
 {
     /// <summary>
     /// Interação lógica para MenuModulos.xam

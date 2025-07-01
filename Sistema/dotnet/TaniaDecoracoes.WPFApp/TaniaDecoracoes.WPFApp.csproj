@@ -9,31 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Fonts\FontAwesome\Font Awesome 6 Brands-Regular-400.otf" />
-    <None Remove="Fonts\FontAwesome\Font Awesome 6 Free-Regular-400.otf" />
-    <None Remove="Fonts\FontAwesome\Font Awesome 6 Free-Solid-900.otf" />
-    <None Remove="Resources\tania_decoracoes_system.jpg" />
-    <None Remove="Resources\tania_decoracoes_system_logo.png" />
-    <None Remove="Resources\tania_decoracoes_system_logo2.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Remove="Styles\ConfirmationButtonStyle.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Fonts\FontAwesome\Font Awesome 6 Brands-Regular-400.otf" />
-    <Resource Include="Fonts\FontAwesome\Font Awesome 6 Free-Regular-400.otf" />
-    <Resource Include="Fonts\FontAwesome\Font Awesome 6 Free-Solid-900.otf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\logo.jpg" />
-    <Resource Include="Resources\tania_decoracoes_system_logo.png" />
-    <Resource Include="Resources\tania_decoracoes_system_logo2.png" />
-    <Resource Include="Styles\ConfirmationButtonStyle.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.16">
       <PrivateAssets>all</PrivateAssets>
@@ -43,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Solutions\TaniaDecoracoesSystem\TaniaDecoracoes.WPFLibrary\TaniaDecoracoes.WPFLibrary.csproj" />
     <ProjectReference Include="..\TaniaDecoracoes.Entities.Data\TaniaDecoracoes.Entities.Data.csproj" />
-    <ProjectReference Include="..\TaniaDecoracoes.Entities.Models\TaniaDecoracoes.Entities.Models.csproj" />
+	  <ProjectReference Include="..\TaniaDecoracoes.Entities.Models\TaniaDecoracoes.Entities.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

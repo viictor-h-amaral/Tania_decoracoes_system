@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace TaniaDecoracoes.WPFApp.Utils
+namespace TaniaDecoracoes.WPFLibrary.Utils
 {
     internal class RelayCommand : ICommand
     {

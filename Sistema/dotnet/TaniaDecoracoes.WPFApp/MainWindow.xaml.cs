@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.WPFApp.WindowsPattern;
+﻿using System.Windows;
+using TaniaDecoracoes.WPFLibrary.WindowsPattern;
 
 namespace TaniaDecoracoes.WPFApp
 {
@@ -10,6 +11,16 @@ namespace TaniaDecoracoes.WPFApp
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void TrocarModulo()
+        {
+
+        }
+
+        public void ModuloButton_Click(object sender, RoutedEventArgs e)
+        {
+            TrocarModulo();
         }
     }
 }

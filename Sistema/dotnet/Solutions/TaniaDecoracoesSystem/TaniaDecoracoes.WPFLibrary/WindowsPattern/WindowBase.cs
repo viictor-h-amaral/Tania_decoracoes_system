@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
-using TaniaDecoracoes.WPFApp.Utils;
-using TaniaDecoracoes.WPFApp.Windows;
+using TaniaDecoracoes.WPFLibrary.Utils;
+using TaniaDecoracoes.WPFLibrary.Windows;
 
-namespace TaniaDecoracoes.WPFApp.WindowsPattern
+namespace TaniaDecoracoes.WPFLibrary.WindowsPattern
 {
     /// <summary>
     /// Lógica interna para WindowBase.xaml e suas derivadas

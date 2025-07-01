@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaniaDecoracoes.WPFApp" 
-        xmlns:padroes="clr-namespace:TaniaDecoracoes.WPFApp.WindowsPattern" 
-        xmlns:userControls="clr-namespace:TaniaDecoracoes.WPFApp.UserControls"
+        xmlns:padroes="clr-namespace:TaniaDecoracoes.WPFLibrary.WindowsPattern;assembly=TaniaDecoracoes.WPFLibrary"
+        xmlns:userControls="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls;assembly=TaniaDecoracoes.WPFLibrary"
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
         Title="MainWindow" Height="450" Width="800" >
@@ -36,7 +36,7 @@
                     <StackPanel.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.MergedDictionaries>
-                                <ResourceDictionary Source="/TaniaDecoracoes.WPFApp;component/Styles/ControleJanelaStyle.xaml" />
+                                <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/ControleJanelaStyle.xaml" />
                             </ResourceDictionary.MergedDictionaries>
                         </ResourceDictionary>
                     </StackPanel.Resources>

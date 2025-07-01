@@ -1,6 +1,6 @@
-﻿using TaniaDecoracoes.WPFApp.WindowsPattern;
+﻿using TaniaDecoracoes.WPFLibrary.WindowsPattern;
 
-namespace TaniaDecoracoes.WPFApp.Windows
+namespace TaniaDecoracoes.WPFLibrary.Windows
 {
     /// <summary>
     /// Lógica interna para ConfirmattionWindow.xaml

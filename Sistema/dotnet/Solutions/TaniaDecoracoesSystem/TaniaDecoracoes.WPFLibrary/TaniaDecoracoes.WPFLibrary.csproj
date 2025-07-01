@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Page Remove="Styles\ConfirmationButtonStyle.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\FontAwesome\Font Awesome 6 Brands-Regular-400.otf" />
+    <Resource Include="Fonts\FontAwesome\Font Awesome 6 Free-Regular-400.otf" />
+    <Resource Include="Fonts\FontAwesome\Font Awesome 6 Free-Solid-900.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\logo.png" />
+    <Resource Include="Styles\ConfirmationButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="UserControls\FontAwesomeIcon.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\MenuModulos.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\MenuSuperiorConfiguracoes.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>

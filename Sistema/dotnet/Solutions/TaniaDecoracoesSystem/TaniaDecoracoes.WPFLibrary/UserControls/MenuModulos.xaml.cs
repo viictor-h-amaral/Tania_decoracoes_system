@@ -11,15 +11,9 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
         public MenuModulos()
         {
             InitializeComponent();
-            var vm = new MenuModulosViewModel();
+            /*var vm = new MenuModulosViewModel();
             this.DataContext = vm;
-        }
-
-        private void TrocaModulo(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var botao = (Button)sender;
-            var novaPagina = botao.Tag as Page;
-            var stackpanel = botao.Parent;
+            trecho definindo DataContext não é aqui, mas sim ao criar esse user control no mainwindow */
         }
     }
 }

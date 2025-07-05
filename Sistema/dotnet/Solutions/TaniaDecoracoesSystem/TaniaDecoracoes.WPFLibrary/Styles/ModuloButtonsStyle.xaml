@@ -21,7 +21,7 @@
     <SolidColorBrush x:Key="ModuloButton.MouseOver.Foreground" Color="#7A3A5C"/>
 
     <SolidColorBrush x:Key="ModuloButton.Pressed.Background" Color="#7A3A5C"/>
-    <SolidColorBrush x:Key="ModuloButton.Pressed.Foreground" Color="#F0B6D1"/>
+    <SolidColorBrush x:Key="ModuloButton.Pressed.Foreground" Color="White"/>
 
     <SolidColorBrush x:Key="ModuloButton.Disabled.Background" Color="#B5B5B5"/>
     <SolidColorBrush x:Key="ModuloButton.Disabled.Foreground" Color="#606060"/>
@@ -33,7 +33,7 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        
+
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontFamily" Value="Quicksand"/>
 
@@ -96,18 +96,16 @@
         </Setter>
         <Style.Triggers>
             <DataTrigger Value="True">
-                    <DataTrigger.Binding>
-                        <MultiBinding Converter="{StaticResource EqualityConverter}">
-                            <Binding Path="ModuloSelecionado"/>
-                            <Binding RelativeSource="{RelativeSource Self}" Path="CommandParameter"/>
-                        </MultiBinding>
-                    </DataTrigger.Binding>
-                    <Setter Property="Background" Value="#7A3A5C"/>
-                    <Setter Property="Foreground" Value="White"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource EqualityConverter}">
+                        <Binding Path="ModuloSelecionado"/>
+                        <Binding RelativeSource="{RelativeSource Self}" Path="CommandParameter"/>
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="Background" Value="{StaticResource ModuloButton.Pressed.Background}"/>
+                <Setter Property="Foreground" Value="{StaticResource ModuloButton.Pressed.Foreground}"/>
+                <Setter Property="FontWeight" Value="Bold"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
-
-
 </ResourceDictionary>

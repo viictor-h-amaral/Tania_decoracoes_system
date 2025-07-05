@@ -61,7 +61,7 @@
                     <ColumnDefinition x:Name="ConteudoColumn" Width="8*" />
                 </Grid.ColumnDefinitions>
 
-                <userControls:MenuModulos Grid.Column="0" Background="#F8D7E6"/>
+                <userControls:MenuModulos Grid.Column="0" Background="#F8D7E6" DataContext="{Binding MenuModulosVM}"/>
 
 
                 <Grid Grid.Column="1" Background="White">
@@ -77,6 +77,10 @@
                     </Grid>
                     
                     <Grid Grid.Row="1" x:Name="ContudoGrid">
+                        <Frame x:Name="frmModulos" 
+                               NavigationUIVisibility="Hidden" 
+                               Content="{Binding PaginaAtual}" 
+                               Background="Transparent"/>
                     </Grid>
 
                 </Grid>

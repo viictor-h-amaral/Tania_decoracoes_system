@@ -14,12 +14,12 @@ namespace TaniaDecoracoes.WPFApp
         {
             InitializeComponent();
             var viewModel = new MainWindowViewModel();
-            viewModel.RequestClose += (s, e) => Close();
-            viewModel.RequestWindowStateChange += (s, state) => this.WindowState = state;
-
             this.DataContext = viewModel;
 
+            viewModel.RequestClose += (s, e) => Close();
+            viewModel.RequestWindowStateChange += (s, state) => this.WindowState = state;
             viewModel.WindowState = this.WindowState;
+
             this.StateChanged += (s, e) => viewModel.WindowState = this.WindowState;
         }
 

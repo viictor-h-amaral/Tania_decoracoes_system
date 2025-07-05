@@ -39,85 +39,104 @@
                     Content="Home"
                     Tag="&#xf015;"
                     Width="Auto"
-                    Command="{Binding ModuloButton_Click, RelativeSource={RelativeSource AncestorType=Window}}"
-                        CommandParameter="_ModuloHome"/>
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloHome"/>
 
                 <Button x:Name="modBtnDecoracoes"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Decorações"
                     Tag="&#xe682;"
                     Width="Auto"
-                    Click="TrocaModulo"/>
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloDecoracoes"/>
 
                 <Button x:Name="modBtnImagens"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Imagens"
                     Tag="&#xf03e;"
                     Width="Auto"
-                        Click="TrocaModulo"/>
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloImagens"/>
 
                 <Button x:Name="modBtnCalendario"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Calendário"
                     Tag="&#xf073;"
                     Width="Auto"
-                        Click="TrocaModulo"/>
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloCalendario"/>
 
                 <Button x:Name="modBtnClientes"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Clientes"
                     Tag="&#xf0c0;"
                     Width="Auto"
-                        Click="TrocaModulo"/>
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloClientes"/>
 
                 <Button x:Name="modBtnPagamentos"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Pagamento"
                     Tag="&#xf81d;"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloPagamentos"/>
 
-                <Button x:Name="modBtnRelatórios"
+                <Button x:Name="modBtnRelatorios"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Relatórios"
                     Tag="&#xf1c1;"
                     Width="Auto"
-                        Click="TrocaModulo"/>
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloRelatorios"/>
 
-                <Button x:Name="modBtnMídia"
+                <Button x:Name="modBtnMidia"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Mídias"
                     Tag="&#x40;"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloMidia"/>
 
                 <Button x:Name="modBtnEstatisticas"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Estatísticas"
                     Tag="&#xe098;"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloEstatisticas"/>
 
                 <Button x:Name="modBtnItens"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Itens"
                     Tag="&#xf02b;"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloItens"/>
 
                 <Button x:Name="modBtnEnderecos"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Endereços"
                     Tag="&#xf3c5;"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloEnderecos"/>
 
                 <Button x:Name="modBtnGerais"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Gerais"
                     Tag="&#xf5fd;"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloGerais"/>
 
                 <Button x:Name="modBtnParceiros"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Parceiros"
                     Tag="&#xe533;"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Command="{Binding SelecionarModuloCommand}"
+                    CommandParameter="_ModuloParceiros"/>
 
             </StackPanel>
         </ScrollViewer>

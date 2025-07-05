@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:userControl="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls">
+                    xmlns:userControl="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls"
+                    xmlns:utils="clr-namespace:TaniaDecoracoes.WPFLibrary.Utils">
+                    <utils:EqualityToBoolConverter x:Key="EqualityConverter"/>
 
     <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
@@ -12,22 +14,22 @@
         </Setter>
     </Style>
 
-    <SolidColorBrush x:Key="ButtonClose.Static.Background" Color="#F8D7E6"/>
-    <SolidColorBrush x:Key="ButtonClose.Static.Foreground" Color="#8A446C"/>
+    <SolidColorBrush x:Key="ModuloButton.Static.Background" Color="#F8D7E6"/>
+    <SolidColorBrush x:Key="ModuloButton.Static.Foreground" Color="#8A446C"/>
 
-    <SolidColorBrush x:Key="ButtonClose.MouseOver.Background" Color="#F0B6D1"/>
-    <SolidColorBrush x:Key="ButtonClose.MouseOver.Foreground" Color="#7A3A5C"/>
+    <SolidColorBrush x:Key="ModuloButton.MouseOver.Background" Color="#F0B6D1"/>
+    <SolidColorBrush x:Key="ModuloButton.MouseOver.Foreground" Color="#7A3A5C"/>
 
-    <SolidColorBrush x:Key="ButtonClose.Pressed.Background" Color="#7A3A5C"/>
-    <SolidColorBrush x:Key="ButtonClose.Pressed.Foreground" Color="#F0B6D1"/>
+    <SolidColorBrush x:Key="ModuloButton.Pressed.Background" Color="#7A3A5C"/>
+    <SolidColorBrush x:Key="ModuloButton.Pressed.Foreground" Color="#F0B6D1"/>
 
-    <SolidColorBrush x:Key="ButtonClose.Disabled.Background" Color="#B5B5B5"/>
-    <SolidColorBrush x:Key="ButtonClose.Disabled.Foreground" Color="#606060"/>
+    <SolidColorBrush x:Key="ModuloButton.Disabled.Background" Color="#B5B5B5"/>
+    <SolidColorBrush x:Key="ModuloButton.Disabled.Foreground" Color="#606060"/>
 
     <Style x:Key="ModuloButtonsStyle" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-        <Setter Property="Background" Value="{StaticResource ButtonClose.Static.Background}"/>
-        <Setter Property="Foreground" Value="{StaticResource ButtonClose.Static.Foreground}"/>
+        <Setter Property="Background" Value="{StaticResource ModuloButton.Static.Background}"/>
+        <Setter Property="Foreground" Value="{StaticResource ModuloButton.Static.Foreground}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -46,18 +48,18 @@
                             BorderBrush="{TemplateBinding BorderBrush}" 
                             BorderThickness="{TemplateBinding BorderThickness}" 
                             SnapsToDevicePixels="true">
-                        
+
                         <StackPanel Orientation="Horizontal" 
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left">
-                            
+
                             <userControl:FontAwesomeIcon x:Name="Icon" 
                                                          IconCode="{TemplateBinding Tag}" 
                                                          Foreground="{TemplateBinding Foreground}"
                                                          VerticalAlignment="Center"
                                                          Margin="30, 3, 15, 3"
                                                          FontSize="20"/>
-                            
+
                             <ContentPresenter x:Name="contentPresenter" 
                                               Focusable="False" 
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
@@ -65,7 +67,7 @@
                                               RecognizesAccessKey="True" 
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        
+
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -73,25 +75,38 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ButtonClose.MouseOver.Background}"/>
-                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ButtonClose.MouseOver.Foreground}"/>
-                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource ButtonClose.MouseOver.Foreground}"/>
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource ModuloButton.MouseOver.Background}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ModuloButton.MouseOver.Foreground}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource ModuloButton.MouseOver.Foreground}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ButtonClose.Pressed.Background}"/>
-                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ButtonClose.Pressed.Foreground}"/>
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource ModuloButton.Pressed.Background}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ModuloButton.Pressed.Foreground}"/>
                             <Setter Property="TextElement.FontWeight" TargetName="contentPresenter" Value="Bold"/>
-                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource ButtonClose.Pressed.Foreground}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource ModuloButton.Pressed.Foreground}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ButtonClose.Disabled.Background}"/>
-                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ButtonClose.Disabled.Foreground}"/>
-                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource ButtonClose.Disabled.Foreground}"/>
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource ModuloButton.Disabled.Background}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource ModuloButton.Disabled.Foreground}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource ModuloButton.Disabled.Foreground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                    <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource EqualityConverter}">
+                            <Binding Path="ModuloSelecionado"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="CommandParameter"/>
+                        </MultiBinding>
+                    </DataTrigger.Binding>
+                    <Setter Property="Background" Value="#7A3A5C"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
 

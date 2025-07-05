@@ -36,7 +36,7 @@
 
                         <TextBlock x:Name="txtConteudo"
                                 Grid.Row="1"
-                                Text="{TemplateBinding QuestionText}"
+                                Text="{Binding QuestionText}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontFamily="Quicksand"
@@ -53,20 +53,20 @@
 
                             <Button x:Name="btnConfirmation"
                                     Grid.Column="0"
-                                    Content="{TemplateBinding YesButtonText}"
+                                    Content="{Binding YesButtonText}"
                                     FontSize="20"
                                     Style="{StaticResource btnStylePositive}"
                                     Margin="10,10,10,10"
-                                    Command="{Binding YesCommand, RelativeSource={RelativeSource AncestorType={x:Type janelasPadroes:YesNoWindowBase}}}">
+                                    Command="{Binding YesCommand}">
                             </Button>
 
                             <Button x:Name="btnNegation"
                                     Grid.Column="1"
-                                    Content="{TemplateBinding NoButtonText}"
+                                    Content="{Binding NoButtonText}"
                                     FontSize="20"
-                                    Style="{TemplateBinding NoButtonStyle}"
+                                    Style="{Binding NoButtonStyle}"
                                     Margin="10,10,10,10"
-                                    Command="{Binding NoCommand, RelativeSource={RelativeSource AncestorType={x:Type janelasPadroes:YesNoWindowBase}}}">
+                                    Command="{Binding NoCommand}">
                             </Button>
                         </Grid>
 

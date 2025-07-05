@@ -32,38 +32,43 @@
         </Image>
 
         <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Grid.Row="1">
-            <StackPanel Width="Auto" Orientation="Vertical">
+            <StackPanel x:Name="stckModulos"  Width="Auto" Orientation="Vertical">
 
                 <Button x:Name="modBtnHome"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Home"
                     Tag="&#xf015;"
                     Width="Auto"
-                    Command="{Binding ModuloButton_Click, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    Command="{Binding ModuloButton_Click, RelativeSource={RelativeSource AncestorType=Window}}"
+                        CommandParameter="_ModuloHome"/>
 
                 <Button x:Name="modBtnDecoracoes"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Decorações"
                     Tag="&#xe682;"
-                    Width="Auto"/>
+                    Width="Auto"
+                    Click="TrocaModulo"/>
 
                 <Button x:Name="modBtnImagens"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Imagens"
                     Tag="&#xf03e;"
-                    Width="Auto"/>
+                    Width="Auto"
+                        Click="TrocaModulo"/>
 
                 <Button x:Name="modBtnCalendario"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Calendário"
                     Tag="&#xf073;"
-                    Width="Auto"/>
+                    Width="Auto"
+                        Click="TrocaModulo"/>
 
                 <Button x:Name="modBtnClientes"
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Clientes"
                     Tag="&#xf0c0;"
-                    Width="Auto"/>
+                    Width="Auto"
+                        Click="TrocaModulo"/>
 
                 <Button x:Name="modBtnPagamentos"
                     Style="{StaticResource ModuloButtonsStyle}" 
@@ -75,7 +80,8 @@
                     Style="{StaticResource ModuloButtonsStyle}" 
                     Content="Relatórios"
                     Tag="&#xf1c1;"
-                    Width="Auto"/>
+                    Width="Auto"
+                        Click="TrocaModulo"/>
 
                 <Button x:Name="modBtnMídia"
                     Style="{StaticResource ModuloButtonsStyle}" 

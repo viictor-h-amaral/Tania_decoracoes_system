@@ -42,14 +42,14 @@
                     </StackPanel.Resources>
 
                     <Button x:Name="btnMinimizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" Content="―" 
-                            Command="{Binding MinimizeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                            Command="{Binding MinimizeWindowCommand}" 
                             FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Button x:Name="btnMaximizar" Style="{StaticResource ControleJanelaMinMax}" Height="Auto" Width="50" BorderThickness="0" 
-                            Command="{Binding MaximizeNormalizeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                            Content="{Binding MaximizeNormalizeButtonContent, RelativeSource={RelativeSource AncestorType=Window}}"
+                            Command="{Binding MaximizeNormalizeWindowCommand}"
+                            Content="{Binding MaximizeNormalizeContent}"
                             FontSize="12" />
                     <Button x:Name="btnFechar" Style="{StaticResource ControleJanelaClose}" Height="Auto" Width="50" BorderThickness="0" Content="×" 
-                            Command="{Binding CloseWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                            Command="{Binding CloseWindowCommand}" 
                             FontSize="18"/>
                 </StackPanel>
             </Grid>

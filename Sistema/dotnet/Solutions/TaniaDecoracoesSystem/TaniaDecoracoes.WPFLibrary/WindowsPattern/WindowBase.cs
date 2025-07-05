@@ -16,10 +16,6 @@ namespace TaniaDecoracoes.WPFLibrary.WindowsPattern
             this.WindowStyle = WindowStyle.None;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            CloseWindowCommand = new RelayCommand(Fechar);
-            MinimizeWindowCommand = new RelayCommand(() => this.WindowState = WindowState.Minimized);
-            MaximizeNormalizeWindowCommand = new RelayCommand(MaximizarNormalizar);
-
             var chrome = new WindowChrome
             {
                 CornerRadius = new CornerRadius(20),
@@ -32,55 +28,18 @@ namespace TaniaDecoracoes.WPFLibrary.WindowsPattern
 
         }
 
-        #region ControlesJanela
-        public ICommand CloseWindowCommand { get; }
-        public ICommand MinimizeWindowCommand { get; }
-        public ICommand MaximizeNormalizeWindowCommand { get; }
-
-        protected void Fechar()
-        {
-            ConfirmattionWindow janelaConfirmacao = new ConfirmattionWindow()
-            {
-                QuestionText = "Fechar a aplicação?",
-                YesButtonText = "Fechar",
-                NoButtonText = "Cancelar",
-                UseAlternativeNoButtonStyle = true
-            };
-            janelaConfirmacao.ShowDialog();
-            if (janelaConfirmacao.DialogResult ?? false)
-                this.Close();
-        }
-
-        protected void MaximizarNormalizar()
-        {
-            this.WindowState = this.WindowState == WindowState.Maximized ?
-                WindowState.Normal : WindowState.Maximized;
-        }
-
-        public string MaximizeNormalizeButtonContent
-        {
-            get { return (string)GetValue(MaximizeNormalizeButtonContentProperty); }
-            set { SetValue(MaximizeNormalizeButtonContentProperty, value); }
-        }
-
-        public static readonly DependencyProperty MaximizeNormalizeButtonContentProperty =
-            DependencyProperty.Register("MaximizeNormalizeButtonContent", typeof(string), typeof(WindowBase),
-                new PropertyMetadata("☐"));
-
-        protected override void OnStateChanged(EventArgs e)
-        {
-            base.OnStateChanged(e);
-            MaximizeNormalizeButtonContent = this.WindowState == WindowState.Maximized ? "❐" : "☐";
-        }
-
-        #endregion ControlesJanela
-
         #region InteracaoJanela
 
         protected bool _isDragging;
         protected DateTime _lastClickTime;
         protected Point _lastClickPosition;
         protected Point _dragStartPosition;
+
+        protected void MaximizarNormalizar()
+        {
+            this.WindowState = this.WindowState == WindowState.Maximized ?
+                WindowState.Normal : WindowState.Maximized;
+        }
 
         protected void GridBarraTarefas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

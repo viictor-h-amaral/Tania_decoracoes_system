@@ -2,7 +2,7 @@
 
 namespace TaniaDecoracoes.WPFLibrary.Utils
 {
-    internal class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private readonly Action _acao;
         private readonly Func<bool>? _podeExecutar;

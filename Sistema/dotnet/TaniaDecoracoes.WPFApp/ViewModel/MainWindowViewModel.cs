@@ -15,7 +15,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel
 {
     internal class MainWindowViewModel : WindowBaseViewModel
     {
-        private Page _paginaAtual;
+        private Page _paginaAtual = new HomePage();
         public Page PaginaAtual
         {
             get => _paginaAtual;

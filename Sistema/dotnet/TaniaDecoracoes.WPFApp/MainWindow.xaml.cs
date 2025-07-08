@@ -12,7 +12,6 @@ namespace TaniaDecoracoes.WPFApp
     {
         public MainWindow()
         {
-            InitializeComponent();
             var viewModel = new MainWindowViewModel();
             this.DataContext = viewModel;
 
@@ -21,6 +20,7 @@ namespace TaniaDecoracoes.WPFApp
             viewModel.WindowState = this.WindowState;
 
             this.StateChanged += (s, e) => viewModel.WindowState = this.WindowState;
+            InitializeComponent();
         }
 
     }

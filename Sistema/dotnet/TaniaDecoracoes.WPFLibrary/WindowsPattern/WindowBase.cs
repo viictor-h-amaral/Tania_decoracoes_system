@@ -20,7 +20,7 @@ namespace TaniaDecoracoes.WPFLibrary.WindowsPattern
             {
                 CornerRadius = new CornerRadius(20),
                 GlassFrameThickness = new Thickness(-1),
-                ResizeBorderThickness = new Thickness(5),
+                ResizeBorderThickness = new Thickness(15),
                 CaptionHeight = 0
             };
 

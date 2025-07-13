@@ -12,23 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TaniaDecoracoes.Entities.Models.Associacao;
-using TaniaDecoracoes.EntitiesLibrary.Entities.Associacao;
-using TaniaDecoracoes.EntitiesLibrary.Entities.TabelasGerais;
 
-namespace TaniaDecoracoes.WPFApp.Pages.Decoracoes
+namespace TaniaDecoracoes.WPFLibrary.UserControls
 {
     /// <summary>
-    /// Interação lógica para DecoracoesMainPage.xam
+    /// Interação lógica para CommonDataGrid.xam
     /// </summary>
-    public partial class DecoracoesMainPage : Page
+    public partial class CommonDataGrid : UserControl
     {
-        public DecoracoesMainPage()
+        public CommonDataGrid()
         {
             InitializeComponent();
-
-            DecoracoesList.ItemsSource = TamanhoEntity.GetMany();
-
         }
     }
 }

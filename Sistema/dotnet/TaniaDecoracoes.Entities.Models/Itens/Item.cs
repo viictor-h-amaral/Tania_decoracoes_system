@@ -91,6 +91,16 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <summary>
         /// Coleção de associações entre decoração e este item
         /// </summary>
+
+        /// <summary>
+        /// Retorna uma string com as dimensões do item
+        /// </summary>
+        public string Dimensoes => TamanhoInstance is null ?
+                                    $@" L{(Largura.HasValue     ? Largura.Value     : string.Empty)}
+                                        C{(Comprimento.HasValue ? Comprimento.Value : string.Empty)}
+                                        A{(Altura.HasValue      ? Altura.Value      : string.Empty)}"
+                                    : TamanhoInstance.Valor;
+
         public ICollection<AssociacaoDecoracaoItens>? AssociacaoDecoracaoItens { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 
         /// <summary>
         /// Retorna o nome do tamanho
+        /// <para>Required</para>
         /// </summary>
         public required string Valor { get; set; }
 

@@ -36,6 +36,11 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         public bool JurosCompostos { get; set; }
 
         /// <summary>
+        /// Retorna uma string com um resumo da taxa de parcelamento
+        /// </summary>
+        public string Identificacao => $@"{Meses} meses a {Juros}% de juros";
+
+        /// <summary>
         /// Coleção das formas de pagamentos associadas à essa taxa de parcelamento
         /// </summary>
         public ICollection<FormaPagamento>? FormasPagamento { get; set; }

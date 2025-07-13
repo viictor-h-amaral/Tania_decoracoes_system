@@ -40,8 +40,8 @@ namespace TaniaDecoracoes.Entities.Data.Mapeamento.Pagamentos
             entity
                 .Property(t => t.JurosCompostos)
                 .HasColumnName("JurosCompostos")
-                .HasColumnType("TinyInt(1)")
-                .IsRequired(false);
+                .HasColumnType("TinyInt(1)");
+                //.IsRequired(false);
 
             entity
                 .Property(t => t.JurosCompostos)

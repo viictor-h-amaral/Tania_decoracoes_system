@@ -142,6 +142,15 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         public DecoracaoCustos? DecoracaoCustosInstance { get; set; }
 
         /// <summary>
+        /// Retorna uma string com identificação básica da decoração
+        /// </summary>
+        public string Identificacao => @$"{ClienteInstance.Nome} 
+                                                - {(DataEvento.HasValue ?
+                                                        DataEvento.Value.ToString("dd/MM/yy")
+                                                        : DataCadastro.ToString("dd/MM/yy"))}
+                                                - {TipoEventoInstance.Nome}";
+
+        /// <summary>
         /// Associações entre decoração e flores
         /// </summary>
         public ICollection<AssociacaoDecoracaoFlores>? AssociacaoDecoracaoFlores { get; set; }

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaniaDecoracoes.Entities.Data\TaniaDecoracoes.Entities.Data.csproj" />
+    <ProjectReference Include="..\TaniaDecoracoes.Entities.Models\TaniaDecoracoes.Entities.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\Clientes\" />
+    <Folder Include="Entities\Decoracoes\" />
+    <Folder Include="Entities\Enderecos\" />
+    <Folder Include="Entities\Itens\" />
+    <Folder Include="Entities\Pagamentos\" />
+  </ItemGroup>
+
+</Project>

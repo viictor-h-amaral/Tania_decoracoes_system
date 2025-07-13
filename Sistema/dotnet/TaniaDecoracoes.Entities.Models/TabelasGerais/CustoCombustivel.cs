@@ -31,7 +31,7 @@
         /// Retorna a data inicial da vigência desse custo
         /// <para>Required</para>
         /// </summary>
-        public required DateOnly DataInicial { get; set; }
+        public DateOnly DataInicial { get; set; }
 
         /// <summary>
         /// Retorna a data final da vigência desse custo

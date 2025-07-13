@@ -9,6 +9,6 @@
       Title="DecoracoesMainPage">
 
     <Grid Background="MistyRose">
-        
+        <DataGrid Name="DecoracoesList" Margin="10,50,10,10"/>
     </Grid>
 </Page>

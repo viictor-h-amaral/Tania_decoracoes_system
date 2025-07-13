@@ -28,44 +28,56 @@ namespace TaniaDecoracoes.Entities.Data.Contexto
 
         #region TABELAS
 
-        public DbSet<AssociacaoDecoracaoFlores> AssociacaoDecoracaoFlores { get; set; }
-        public DbSet<AssociacaoDecoracaoItens> AssociacaoDecoracaoItens { get; set; }
+            #region ASSOCIACOES
+                public DbSet<AssociacaoDecoracaoFlores> AssociacaoDecoracaoFlores { get; set; }
+                public DbSet<AssociacaoDecoracaoItens> AssociacaoDecoracaoItens { get; set; }
+        #endregion ASSOCIACOES
 
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<DependenteCliente> DependentesClientes { get; set; }
+            #region CLIENTES
+                public DbSet<Cliente> Clientes { get; set; }
+                public DbSet<DependenteCliente> DependentesClientes { get; set; }
+        #endregion CLIENTES
 
-        public DbSet<Decoracao> Decoracoes { get; set; }
-        public DbSet<TemaAniversario> TemasAniversarios { get; set; }
-        public DbSet<TipoEvento> TiposEventos { get; set; }
+            #region DECORACOES
+                public DbSet<Decoracao> Decoracoes { get; set; }
+                public DbSet<TemaAniversario> TemasAniversarios { get; set; }
+                public DbSet<TipoEvento> TiposEventos { get; set; }
+        #endregion DECORACOES
 
-        public DbSet<Estado> Estados { get; set; }
-        public DbSet<Municipio> Municipios { get; set; }
-        public DbSet<Bairro> Bairros { get; set; }
-        public DbSet<Logradouro> Logradouros { get; set; }
-        public DbSet<Cep> Ceps { get; set; }
-        public DbSet<TipoLogradouro> TiposLogradouros { get; set; }
-        public DbSet<EnderecoCliente> EnderecosClientes { get; set; }
-        public DbSet<EnderecoEvento> EnderecosEventos { get; set; }
-        public DbSet<TipoEnderecoCliente> TiposEnderecosClientes { get; set; }
-        public DbSet<TipoEnderecoEvento> TiposEnderecosEventos { get; set; }
+            #region ENDERECOS
+                public DbSet<Estado> Estados { get; set; }
+                public DbSet<Municipio> Municipios { get; set; }
+                public DbSet<Bairro> Bairros { get; set; }
+                public DbSet<Logradouro> Logradouros { get; set; }
+                public DbSet<Cep> Ceps { get; set; }
+                public DbSet<TipoLogradouro> TiposLogradouros { get; set; }
+                public DbSet<EnderecoCliente> EnderecosClientes { get; set; }
+                public DbSet<EnderecoEvento> EnderecosEventos { get; set; }
+                public DbSet<TipoEnderecoCliente> TiposEnderecosClientes { get; set; }
+                public DbSet<TipoEnderecoEvento> TiposEnderecosEventos { get; set; }
+        #endregion ENDERECOS
 
-        public DbSet<Flor> Flores{ get; set; }
-        public DbSet<Item> Itens{ get; set; }
-        public DbSet<TipoItem> TiposItens { get; set; }
+            #region ITENS
+                public DbSet<Flor> Flores{ get; set; }
+                public DbSet<Item> Itens{ get; set; }
+                public DbSet<TipoItem> TiposItens { get; set; }
+        #endregion ITENS
 
-        public DbSet<DecoracaoCustos> DecoracoesCustos { get; set; }
-        public DbSet<DecoracaoPagamento> DecoracoesPagamentos { get; set; }
-        public DbSet<FormaPagamento> FormasPagamentos { get; set; }
-        public DbSet<TaxaParcelamento> TaxasParcelamentos { get; set; }
+            #region DECORACOES
+                public DbSet<DecoracaoCustos> DecoracoesCustos { get; set; }
+                public DbSet<DecoracaoPagamento> DecoracoesPagamentos { get; set; }
+                public DbSet<FormaPagamento> FormasPagamentos { get; set; }
+                public DbSet<TaxaParcelamento> TaxasParcelamentos { get; set; }
+        #endregion DECORACOES
 
-        public DbSet<Carro> Carros { get; set; }
-        public DbSet<Cor> Cores { get; set; }
-        public DbSet<CustoCombustivel> CustosCombustiveis { get; set; }
-        public DbSet<Genero> Generos { get; set; }
-        public DbSet<Tamanho> Tamanhos { get; set; }
-        public DbSet<TipoCombustivel> TiposCombustiveis { get; set; }
-
-
+            #region GERAIS
+                public DbSet<Carro> Carros { get; set; }
+                public DbSet<Cor> Cores { get; set; }
+                public DbSet<CustoCombustivel> CustosCombustiveis { get; set; }
+                public DbSet<Genero> Generos { get; set; }
+                public DbSet<Tamanho> Tamanhos { get; set; }
+                public DbSet<TipoCombustivel> TiposCombustiveis { get; set; }
+            #endregion GERAIS
 
         #endregion TABELAS
 
@@ -77,7 +89,7 @@ namespace TaniaDecoracoes.Entities.Data.Contexto
 
                 optionsBuilder
                     .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
-                    .EnableDetailedErrors(); ;
+                    .EnableDetailedErrors();
             }
         }
     }

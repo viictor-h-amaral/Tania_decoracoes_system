@@ -13,8 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TaniaDecoracoes.Entities.Models.Associacao;
+using TaniaDecoracoes.EntitiesLibrary.DataTransferObjects.TabelasGerais;
 using TaniaDecoracoes.EntitiesLibrary.Entities.Associacao;
 using TaniaDecoracoes.EntitiesLibrary.Entities.TabelasGerais;
+using TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes;
+using TaniaDecoracoes.WPFLibrary.Utils;
+using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
 
 namespace TaniaDecoracoes.WPFApp.Pages.Decoracoes
 {
@@ -27,7 +31,7 @@ namespace TaniaDecoracoes.WPFApp.Pages.Decoracoes
         {
             InitializeComponent();
 
-            DecoracoesList.ItemsSource = TamanhoEntity.GetMany();
+            this.DataContext = new DecoracoesMainPageViewModel();
 
         }
     }

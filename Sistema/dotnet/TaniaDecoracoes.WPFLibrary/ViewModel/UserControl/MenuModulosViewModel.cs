@@ -8,7 +8,7 @@ using TaniaDecoracoes.WPFLibrary.Utils;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
-    public class MenuModulosViewModel :ViewModelBase
+    public class MenuModulosViewModel : ViewModelBase
     {
         private string _moduloSelecionado = "_ModuloHome";
         public string ModuloSelecionado

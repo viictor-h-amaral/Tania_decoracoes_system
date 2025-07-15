@@ -33,7 +33,6 @@
     <Folder Include="Pages\Calendário\" />
     <Folder Include="Pages\TabelasGerais\" />
     <Folder Include="Pages\Pagamentos\" />
-    <Folder Include="ViewModel\Pages\" />
   </ItemGroup>
 
 </Project>

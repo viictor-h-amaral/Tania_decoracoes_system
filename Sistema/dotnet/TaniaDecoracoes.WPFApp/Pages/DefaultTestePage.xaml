@@ -9,6 +9,6 @@
       Title="DefaultTestePage">
 
     <Grid Background="DarkBlue">
-        
+        <Label Content="Texto" Foreground="White" FontSize="200"/>
     </Grid>
 </Page>

@@ -23,6 +23,6 @@ namespace TaniaDecoracoes.EntitiesLibrary.DataTransferObjects.TabelasGerais
 
         public int Id { get; set; }
 
-        public required string Valor { get; set; }
+        public string? Valor { get; set; }
     }
 }

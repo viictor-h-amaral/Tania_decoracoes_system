@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Page Remove="Styles\CommonGridStyle.xaml" />
     <Page Remove="Styles\ConfirmationButtonStyle.xaml" />
   </ItemGroup>
 
@@ -18,6 +19,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\logo.png" />
+    <Resource Include="Styles\CommonGridStyle.xaml" />
     <Resource Include="Styles\ConfirmationButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>

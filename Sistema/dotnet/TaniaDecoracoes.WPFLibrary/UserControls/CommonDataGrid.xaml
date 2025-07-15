@@ -7,6 +7,51 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label x:Name="Titulo" Content="{Binding Titulo}"/>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/GridButtonsStyle.xaml" />
+                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/CommonGridStyle.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="Titulo" 
+                   Grid.Row="0" 
+                   Text="{Binding Titulo}"
+                   FontSize="16"
+                   FontFamily="Quicksand"
+                   FontWeight="SemiBold"/>
+
+        <DataGrid x:Name="MainGrid" 
+                  Grid.Row="1"
+                  Style="{StaticResource CommonDataGridTemplate}"
+                  ItemsSource="{Binding Items}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  AutoGenerateColumns="False">
+
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Width="Auto">
+            <Button x:Name="gridBtnVoltar"
+                Style="{StaticResource GridButtonsStyle}"
+                Tag="&#xf060;"
+                Width="Auto"
+                Margin="5"
+                Command="{Binding VoltarCommand}"/>
+
+            <Button x:Name="gridBtnAvancar"
+                Style="{StaticResource GridButtonsStyle}"
+                Tag="&#xf061;"
+                Margin="5"
+                Width="Auto"
+                Command="{Binding AvancarCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

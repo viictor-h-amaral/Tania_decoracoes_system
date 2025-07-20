@@ -25,9 +25,11 @@
         <TextBlock x:Name="Titulo" 
                    Grid.Row="0" 
                    Text="{Binding Titulo}"
-                   FontSize="16"
+                   FontSize="35"
+                   Margin="10"
                    FontFamily="Quicksand"
-                   FontWeight="SemiBold"/>
+                   FontWeight="SemiBold"
+                   Foreground="#7A3A5C"/>
 
         <DataGrid x:Name="MainGrid" 
                   Grid.Row="1"
@@ -35,7 +37,6 @@
                   ItemsSource="{Binding Items}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   AutoGenerateColumns="False">
-
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Width="Auto">

@@ -15,10 +15,21 @@ namespace TaniaDecoracoes.EntitiesLibrary
         {
             using (var context = new TaniaDecoracoesDbContext())
             {
-                var registros = predicado is null ?
+                try
+                {
+                    var registros = predicado is null ?
                         context.Set<T>().ToList()
                         : context.Set<T>().Where(predicado).ToList();
-                return registros;
+                    return registros;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                }
+                finally 
+                {
+                    context.Dispose();
+                }
             }
         }
 
@@ -32,10 +43,68 @@ namespace TaniaDecoracoes.EntitiesLibrary
         {
             using (var context = new TaniaDecoracoesDbContext())
             {
-                var registro = predicado is null ?
-                        context.Set<T>().FirstOrDefault()
-                        : context.Set<T>().FirstOrDefault(predicado);
-                return registro;
+                try
+                {
+                    var registro = predicado is null ?
+                                            context.Set<T>().FirstOrDefault()
+                                            : context.Set<T>().FirstOrDefault(predicado);
+                    return registro;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                }
+                finally 
+                {
+                    context.Dispose();
+                }
+
+            }
+        }
+
+
+        /// <summary>
+        /// Salva a entidade do tipo <typeparamref name="T"/> no banco.
+        /// </summary>
+        /// <param name="entity">Parâmetro obrigatório à entidade do tipo <typeparamref name="T"/> a ser salva.</param>
+        /// <returns>O primeiro registro na forma de elementos do tipo <typeparamref name="T"/> que satisfaz o critério passado como parâmetro. Retorna <see langword="null"/> Se nenhum registro for encontrado.</returns>
+        public static bool Save(T entity)
+        {
+            using (var context = new TaniaDecoracoesDbContext())
+            {
+                try
+                {
+                    context.Set<T>().Add(entity);
+                    return context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                }
+                finally 
+                {
+                    context.Dispose();
+                }
+            }
+        }
+
+        public static bool Delete(T entity)
+        {
+            using (var context = new TaniaDecoracoesDbContext())
+            {
+                try
+                {
+                    context.Set<T>().Remove(entity);
+                    return context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                }
+                finally 
+                {
+                    context.Dispose();
+                }
             }
         }
     }

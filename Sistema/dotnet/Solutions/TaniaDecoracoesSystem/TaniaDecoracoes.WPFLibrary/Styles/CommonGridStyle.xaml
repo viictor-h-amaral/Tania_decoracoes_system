@@ -1,12 +1,23 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <SolidColorBrush x:Key="CommonGrid.Background" Color="#F8D7E6"/>
+    <SolidColorBrush x:Key="CommonGrid.BorderBrush" Color="#8A446C"/>
+
+    <SolidColorBrush x:Key="GridButton.MouseOver.Background" Color="#F0B6D1"/>
+    <SolidColorBrush x:Key="GridButton.MouseOver.Foreground" Color="#7A3A5C"/>
+
+    <SolidColorBrush x:Key="GridButton.Pressed.Background" Color="#7A3A5C"/>
+    <SolidColorBrush x:Key="CommonGrid.Foreground" Color="#7A3A5C"/>
+
     <Style x:Key="CommonDataGridTemplate" TargetType="{x:Type DataGrid}">
         <!-- Propriedades básicas -->
-        <Setter Property="Background" Value="#FF2D2D30"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="BorderBrush" Value="#FF5E5E5E"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{StaticResource CommonGrid.Background}"/>
+        <Setter Property="Foreground" Value="{StaticResource CommonGrid.Foreground}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CommonGrid.Background}"/>
+        <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
@@ -15,7 +26,7 @@
         <Setter Property="SelectionUnit" Value="FullRow"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
         <Setter Property="RowHeight" Value="28"/>
-        <Setter Property="ColumnHeaderHeight" Value="32"/>
+        <Setter Property="ColumnHeaderHeight" Value="60"/>
         <Setter Property="GridLinesVisibility" Value="None"/>
 
         <!-- Template principal -->
@@ -26,8 +37,9 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Background="{TemplateBinding Background}"
                         Padding="{TemplateBinding Padding}"
-                        SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false">
+                        SnapsToDevicePixels="True"
+                        CornerRadius="10">
+                        <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false" HorizontalScrollBarVisibility="Auto">
                             <ScrollViewer.Template>
                                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
                                     <Grid>
@@ -90,15 +102,20 @@
             <Setter.Value>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="{StaticResource CommonGrid.Foreground}"/>
                     <Setter Property="SnapsToDevicePixels" Value="true"/>
+                    <Setter Property="Height" Value="Auto"/>
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="Margin" Value="5"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type DataGridRow}">
                                 <Border x:Name="DGR_Border"
                                     Background="{TemplateBinding Background}"
-                                    BorderThickness="0,0,0,1"
-                                    BorderBrush="#FF252526"
-                                    SnapsToDevicePixels="True">
+                                    BorderThickness="0,0,0,0"
+                                    BorderBrush="Transparent"
+                                    SnapsToDevicePixels="True"
+                                    CornerRadius="4">
                                     <SelectiveScrollingGrid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -112,13 +129,13 @@
                                         <!-- Indicador de seleção -->
                                         <Rectangle x:Name="DGR_SelectionBackground"
                                               Grid.ColumnSpan="2"
-                                              Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
                                               Opacity="0"/>
 
                                         <!-- Células -->
                                         <DataGridCellsPresenter Grid.Column="1"
                                                             ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                            Height="50"/>
 
                                         <!-- Detalhes da linha -->
                                         <DataGridDetailsPresenter Grid.Column="1"
@@ -136,17 +153,30 @@
                                               Width="6"
                                               Fill="Red"
                                               Visibility="Collapsed"/>
+
+                                        
+
                                     </SelectiveScrollingGrid>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="DGR_SelectionBackground" Property="Opacity" Value="1"/>
+                                        <!--Setter TargetName="DGR_SelectionBackground" Property="Opacity" Value="1"-->
+                                        <Setter Property="Background" Value="{StaticResource CommonGrid.Foreground}"/>
+                                        <Setter Property="Foreground" Value="{StaticResource CommonGrid.Background}"/>
                                     </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#FF53535A"/>
+                                    <Trigger Property="IsKeyboardFocusWithin" Value="False">
+                                        <!--Setter TargetName="DGR_SelectionBackground" Property="Opacity" Value="1"-->
+                                        <Setter Property="IsSelected" Value="False"/>
                                     </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsMouseOver" Value="True"/>
+                                            <Condition Property="IsSelected" Value="False"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Background" Value="White"/>
+                                    </MultiTrigger>
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                        <Setter Property="Foreground" Value="{StaticResource CommonGrid.Background}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -161,15 +191,17 @@
             <Setter.Value>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="BorderBrush" Value="#FF5E5E5E"/>
-                    <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    <Setter Property="Height" Value="Auto"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type DataGridCell}">
-                                <Border Background="{TemplateBinding Background}"
+                                <Border Background="Transparent"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    SnapsToDevicePixels="True">
+                                    SnapsToDevicePixels="True"
+                                        Height="Auto">
                                     <ContentPresenter VerticalAlignment="Center" Margin="10,0,10,0"/>
                                 </Border>
                             </ControlTemplate>
@@ -183,23 +215,27 @@
         <Setter Property="ColumnHeaderStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="Background" Value="#FF252526"/>
-                    <Setter Property="Foreground" Value="White"/>
-                    <Setter Property="BorderBrush" Value="#FF5E5E5E"/>
+                    <Setter Property="Background" Value="{StaticResource CommonGrid.Background}"/>
+                    <Setter Property="Foreground" Value="{StaticResource CommonGrid.Foreground}"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource CommonGrid.BorderBrush}"/>
                     <Setter Property="BorderThickness" Value="0,0,1,1"/>
-                    <Setter Property="Padding" Value="10,0,10,0"/>
+                    <Setter Property="Padding" Value="15,0,15,0"/>
+                    <Setter Property="Margin" Value="5,15,5,15"/>
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                    <Setter Property="Height" Value="32"/>
+                    <Setter Property="Height" Value="40"/>
                     <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="FontFamily" Value="Quicksand"/>
+                    <Setter Property="FontSize" Value="20"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                                 <Grid>
                                     <Border x:Name="HeaderBorder"
                                         Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderBrush="Transparent"
                                         BorderThickness="{TemplateBinding BorderThickness}"
-                                        SnapsToDevicePixels="True">
+                                        SnapsToDevicePixels="True"
+                                        CornerRadius="10">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>

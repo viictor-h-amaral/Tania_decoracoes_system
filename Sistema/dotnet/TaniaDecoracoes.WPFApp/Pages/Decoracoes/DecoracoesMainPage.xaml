@@ -22,7 +22,7 @@
 
 
         <userControls:CommonDataGrid 
-            Margin="20" 
+            Margin="100" 
             DataContext="{Binding DataGridVM}" 
             ColumnsSource="{Binding DataGridColumns}"/>
     </Grid>

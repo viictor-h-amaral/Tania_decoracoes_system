@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Clientes\" />
-    <Folder Include="Entities\Decoracoes\" />
-    <Folder Include="Entities\Enderecos\" />
-    <Folder Include="Entities\Itens\" />
-    <Folder Include="Entities\Pagamentos\" />
+    <Folder Include="DataAcessObjects\Clientes\" />
+    <Folder Include="DataAcessObjects\Decoracoes\" />
+    <Folder Include="DataAcessObjects\Enderecos\" />
+    <Folder Include="DataAcessObjects\Itens\" />
+    <Folder Include="DataAcessObjects\Pagamentos\" />
   </ItemGroup>
 
 </Project>

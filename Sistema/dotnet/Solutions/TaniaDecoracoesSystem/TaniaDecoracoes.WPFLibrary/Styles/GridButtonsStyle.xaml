@@ -13,22 +13,22 @@
         </Setter>
     </Style>
 
-    <SolidColorBrush x:Key="ModuloButton.Static.Background" Color="#F8D7E6"/>
-    <SolidColorBrush x:Key="ModuloButton.Static.Foreground" Color="#8A446C"/>
+    <SolidColorBrush x:Key="GridButton.Static.Background" Color="#F8D7E6"/>
+    <SolidColorBrush x:Key="GridButton.Static.Foreground" Color="#8A446C"/>
 
-    <SolidColorBrush x:Key="ModuloButton.MouseOver.Background" Color="#F0B6D1"/>
-    <SolidColorBrush x:Key="ModuloButton.MouseOver.Foreground" Color="#7A3A5C"/>
+    <SolidColorBrush x:Key="GridButton.MouseOver.Background" Color="#F0B6D1"/>
+    <SolidColorBrush x:Key="GridButton.MouseOver.Foreground" Color="#7A3A5C"/>
 
-    <SolidColorBrush x:Key="ModuloButton.Pressed.Background" Color="#7A3A5C"/>
-    <SolidColorBrush x:Key="ModuloButton.Pressed.Foreground" Color="White"/>
+    <SolidColorBrush x:Key="GridButton.Pressed.Background" Color="#7A3A5C"/>
+    <SolidColorBrush x:Key="GridButton.Pressed.Foreground" Color="White"/>
 
-    <SolidColorBrush x:Key="ModuloButton.Disabled.Background" Color="#B5B5B5"/>
-    <SolidColorBrush x:Key="ModuloButton.Disabled.Foreground" Color="#606060"/>
+    <SolidColorBrush x:Key="GridButton.Disabled.Background" Color="#B5B5B5"/>
+    <SolidColorBrush x:Key="GridButton.Disabled.Foreground" Color="#606060"/>
 
     <Style x:Key="GridButtonsStyle" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-        <Setter Property="Background" Value="{StaticResource ModuloButton.Static.Background}"/>
-        <Setter Property="Foreground" Value="{StaticResource ModuloButton.Static.Foreground}"/>
+        <Setter Property="Background" Value="{StaticResource GridButton.Static.Background}"/>
+        <Setter Property="Foreground" Value="{StaticResource GridButton.Static.Foreground}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -67,18 +67,18 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="{StaticResource ModuloButton.MouseOver.Background}"/>
-                            <Setter Property="TextElement.Foreground" Value="{StaticResource ModuloButton.MouseOver.Foreground}"/>
+                            <Setter Property="Background" Value="{StaticResource GridButton.MouseOver.Background}"/>
+                            <Setter Property="TextElement.Foreground" Value="{StaticResource GridButton.MouseOver.Foreground}"/>
                             <Setter Property="TextElement.FontWeight" Value="Bold"/>
-                            <Setter Property="TextElement.Foreground" Value="{StaticResource ModuloButton.MouseOver.Foreground}"/>
+                            <Setter Property="TextElement.Foreground" Value="{StaticResource GridButton.MouseOver.Foreground}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ModuloButton.Pressed.Background}"/>
-                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource ModuloButton.Pressed.Foreground}"/>
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource GridButton.Pressed.Background}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource GridButton.Pressed.Foreground}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="border" Value="{StaticResource ModuloButton.Disabled.Background}"/>
-                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource ModuloButton.Disabled.Foreground}"/>
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource GridButton.Disabled.Background}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="Icon" Value="{StaticResource GridButton.Disabled.Foreground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

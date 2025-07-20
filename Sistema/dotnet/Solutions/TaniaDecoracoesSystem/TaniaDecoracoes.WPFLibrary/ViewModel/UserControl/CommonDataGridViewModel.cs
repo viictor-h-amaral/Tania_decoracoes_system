@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System.CodeDom;
+using System.Collections;
 using System.Collections.ObjectModel;
+using System.Net.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using TaniaDecoracoes.EntitiesLibrary;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.Utils.Interfaces;
 
@@ -53,15 +56,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             OnPropertyChanged(nameof(DataGridColumns));
         }
 
-        public void AddColumns(ObservableCollection<DataGridColumn> columns)
-        {
-            foreach (var column in columns) 
-            { 
-                this.AddColumn(column);
-            }
-            OnPropertyChanged(nameof(DataGridColumns));
-        }
-
         public void AddColumns(params DataGridColumn[] columns)
         {
             foreach (var column in columns)
@@ -71,86 +65,53 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             OnPropertyChanged(nameof(DataGridColumns));
         }
 
-        public void AddActionColumns()
+        public void AddActionColumn(bool addDefaultButtons, params ActionGridButton[]? buttons)
         {
+            var cellTemplate = CreateActionButtonsTemplate(addDefaultButtons, buttons);
+
+            if (cellTemplate is null)
+                return;
+
             var column = new DataGridTemplateColumn
             {
                 Header = "Ações",
                 Width = DataGridUnits.GridLengthAuto,
                 IsReadOnly = true,
-                CellTemplate = CreateActionButtonsTemplate()
+                CellTemplate = cellTemplate
             };
             DataGridColumns.Add(column);
             OnPropertyChanged(nameof(DataGridColumns));
         }
 
-        public void AddActionColumns(params DataGridColumn[] buttons)
-        {
-            var column = new DataGridTemplateColumn
-            {
-                Header = "Ações",
-                Width = DataGridUnits.GridLengthAuto,
-                IsReadOnly = true,
-                CellTemplate = CreateActionButtonsTemplate()
-            };
-            DataGridColumns.Add(column);
-            OnPropertyChanged(nameof(DataGridColumns));
-        }
-
-        private DataTemplate CreateActionButtonsTemplate()
+        private static DataTemplate? CreateActionButtonsTemplate(bool addDefaultButtons, params ActionGridButton[]? buttons)
         {
             var factory = new FrameworkElementFactory(typeof(StackPanel));
             factory.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
             factory.SetValue(StackPanel.HorizontalAlignmentProperty, HorizontalAlignment.Center);
             factory.SetValue(StackPanel.VerticalAlignmentProperty, VerticalAlignment.Center);;
 
-            var editButton = ActionGridButton.EditButton;
-            var deleteButton = ActionGridButton.DeleteButton;
+            var buttonsList = new List<FrameworkElementFactory>();
 
-            factory.AppendChild(editButton);
-            factory.AppendChild(deleteButton);
-
-            return new DataTemplate { VisualTree = factory };
-        }
-
-        private DataTemplate CreateActionButtonsTemplate(params IActionGridButton[] buttons)
-        {
-            ResourceDictionary _resourceDictionary = new ResourceDictionary
+            if (addDefaultButtons)
             {
-                Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFLibrary;component/Styles/RowGridButtonsStyle.xaml", UriKind.Absolute)
-            };
+                buttonsList.Add(ActionGridButton.EditButton);
+                buttonsList.Add(ActionGridButton.DeleteButton);
+                buttonsList.Add(ActionGridButton.ViewButton);
+            }
 
-            var factory = new FrameworkElementFactory(typeof(StackPanel));
-            factory.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
-            factory.SetValue(StackPanel.HorizontalAlignmentProperty, HorizontalAlignment.Center);
-
-            // Botão Editar
-            var editButton = new FrameworkElementFactory(typeof(Button));
-            editButton.SetValue(Button.TagProperty, "\uf044");
-            editButton.SetValue(Button.StyleProperty, (Style)_resourceDictionary["RowGridButton"]);
-
-            editButton.SetValue(Button.CursorProperty, Cursors.Hand);
-            editButton.SetValue(Button.IsHitTestVisibleProperty, true);
-            editButton.SetValue(Button.FocusableProperty, true);
-            editButton.SetBinding(Button.CommandProperty, new Binding("DataContext.EditCommand")
+            foreach (var button in buttons ?? [])
             {
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(DataGrid), 1)
-            });
-            editButton.SetBinding(Button.CommandParameterProperty, new Binding("."));
+                var buttonFactory = button.ToFrameworkElement();
+                buttonsList.Add(buttonFactory);
+            }
 
-            /* Botão Excluir
-            var deleteButton = new FrameworkElementFactory(typeof(Button));
-            deleteButton.SetValue(Button.ContentProperty, "Excluir");
-            //deleteButton.SetValue(Button.StyleProperty, Application.Current.FindResource("ActionButtonStyle"));
-            deleteButton.SetValue(Button.MarginProperty, new Thickness(5, 0, 5, 0));
-            deleteButton.SetBinding(Button.CommandProperty, new Binding("DataContext.DeleteCommand")
+            if (buttonsList.Count == 0)
+                return null;
+
+            foreach (var buttonFactory in buttonsList)
             {
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(DataGrid), 1)
-            });
-            deleteButton.SetBinding(Button.CommandParameterProperty, new Binding("."));*/
-
-            factory.AppendChild(editButton);
-            //factory.AppendChild(deleteButton);
+                factory.AppendChild(buttonFactory);
+            }
 
             return new DataTemplate { VisualTree = factory };
         }
@@ -183,47 +144,42 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             set => SetProperty(ref _deleteCommand, value);
         }
 
+        private ICommand _viewCommand;
+        public ICommand ViewCommand
+        {
+            get => _viewCommand;
+            set => SetProperty(ref _viewCommand, value);
+        }
+
         #endregion COMANDOS
 
-        #region CONSTRUTORES
+        #region CONSTRUTOR
 
-        public CommonDataGridViewModel()
-        {
-            EditCommand = new RelayCommand<object>(registro =>
-            {
-                var idProperty = registro.GetType().GetProperty("Id");
-                this.Titulo = $"Edit command executed: {idProperty.GetValue(registro)}";
-
-            });
-
-            DeleteCommand = new RelayCommand<object>(registro =>
-            {
-                var valorProperty = registro.GetType().GetProperty("Valor");
-                this.Titulo = $"Delete command executed: {valorProperty.GetValue(registro)}";
-            });
-        }
-
-        public CommonDataGridViewModel(ObservableCollection<DataGridColumn> columns)
-        {
-            this.AddColumns(columns);
-            EditCommand = new RelayCommand<object>(registro =>
-            {
-                var idProperty = registro.GetType().GetProperty("Id");
-                this.Titulo = $"Edit command executed: {idProperty.GetValue(registro)}";
-
-            });
-
-            DeleteCommand = new RelayCommand<object>(registro =>
-            {
-                var valorProperty = registro.GetType().GetProperty("Valor");
-                this.Titulo = $"Delete command executed: {valorProperty.GetValue(registro)}";
-            });
-        }
-
-        public CommonDataGridViewModel(IEnumerable itens, string titulo)
+        public CommonDataGridViewModel(IEnumerable itens, string titulo, bool? autoGenerateColumns = true)
         {
             Items = itens;
             Titulo = titulo;
+
+            if (autoGenerateColumns == true)
+            {
+                // Adiciona colunas automaticamente com base nas propriedades dos itens
+                var firstItem = Items.Cast<object>().FirstOrDefault();
+                if (firstItem != null)
+                {
+                    var properties = firstItem.GetType().GetProperties();
+                    foreach (var property in properties)
+                    {
+                        var column = new DataGridTextColumn
+                        {
+                            Header = property.Name,
+                            Binding = new Binding(property.Name),
+                            Width = DataGridUnits.GridLengthAuto
+                        };
+                        AddColumn(column);
+                    }
+                }
+            }
+
             EditCommand = new RelayCommand<object>(registro =>
             {
                 var idProperty = registro.GetType().GetProperty("Id");
@@ -232,29 +188,32 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
             DeleteCommand = new RelayCommand<object>(registro =>
             {
-                var valorProperty = registro.GetType().GetProperty("Valor");
-                this.Titulo = $"Delete command executed: {valorProperty.GetValue(registro)}";
-            });
-        }
+                var dialogService = new DialogService();
+                bool? dialogResult = dialogService.ShowYesNoDialog(
+                    questionText: "Apagar o registro?",
+                    yesButtonText: "Sim",
+                    noButtonText: "Não",
+                    useAlternativeNoButtonStyle: false
+                );
+                if (dialogResult != null && dialogResult == false)
+                    return;
 
-        public CommonDataGridViewModel(IEnumerable itens, string titulo, ObservableCollection<DataGridColumn> columns)
-        {
-            Items = itens;
-            Titulo = titulo;
-            this.AddColumns(columns);
-            EditCommand = new RelayCommand<object>(registro =>
+                var objectType = registro.GetType();
+                var idProperty = objectType.GetProperty("Id");
+
+                var deleteMethod = typeof(EntityBase<>).MakeGenericType(objectType).GetMethod("Delete");
+
+                deleteMethod?.Invoke(null, [registro]);
+                OnPropertyChanged(nameof(Items));
+            });
+
+            ViewCommand = new RelayCommand<object>(registro =>
             {
                 var idProperty = registro.GetType().GetProperty("Id");
-                this.Titulo = $"Edit command executed: {idProperty.GetValue(registro)}";
-            });
-
-            DeleteCommand = new RelayCommand<object>(registro =>
-            {
-                var valorProperty = registro.GetType().GetProperty("Valor");
-                this.Titulo = $"Delete command executed: {valorProperty.GetValue(registro)}";
+                this.Titulo = $"View command executed: {idProperty.GetValue(registro)}";
             });
         }
 
-        #endregion CONSTRUTORES
+        #endregion CONSTRUTOR
     }
 }

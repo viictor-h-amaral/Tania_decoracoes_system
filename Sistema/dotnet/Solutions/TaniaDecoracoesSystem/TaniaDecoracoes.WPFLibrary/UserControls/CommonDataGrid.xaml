@@ -33,6 +33,7 @@
 
         <DataGrid x:Name="MainGrid" 
                   Grid.Row="1"
+                  Width="Auto"
                   Style="{StaticResource CommonDataGridTemplate}"
                   ItemsSource="{Binding Items}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"

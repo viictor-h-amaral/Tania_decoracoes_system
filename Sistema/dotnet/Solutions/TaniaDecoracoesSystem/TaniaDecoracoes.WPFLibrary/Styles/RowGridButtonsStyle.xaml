@@ -64,14 +64,17 @@
                     </Border>
                     
                     <ControlTemplate.Triggers>
+                        
                         <Trigger Property="IsPressed" Value="true">
                             <Setter Property="Foreground" Value="White"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                         </Trigger>
+                        
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Foreground" Value="{DynamicResource ActionButton.MouseOver.Foreground}"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                         </Trigger>
+                        
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{StaticResource ActionButton.Disabled.Foreground}"/>
                         </Trigger>
@@ -80,6 +83,16 @@
                             <Setter Property="Foreground" Value="{DynamicResource ActionButton.SelectedRow.Foreground}"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                         </DataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=IsSelected}" Value="True"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Foreground" Value="{DynamicResource ActionButton.Default.Foreground}"/>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
 
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

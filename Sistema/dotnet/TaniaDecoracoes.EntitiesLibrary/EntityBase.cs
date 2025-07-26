@@ -107,6 +107,27 @@ namespace TaniaDecoracoes.EntitiesLibrary
                 }
             }
         }
-        
+
+        /*public static bool Delete(int id)
+        {
+            using (var context = new TaniaDecoracoesDbContext())
+            {
+                try
+                {
+                    var entity = FirstOrDefault
+                    context.Set<T>().Remove(entity);
+                    return context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                }
+                finally
+                {
+                    context.Dispose();
+                }
+            }
+        }*/
+
     }
 }

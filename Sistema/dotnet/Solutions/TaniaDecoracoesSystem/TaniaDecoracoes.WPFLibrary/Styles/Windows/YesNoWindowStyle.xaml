@@ -12,7 +12,7 @@
                         <Grid.Resources>
                             <ResourceDictionary>
                                 <ResourceDictionary.MergedDictionaries>
-                                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/ConfirmationButtonStyle.xaml" />
+                                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/Buttons/ConfirmationButtonStyle.xaml" />
                                 </ResourceDictionary.MergedDictionaries>
                             </ResourceDictionary>
                         </Grid.Resources>

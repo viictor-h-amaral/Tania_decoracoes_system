@@ -93,7 +93,7 @@ namespace TaniaDecoracoes.WPFLibrary.Utils
 
         private static readonly ResourceDictionary _resourceDictionary = new ResourceDictionary
         {
-            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFLibrary;component/Styles/RowGridButtonsStyle.xaml", UriKind.Absolute)
+            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFLibrary;component/Styles/Buttons/RowGridButtonsStyle.xaml", UriKind.Absolute)
         };
 
         public static FrameworkElementFactory EditButton

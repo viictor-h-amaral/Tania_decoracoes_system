@@ -10,7 +10,7 @@
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/GridButtonsStyle.xaml" />
+                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/Buttons/GridButtonsStyle.xaml" />
                     <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/CommonGridStyle.xaml" />
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>

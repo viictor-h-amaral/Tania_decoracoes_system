@@ -37,7 +37,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.Windows
 
         private static readonly ResourceDictionary _resourceDictionary = new ResourceDictionary
         {
-            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFLibrary;component/Styles/ConfirmationButtonStyle.xaml", UriKind.Absolute)
+            Source = new Uri("pack://application:,,,/TaniaDecoracoes.WPFLibrary;component/Styles/Buttons/ConfirmationButtonStyle.xaml", UriKind.Absolute)
         };
 
         public ICommand YesCommand { get; }

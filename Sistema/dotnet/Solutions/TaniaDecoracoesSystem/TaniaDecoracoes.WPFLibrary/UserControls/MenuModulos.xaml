@@ -13,7 +13,7 @@
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/ModuloButtonsStyle.xaml" />
+                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/Buttons/ModuloButtonsStyle.xaml" />
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>

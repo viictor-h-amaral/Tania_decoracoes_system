@@ -19,11 +19,11 @@
         /// <summary>
         /// Coleção de carros associados a esse tipo de combustível
         /// </summary>
-        public ICollection<Carro>? Carros { get; set; }
+        public virtual ICollection<Carro>? Carros { get; set; }
 
         /// <summary>
         /// Coleção de custos de combustível associados a esse tipo de combustível
         /// </summary>
-        public ICollection<CustoCombustivel>? CustosCombustiveis { get; set; }
+        public virtual ICollection<CustoCombustivel>? CustosCombustiveis { get; set; }
     }
 }

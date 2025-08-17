@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaniaDecoracoes.WPFLibrary.Utils.Interfaces;
 
-namespace TaniaDecoracoes.WPFLibrary.Utils
+namespace TaniaDecoracoes.WPFLibrary.ViewModel
 {
     public abstract class ViewModelBase : IOnPropertyChanged
     {

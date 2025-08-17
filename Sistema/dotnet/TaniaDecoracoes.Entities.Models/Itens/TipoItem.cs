@@ -19,6 +19,6 @@
         /// <summary>
         /// Coleção de itens deste tipo de item
         /// </summary>
-        public ICollection<Item>? Itens { get; set; }
+        public virtual ICollection<Item>? Itens { get; set; }
     }
 }

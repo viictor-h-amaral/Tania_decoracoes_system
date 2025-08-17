@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
 
 namespace TaniaDecoracoes.WPFLibrary.UserControls
 {
@@ -20,9 +22,69 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
     /// </summary>
     public partial class CommonForm : UserControl
     {
+
+        public static readonly DependencyProperty ViewModelProperty =
+        DependencyProperty.Register("ViewModel", typeof(CommonForm), typeof(CommonForm),
+            new PropertyMetadata(null, OnViewModelChanged));
+
+        public CommonFormViewModel ViewModel
+        {
+            get => (CommonFormViewModel)GetValue(ViewModelProperty);
+            set => SetValue(ViewModelProperty, value);
+        }
+
+        private static void OnViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is CommonForm control)
+            {
+                control.UpdateDataContext();
+            }
+        }
+
+        private void UpdateDataContext()
+        {
+            // Mantemos o DataContext como o próprio UserControl para acessar a ViewModel via DP
+            // A ViewModel é exposta para binding interno via propriedade
+        }
+
         public CommonForm()
         {
             InitializeComponent();
+        }
+    }
+
+    public class FieldTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate StringTemplate { get; set; }
+        public DataTemplate BooleanTemplate { get; set; }
+        public DataTemplate NumericFieldTemplate { get; set; }
+        // Adicione templates para outros tipos conforme necessário
+
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        {
+            if (item is FormFieldViewModel field)
+            {
+                if (field.PropertyType == typeof(bool))
+                    return BooleanTemplate;
+
+                // Padrão para strings e outros tipos
+                return StringTemplate;
+            }
+
+            return base.SelectTemplate(item, container);
+        }
+    }
+
+    public class InverseBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !(value is bool && (bool)value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Convert(value, targetType, parameter, culture);
         }
     }
 }

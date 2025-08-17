@@ -19,6 +19,6 @@
         /// <summary>
         /// Coleção de endereços de clientes deste tipo de endereço
         /// </summary>
-        public ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
+        public virtual ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
     }
 }

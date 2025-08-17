@@ -6,7 +6,7 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
     /// <summary>
     /// Classe referente aos dependentes dos clientes
     /// </summary>
-    public class DependenteCliente
+    public partial class DependenteCliente
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados
@@ -34,7 +34,7 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// <summary>
         /// Instância do cliente responsável pelo dependente
         /// </summary>
-        public required Cliente ResponsavelInstance { get; set; }
+        public virtual required Cliente ResponsavelInstance { get; set; }
 
         /// <summary>
         /// Retorna o Id do registro do gênero do dependente
@@ -45,12 +45,12 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// <summary>
         /// Instância do gênero do dependente
         /// </summary>
-        public required Genero GeneroInstance { get; set; }
+        public virtual required Genero GeneroInstance { get; set; }
 
 
         /// <summary>
         /// Retorna a lista de decorações associadas a este dependente
         /// </summary>
-        public ICollection<Decoracao>? Decoracoes { get; set; }
+        public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

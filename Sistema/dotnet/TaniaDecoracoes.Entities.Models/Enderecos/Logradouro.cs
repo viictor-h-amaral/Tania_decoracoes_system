@@ -19,7 +19,7 @@
         /// <summary>
         /// Instância do bairro associado ao logradouro
         /// </summary>
-        public required Bairro BairroInstance { get; set; }
+        public virtual required Bairro BairroInstance { get; set; }
 
         /// <summary>
         /// Retorna o nome do logradouro
@@ -36,21 +36,21 @@
         /// <summary>
         /// Instância do tipo de logradouro
         /// </summary>
-        public TipoLogradouro? TipoLogradouroInstance { get; set; }
+        public virtual TipoLogradouro? TipoLogradouroInstance { get; set; }
 
         /// <summary>
         /// Coleção de CEPs associados a este logradouro
         /// </summary>
-        public ICollection<Cep>? Ceps { get; set; }
+        public virtual ICollection<Cep>? Ceps { get; set; }
 
         /// <summary>
         /// Coleção de endereços de clientes associados a este logradouro
         /// </summary>
-        public ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
+        public virtual ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
 
         /// <summary>
         /// Coleção de endereços de eventos associados a este logradouro
         /// </summary>
-        public ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
+        public virtual ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
     }
 }

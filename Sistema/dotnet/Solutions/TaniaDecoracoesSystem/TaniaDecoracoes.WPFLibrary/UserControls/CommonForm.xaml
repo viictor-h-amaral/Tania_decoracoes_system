@@ -6,6 +6,37 @@
              xmlns:local="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        
+        <DataTemplate x:Key="StringFieldTemplate">
+
+            <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="{Binding IsReadOnly}"
+                     Margin="0,2"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="BooleanFieldTemplate">
+            <CheckBox IsChecked="{Binding Value, Mode=TwoWay}" Margin="0,2"/>
+            <!--IsEnabled="{Binding IsReadOnly 
+                , Converter={StaticResource InverseBooleanConverter}}"-->
+                      
+        </DataTemplate>
+
+        <DataTemplate x:Key="NumericFieldTemplate">
+            <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsReadOnly="{Binding IsReadOnly}"
+                         Margin="0,2"
+                         HorizontalAlignment="Stretch"/>
+        </DataTemplate>
+
+        <local:FieldTemplateSelector x:Key="FieldTemplateSelector"
+                    StringTemplate="{StaticResource StringFieldTemplate}"
+                    BooleanTemplate="{StaticResource BooleanFieldTemplate}"/>
+
+    </UserControl.Resources>
+    
+    
     <Grid>
 
         <Grid.Resources>
@@ -54,7 +85,17 @@
             <ItemsControl ItemsSource="{Binding Fields}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBox Text="{Binding Value}" Margin="5" />
+
+                        <StackPanel Orientation="Vertical" Margin="0,5">
+                            <TextBlock Text="{Binding Label}" FontWeight="Bold"/>
+                            <!-- Aplicação do TemplateSelector aqui -->
+                            <ContentControl Content="{Binding}"
+                              ContentTemplateSelector="{StaticResource FieldTemplateSelector}"/>
+                            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" />
+                            <!-- Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}}"-->
+                        </StackPanel>
+
+                        <!-- <TextBox Text="{Binding Value}" Margin="5" /> -->
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

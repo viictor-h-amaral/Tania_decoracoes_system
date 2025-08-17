@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.Entities.Models.Decoracoes;
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Decoracoes;
 using TaniaDecoracoes.Entities.Models.Enderecos;
 using TaniaDecoracoes.Entities.Models.TabelasGerais;
 
@@ -7,11 +8,10 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
     /// <summary>
     /// Classe referente aos clientes 
     /// </summary>
-    public class Cliente
+    public partial class Cliente
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -42,23 +42,27 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// Retorna o Id do registro do gênero do cliente
         /// <para>Optional</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int? GeneroId { get; set; }
 
         /// <summary>
         /// Instncia do gênero do cliente
         /// </summary>
-        public Genero? GeneroInstance { get; set; }
+        public virtual Genero? GeneroInstance { get; set; }
 
         /// <summary>
         /// Retorna o Id do registro do endereço do cliente
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int EnderecoClienteId { get; set; }
 
         /// <summary>
-        /// Instâia do endereço do cliente
+        /// Instância do endereço do cliente
         /// </summary>
-        public required EnderecoCliente EnderecoClienteInstance {  get; set; }
+        public virtual required EnderecoCliente EnderecoClienteInstance {  get; set; }
 
         /// <summary>
         /// Retorna o telefone celular do cliente
@@ -76,11 +80,15 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// <summary>
         /// Retorna os dependentes do cliente
         /// </summary>
-        public ICollection<DependenteCliente>? DependentesClientes { get; set; }
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
+        public virtual ICollection<DependenteCliente>? DependentesClientes { get; set; }
 
         /// <summary>
         /// Retorna as decorações feitas para o cliente
         /// </summary>
-        public ICollection<Decoracao>? Decoracoes { get; set; }
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
+        public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

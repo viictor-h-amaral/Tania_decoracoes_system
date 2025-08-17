@@ -25,16 +25,16 @@
         /// <summary>
         /// Coleção de municípios do estado
         /// </summary>
-        public ICollection<Municipio>? Municipios { get; set; }
+        public virtual ICollection<Municipio>? Municipios { get; set; }
 
         /// <summary>
         /// Coleção de endereços de clientes do estado
         /// </summary>
-        public ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
+        public virtual ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
 
         /// <summary>
         /// Coleção de endereços de eventos do estado
         /// </summary>
-        public ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
+        public virtual ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
     }
 }

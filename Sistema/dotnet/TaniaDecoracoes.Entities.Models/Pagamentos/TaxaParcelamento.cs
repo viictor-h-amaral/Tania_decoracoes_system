@@ -43,6 +43,6 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         /// <summary>
         /// Coleção das formas de pagamentos associadas à essa taxa de parcelamento
         /// </summary>
-        public ICollection<FormaPagamento>? FormasPagamento { get; set; }
+        public virtual ICollection<FormaPagamento>? FormasPagamento { get; set; }
     }
 }

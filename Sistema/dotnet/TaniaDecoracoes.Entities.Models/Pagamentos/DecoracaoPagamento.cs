@@ -26,7 +26,7 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         /// <summary>
         /// Instância da decoração
         /// </summary>
-        public required Decoracao DecoracaoInstance { get; set; }
+        public virtual required Decoracao DecoracaoInstance { get; set; }
 
         /// <summary>
         /// Retorna o Id da forma de pagamento da entrada do pagamento da decoração
@@ -37,7 +37,7 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         /// <summary>
         /// Instância da forma de pagamento da entrada do pagamento da decoração
         /// </summary>
-        public required FormaPagamento FormaPagamentoEntradaInstance { get; set; }
+        public virtual required FormaPagamento FormaPagamentoEntradaInstance { get; set; }
 
         /// <summary>
         /// Retorna o valor da entrada do pagamento da decoração
@@ -60,7 +60,7 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         /// <summary>
         /// Instância da forma de pagamento do restante do pagamento da decoração
         /// </summary>
-        public required FormaPagamento FormaPagamentoRestanteInstance { get; set; }
+        public virtual required FormaPagamento FormaPagamentoRestanteInstance { get; set; }
 
         /// <summary>
         /// Retorna o valor do restante do pagamento da decoração

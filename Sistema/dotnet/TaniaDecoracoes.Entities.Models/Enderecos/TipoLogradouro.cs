@@ -18,6 +18,6 @@
         /// <summary>
         /// Coleção de logradouros tipo de logradouro
         /// </summary>
-        public ICollection<Logradouro>? Logradouros { get; set; }
+        public virtual ICollection<Logradouro>? Logradouros { get; set; }
     }
 }

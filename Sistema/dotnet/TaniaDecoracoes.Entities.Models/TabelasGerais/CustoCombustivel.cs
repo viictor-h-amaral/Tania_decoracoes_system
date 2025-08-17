@@ -19,7 +19,7 @@
         /// <summary>
         /// Instância do combustível que possui esse custo
         /// </summary>
-        public required TipoCombustivel CombustivelInstance { get; set; }
+        public virtual required TipoCombustivel CombustivelInstance { get; set; }
 
         /// <summary>
         /// Retorna o valor pago por litro do combustível

@@ -6,12 +6,8 @@ namespace TaniaDecoracoes.Entities.Models.Associacao
     /// <summary>
     /// Classe referente à associação entre decorações e itens
     /// </summary>
-    public class AssociacaoDecoracaoItens
+    public partial class AssociacaoDecoracaoItens
     {
-        /// <summary>
-        /// Retotorna o Id do registro no banco de dados
-        /// <para>Required</para>
-        /// </summary>
         public int Id { get; set; }
 
         /// <summary>
@@ -23,7 +19,7 @@ namespace TaniaDecoracoes.Entities.Models.Associacao
         /// <summary>
         /// Instância da decoração associada
         /// </summary>
-        public required Decoracao DecoracaoInstance { get; set; }
+        public virtual required Decoracao DecoracaoInstance { get; set; }
 
         /// <summary>
         /// Retorna o Id do registro do item associado
@@ -34,6 +30,6 @@ namespace TaniaDecoracoes.Entities.Models.Associacao
         /// <summary>
         /// Instância do item associado
         /// </summary>
-        public required Item ItemInstance { get; set; }
+        public virtual required Item ItemInstance { get; set; }
     }
 }

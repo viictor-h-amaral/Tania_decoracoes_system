@@ -27,11 +27,11 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Coleção de clientes associados a esse gênero
         /// </summary>
-        public ICollection<Cliente>? Clientes { get; set; }
+        public virtual ICollection<Cliente>? Clientes { get; set; }
 
         /// <summary>
         /// Coleção de dependentes de clientes
         /// </summary>
-        public ICollection<DependenteCliente>? DependentesClientes { get; set; }
+        public virtual ICollection<DependenteCliente>? DependentesClientes { get; set; }
     }
 }

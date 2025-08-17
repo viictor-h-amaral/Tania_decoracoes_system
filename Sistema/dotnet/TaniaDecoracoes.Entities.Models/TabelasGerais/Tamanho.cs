@@ -1,15 +1,18 @@
-﻿using TaniaDecoracoes.Entities.Models.Itens;
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Itens;
 
 namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 {
     /// <summary>
     /// Classe referente aos tamanhos
     /// </summary>
-    public class Tamanho
+    public partial class Tamanho
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -21,6 +24,8 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Coleção de itens associados a esse tamanho
         /// </summary>
-        public ICollection<Item>? Itens { get; set; }
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
+        public virtual ICollection<Item>? Itens { get; set; }
     }
 }

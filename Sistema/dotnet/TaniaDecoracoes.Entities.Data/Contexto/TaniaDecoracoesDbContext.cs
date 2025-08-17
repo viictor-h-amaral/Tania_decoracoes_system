@@ -89,6 +89,7 @@ namespace TaniaDecoracoes.Entities.Data.Contexto
 
                 optionsBuilder
                     .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+                    .UseLazyLoadingProxies()
                     .EnableDetailedErrors();
             }
         }

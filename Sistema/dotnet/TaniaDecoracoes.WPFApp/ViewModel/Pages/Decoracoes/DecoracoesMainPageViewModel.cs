@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore;
+using TaniaDecoracoes.Entities.Data.Contexto;
+using TaniaDecoracoes.Entities.Models.Decoracoes;
 using TaniaDecoracoes.Entities.Models.Itens;
-using TaniaDecoracoes.EntitiesLibrary;
-using TaniaDecoracoes.EntitiesLibrary.DataTransferObjects.TabelasGerais;
-using TaniaDecoracoes.EntitiesLibrary.Entities.TabelasGerais;
+using TaniaDecoracoes.Entities.Models.Itens.Tabelas;
+using TaniaDecoracoes.EntitiesLibrary.Entities.Itens;
 using TaniaDecoracoes.WPFLibrary.Utils;
+using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
+using TaniaDecoracoes.WPFLibrary.ViewModel;
 using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
 
 namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
 {
     public class DecoracoesMainPageViewModel : ViewModelBase
     {
+        private readonly DbContext _dbContext;
+
         private CommonDataGridViewModel? _dataGridVM;
         public CommonDataGridViewModel? DataGridVM
         {
@@ -25,18 +25,44 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             set => SetProperty(ref _dataGridVM, value);
         }
 
+        private CommonFormViewModel? _formVM;
+        public CommonFormViewModel? FormVM
+        {
+            get => _formVM;
+            set => SetProperty(ref _formVM, value);
+        }
+
         public DecoracoesMainPageViewModel()
         {
+            _dbContext = new TaniaDecoracoesDbContext();
+
+            var itemEntity = new ItemEntity(_dbContext);
+            var source = itemEntity.GetMany();
+
+            var gridConfig = new GridConfigObject(  source: new ItemTabela(),
+                                                    criterio: null,
+                                                    title: "Tamanhos",
+                                                    readOnly: true,
+                                                    autoGenerateColumns: true,
+                                                    maxItensPerPage: 10 ); 
+
             // Inicializa o ViewModel do DataGrid
-            var source = TamanhoEntity.GetMany().Select(t => new TamanhoDto(t));
-            DataGridVM = new CommonDataGridViewModel(itens:source, titulo:"Tamanhos") {};
+            DataGridVM = new CommonDataGridViewModel(gridConfig) { };
+
+            DataGridVM.AddColumns(
+                new DataGridTextColumn
+                {
+                    Header = "Tipo Item",
+                    Binding = new Binding("TipoItemInstance.Nome"),
+                    Width = DataGridLength.Auto
+                }
+            );
 
             var commandSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Page), 1);
-
-            var myButton = new ActionGridButton("\uf1ec", 
-                                                "Black", 
-                                                "Green", 
-                                                "Violet", 
+            var myButton = new ActionGridButton("\uf1ec",
+                                                "Black",
+                                                "Green",
+                                                "Violet",
                                                 "DataContext.MyCommandName",
                                                 commandSource);
 
@@ -55,6 +81,13 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                     useAlternativeNoButtonStyle: false
                 );
             });
+
+            //Inicializa o ViewModel do Formulário
+            FormVM = new CommonFormViewModel
+            {
+                Mode = FormMode.Create,
+                TypeObject = typeof(Decoracao)
+            };
         }
 
         private ICommand _myCommandName;

@@ -3,7 +3,7 @@
     /// <summary>
     /// Classe referente aos temas de aniversário
     /// </summary>
-    public class TemaAniversario
+    public partial class TemaAniversario
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados
@@ -19,6 +19,6 @@
         /// <summary>
         /// Decorações com este tema de aniversário
         /// </summary>
-        public ICollection<Decoracao>? Decoracoes { get; set; }
+        public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

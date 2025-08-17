@@ -22,11 +22,18 @@
             </ResourceDictionary>
         </Grid.Resources>
 
-
-        <userControls:CommonDataGrid
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            
+            <userControls:CommonDataGrid
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             DataContext="{Binding DataGridVM}" 
             ColumnsSource="{Binding DataGridColumns}"/>
+
+        <userControls:CommonForm
+            HorizontalAlignment="Center"
+            DataContext="{Binding FormVM}"
+            />
+        </StackPanel>
     </Grid>
 </Page>

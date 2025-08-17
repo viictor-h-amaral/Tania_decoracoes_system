@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using TaniaDecoracoes.WPFLibrary.Utils.Interfaces;
 
-namespace TaniaDecoracoes.WPFLibrary.Utils
+namespace TaniaDecoracoes.WPFLibrary.Utils.GridUtils
 {
     public class ActionGridButton : IActionGridButton
     {
@@ -59,7 +59,7 @@ namespace TaniaDecoracoes.WPFLibrary.Utils
             set => _commandSource = value;
         }
 
-        private string? _toolTip = String.Empty;
+        private string? _toolTip = string.Empty;
         public string? ToolTip
         {
             get => _toolTip;
@@ -76,7 +76,7 @@ namespace TaniaDecoracoes.WPFLibrary.Utils
             RowSelectedForegroundColor = (Color)ColorConverter.ConvertFromString(rowSelectedForegroundColor);
             CommandName = commandName;
             CommandSource = relativeSource;
-            ToolTip = tooltip ?? String.Empty;
+            ToolTip = tooltip ?? string.Empty;
         }
 
         public FrameworkElementFactory ToFrameworkElement()
@@ -182,23 +182,23 @@ namespace TaniaDecoracoes.WPFLibrary.Utils
                 })
             );
 
-            button.SetValue(Button.TagProperty, icone);
-            button.SetValue(Button.MarginProperty, new Thickness(2, 0, 2, 0));
-            button.SetValue(Button.StyleProperty, baseStyle);
+            button.SetValue(FrameworkElement.TagProperty, icone);
+            button.SetValue(FrameworkElement.MarginProperty, new Thickness(2, 0, 2, 0));
+            button.SetValue(FrameworkElement.StyleProperty, baseStyle);
 
-            button.SetValue(Button.CursorProperty, Cursors.Hand);
-            button.SetValue(Button.IsHitTestVisibleProperty, true);
-            button.SetValue(Button.FocusableProperty, true);
+            button.SetValue(FrameworkElement.CursorProperty, Cursors.Hand);
+            button.SetValue(UIElement.IsHitTestVisibleProperty, true);
+            button.SetValue(UIElement.FocusableProperty, true);
 
             if(!string.IsNullOrEmpty(toolTip))
-                button.SetValue(Button.ToolTipProperty, toolTip);
+                button.SetValue(FrameworkElement.ToolTipProperty, toolTip);
 
-            button.SetBinding(Button.CommandProperty, new Binding(commandName)
+            button.SetBinding(System.Windows.Controls.Primitives.ButtonBase.CommandProperty, new Binding(commandName)
             {
                 RelativeSource = commandSource
             });
 
-            button.SetBinding(Button.CommandParameterProperty, new Binding("."));
+            button.SetBinding(System.Windows.Controls.Primitives.ButtonBase.CommandParameterProperty, new Binding("."));
 
             return button;
         }

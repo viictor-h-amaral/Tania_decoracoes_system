@@ -42,16 +42,16 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         /// <summary>
         /// Instância da taxa de parcelamento da forma de pagamento
         /// </summary>
-        public TaxaParcelamento? TaxaParcelamentoInstance { get; set; }
+        public virtual TaxaParcelamento? TaxaParcelamentoInstance { get; set; }
 
         /// <summary>
         /// Coleção de entradas de pagamentos de decorações associadas com essa forma de pagamento
         /// </summary>
-        public ICollection<DecoracaoPagamento>? DecoracoesPagamentosEntradas { get; set; }
+        public virtual ICollection<DecoracaoPagamento>? DecoracoesPagamentosEntradas { get; set; }
 
         /// <summary>
         /// Coleção de pagamentos restantes de decorações associados com essa forma de pagamento
         /// </summary>
-        public ICollection<DecoracaoPagamento>? DecoracoesPagamentosRestante { get; set; }
+        public virtual ICollection<DecoracaoPagamento>? DecoracoesPagamentosRestante { get; set; }
     }
 }

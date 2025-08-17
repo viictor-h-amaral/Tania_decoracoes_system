@@ -17,7 +17,7 @@
         /// <summary>
         /// Instância do município do bairro
         /// </summary>
-        public required Municipio MunicipioInstance { get; set; }
+        public virtual required Municipio MunicipioInstance { get; set; }
         /// <summary>
         /// Retorna o Nome do bairro
         /// <para>Required</para>
@@ -27,14 +27,14 @@
         /// <summary>
         /// Logradouros associados a este bairro
         /// </summary>
-        public ICollection<Logradouro>? Logradouros { get; set; }
+        public virtual ICollection<Logradouro>? Logradouros { get; set; }
         /// <summary>
         /// Endereços de clientes associados a este bairro
         /// </summary>
-        public ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
+        public virtual ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
         /// <summary>
         /// Endereços de eventos associados a este bairros
         /// </summary>
-        public ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
+        public virtual ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
     }
 }

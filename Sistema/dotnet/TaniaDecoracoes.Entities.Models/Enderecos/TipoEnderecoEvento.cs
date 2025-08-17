@@ -19,6 +19,6 @@
         /// <summary>
         /// Coleção de endereços de eventos deste tipo de endereço
         /// </summary>
-        public ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
+        public virtual ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
     }
 }

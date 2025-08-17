@@ -126,9 +126,9 @@ namespace TaniaDecoracoes.Entities.Data.Mapeamento.Decoracoes
                 .HasForeignKey(d => d.TipoEventoId);
 
             entity
-                .HasOne(d => d.ClienteInstance)
+                .HasOne(d => d.CarroUtilizadoInstance)
                 .WithMany(c => c.Decoracoes)
-                .HasForeignKey(d => d.ClienteId);
+                .HasForeignKey(d => d.CarroUtilizadoId);
 
             #endregion Relacionamentos
         }

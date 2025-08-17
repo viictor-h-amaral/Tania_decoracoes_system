@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace TaniaDecoracoes.WPFLibrary.Utils
+namespace TaniaDecoracoes.WPFLibrary.Utils.GridUtils
 {
-    public class DataGridColumnsUnits
+    public class DataGridUnits
     {
         public static readonly DataGridLength GridLengthAuto = new DataGridLength(1, DataGridLengthUnitType.Auto);
 
-        public static Func<int, DataGridLength> GridLengthStars => 
-            (int stars) => new DataGridLength(stars, DataGridLengthUnitType.Star);
+        public static Func<double, DataGridLength> GridLengthStars => 
+            (stars) => new DataGridLength(stars, DataGridLengthUnitType.Star);
     }
 }

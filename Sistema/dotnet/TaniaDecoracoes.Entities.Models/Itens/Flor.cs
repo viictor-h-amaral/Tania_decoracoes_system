@@ -46,11 +46,11 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <summary>
         /// Instância da cor da flor
         /// </summary>
-        public Cor? CorInstance { get; set; }
+        public virtual Cor? CorInstance { get; set; }
 
         /// <summary>
         /// Coleção de associações entre decorações e esta flor
         /// </summary>
-        public ICollection<AssociacaoDecoracaoFlores>? AssociacaoDecoracaoFlores { get; set; }
+        public virtual ICollection<AssociacaoDecoracaoFlores>? AssociacaoDecoracaoFlores { get; set; }
     }
 }

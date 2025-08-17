@@ -27,10 +27,10 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Coleção de flores associados à essa cor
         /// </summary>
-        public ICollection<Flor>? Flores { get; set; }
+        public virtual ICollection<Flor>? Flores { get; set; }
         /// <summary>
         /// Coleção de itens relacionados à essa cor
         /// </summary>
-        public ICollection<Item>? Itens { get; set; }
+        public virtual ICollection<Item>? Itens { get; set; }
     }
 }

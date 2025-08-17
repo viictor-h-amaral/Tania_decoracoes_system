@@ -21,7 +21,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do estado do endereço
         /// </summary>
-        public required Estado EstadoInstance { get; set; }
+        public virtual required Estado EstadoInstance { get; set; }
 
         /// <summary>
         /// Retorna o Id do município do endereço
@@ -32,7 +32,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do município do endereço
         /// </summary>
-        public required Municipio MunicipioInstance { get; set; }
+        public virtual required Municipio MunicipioInstance { get; set; }
 
         /// <summary>
         /// Retorna o Id do bairro do endereço
@@ -43,7 +43,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do bairro do endereço
         /// </summary>
-        public required Bairro BairroInstance { get; set; }
+        public virtual required Bairro BairroInstance { get; set; }
 
         /// <summary>
         /// Retorna o Id do logradouro do endereço
@@ -54,7 +54,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do logradouro do endereço
         /// </summary>
-        public required Logradouro LogradouroInstance { get; set; }
+        public virtual required Logradouro LogradouroInstance { get; set; }
 
         /// <summary>
         /// Retorna o Id do tipo de endereço do evento
@@ -65,7 +65,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do tipo de endereço do evento
         /// </summary>
-        public required TipoEnderecoEvento TipoEnderecoEventoInstance { get; set; }
+        public virtual required TipoEnderecoEvento TipoEnderecoEventoInstance { get; set; }
 
         /// <summary>
         /// Retorna o número do endereço
@@ -100,6 +100,6 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Coleção de decorações associadas a este endereço de evento
         /// </summary>
-        public ICollection<Decoracao>? Decoracoes { get; set; }
+        public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

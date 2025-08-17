@@ -17,7 +17,7 @@
         /// <summary>
         /// Instância do logradouro associado ao CEP
         /// </summary>
-        public required Logradouro LogradouroInstance { get; set; }
+        public virtual required Logradouro LogradouroInstance { get; set; }
         /// <summary>
         /// Retorna o número do CEP
         /// <para>Required</para>

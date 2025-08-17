@@ -1,21 +1,25 @@
-﻿using System.CodeDom;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.ObjectModel;
-using System.Net.Security;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
+using Microsoft.EntityFrameworkCore.Metadata;
+using TaniaDecoracoes.Entities.Data.Contexto;
+using TaniaDecoracoes.Entities.Models;
+using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.EntitiesLibrary;
+using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 using TaniaDecoracoes.WPFLibrary.Utils;
-using TaniaDecoracoes.WPFLibrary.Utils.Interfaces;
+using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
     public class CommonDataGridViewModel : ViewModelBase
     {
-        
+        private object _entityBase;
+
         private string? _titulo = "";
         public string? Titulo
         {
@@ -23,16 +27,35 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             set => SetProperty(ref _titulo, value);
         }
 
-        private IEnumerable _items = new ObservableCollection<object>() { new { campo = "Nenhum conteúdo a ser exibido" } };
-        public IEnumerable Items
+        private IEnumerable? _items;
+        public IEnumerable? Items
         {
             get => _items;
             set 
             {
                 if (value is not null)
-                    SetProperty(ref _items, value); 
+                    SetProperty(ref _items, value);
+                else
+                    SetProperty(ref _items, 
+                        new ObservableCollection<object>() 
+                        { 
+                            new { campo = "Nenhum conteúdo a ser exibido." } 
+                        });
             }
         }
+
+        private ITabela _tabelaSource;
+        public ITabela TabelaSource 
+        { 
+            get => _tabelaSource;
+            set
+            {
+                if (value != null)
+                    SetProperty(ref _tabelaSource, value);
+            }
+        }
+
+        private Type ElementsType => TabelaSource.ModelType;
 
         private object? _selectedItem;
         public object? SelectedItem
@@ -67,7 +90,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         public void AddActionColumn(bool addDefaultButtons, params ActionGridButton[]? buttons)
         {
-            var cellTemplate = CreateActionButtonsTemplate(addDefaultButtons, buttons);
+            var cellTemplate = CreateActionButtonsColumnTemplate(addDefaultButtons, buttons);
 
             if (cellTemplate is null)
                 return;
@@ -83,7 +106,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             OnPropertyChanged(nameof(DataGridColumns));
         }
 
-        private static DataTemplate? CreateActionButtonsTemplate(bool addDefaultButtons, params ActionGridButton[]? buttons)
+        private DataTemplate? CreateActionButtonsColumnTemplate(bool addDefaultButtons, params ActionGridButton[]? buttons)
         {
             var factory = new FrameworkElementFactory(typeof(StackPanel));
             factory.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
@@ -94,6 +117,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
             if (addDefaultButtons)
             {
+                CriarComandosDefault();
                 buttonsList.Add(ActionGridButton.EditButton);
                 buttonsList.Add(ActionGridButton.DeleteButton);
                 buttonsList.Add(ActionGridButton.ViewButton);
@@ -160,26 +184,25 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             Items = itens;
             Titulo = titulo;
 
-            if (autoGenerateColumns == true)
-            {
-                // Adiciona colunas automaticamente com base nas propriedades dos itens
-                var firstItem = Items.Cast<object>().FirstOrDefault();
-                if (firstItem != null)
-                {
-                    var properties = firstItem.GetType().GetProperties();
-                    foreach (var property in properties)
-                    {
-                        var column = new DataGridTextColumn
-                        {
-                            Header = property.Name,
-                            Binding = new Binding(property.Name),
-                            Width = DataGridUnits.GridLengthAuto
-                        };
-                        AddColumn(column);
-                    }
-                }
-            }
+            if (autoGenerateColumns == true) GenerateColumns();
 
+            CriarComandosDefault();
+            CreateEntityBase();
+        }
+
+        public CommonDataGridViewModel(GridConfigObject configObj)
+        {
+            TabelaSource = configObj.tabelaSource;
+            CreateEntityBase();
+            Titulo = configObj.Title;
+            LoadSource();
+
+            if (configObj.AutoGenerateColumns == true) GenerateColumns();
+
+        }
+
+        private void CriarComandosDefault()
+        {
             EditCommand = new RelayCommand<object>(registro =>
             {
                 var idProperty = registro.GetType().GetProperty("Id");
@@ -199,11 +222,16 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                     return;
 
                 var objectType = registro.GetType();
-                var idProperty = objectType.GetProperty("Id");
+                //var idProperty = objectType.GetProperty("Id");
 
-                var deleteMethod = typeof(EntityBase<>).MakeGenericType(objectType).GetMethod("Delete");
+                //var deleteMethod = typeof(EntityBase<>).MakeGenericType(objectType).GetMethod("Delete");
 
-                deleteMethod?.Invoke(null, [registro]);
+                //deleteMethod?.Invoke(null, [registro]);
+
+                var deleteMethod = _entityBase.GetType().GetMethod("Delete");
+                deleteMethod?.Invoke(_entityBase, [registro]);
+
+                LoadSource();
                 OnPropertyChanged(nameof(Items));
             });
 
@@ -212,6 +240,53 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 var idProperty = registro.GetType().GetProperty("Id");
                 this.Titulo = $"View command executed: {idProperty.GetValue(registro)}";
             });
+        }
+
+        private void GenerateColumns()
+        {
+            var properties = ElementsType.GetProperties();
+
+            foreach (var property in properties)
+            {
+                if (property.GetCustomAttribute<IgnoreOnGridAttribute>() != null)
+                    continue;
+
+                var column = new DataGridTextColumn
+                {
+                    Header = FormatPropertyLabelHelper.GetPropertyLabel(property),
+                    Binding = new Binding(property.Name),
+                    Width = DataGridUnits.GridLengthAuto
+                };
+
+                AddColumn(column);
+            }
+        }
+
+        private void LoadSource()
+        {
+            try
+            {
+                var getManyMethod = _entityBase.GetType().GetMethod("GetMany");
+                Items = getManyMethod?.Invoke(_entityBase, [null]) as IEnumerable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar os dados: {ex.Message}", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                Items = null;
+            }
+        }
+
+        private void CreateEntityBase()
+        {
+            var context = new TaniaDecoracoesDbContext();
+
+            var entityBaseType = typeof(EntityBase<>).MakeGenericType(ElementsType);
+            var entity = Activator.CreateInstance(entityBaseType, context);
+
+            if (entity == null)
+                throw new InvalidOperationException($"Não foi possível criar uma instância de EntityBase para o tipo {entityBaseType} do EntityBase do Grid.");
+
+            _entityBase = entity;
         }
 
         #endregion CONSTRUTOR

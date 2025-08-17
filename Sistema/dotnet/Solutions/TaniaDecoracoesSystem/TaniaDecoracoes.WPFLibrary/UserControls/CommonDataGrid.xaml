@@ -37,7 +37,9 @@
                   Style="{StaticResource CommonDataGridTemplate}"
                   ItemsSource="{Binding Items}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  CanUserAddRows ="False"
+                  CanUserDeleteRows="False">
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Width="Auto">

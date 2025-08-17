@@ -3,7 +3,7 @@
     /// <summary>
     /// Classe referente aos tipos de eventos
     /// </summary>
-    public class TipoEvento
+    public partial class TipoEvento
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados
@@ -20,6 +20,6 @@
         /// <summary>
         /// Decorações com este tipo de evento
         /// </summary>
-        public ICollection<Decoracao>? Decoracoes { get; set; }
+        public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         /// <summary>
         /// Instância da decoração
         /// </summary>
-        public required Decoracao  DecoracaoInstance { get; set; }
+        public virtual required Decoracao  DecoracaoInstance { get; set; }
 
         /// <summary>
         /// Retorna o custo calculado da decoração

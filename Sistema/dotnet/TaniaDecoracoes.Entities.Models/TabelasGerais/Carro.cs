@@ -33,7 +33,7 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Instância do tipo de combustível do carro
         /// </summary>
-        public required TipoCombustivel TipoCombustivelInstance { get; set; }
+        public virtual required TipoCombustivel TipoCombustivelInstance { get; set; }
 
         /// <summary>
         /// Retorna se o carro está, ou não, ativo
@@ -44,6 +44,6 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Coleção de decorações associadas a esse carro
         /// </summary>
-        public ICollection<Decoracao>? Decoracoes { get; set; }
+        public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

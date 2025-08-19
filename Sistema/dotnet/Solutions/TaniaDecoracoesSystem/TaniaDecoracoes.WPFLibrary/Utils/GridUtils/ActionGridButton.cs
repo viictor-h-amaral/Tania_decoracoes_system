@@ -153,14 +153,13 @@ namespace TaniaDecoracoes.WPFLibrary.Utils.GridUtils
             }
         }
 
-        public static FrameworkElementFactory CreateActionButton(
-                string icone, 
-                Color foregroundColor,
-                Color mouseOverForegroundColor,
-                Color rowSelectedForegroundColor,
-                string commandName, 
-                RelativeSource commandSource,
-                string? toolTip)
+        public static FrameworkElementFactory CreateActionButton(   string icone, 
+                                                                    Color foregroundColor,
+                                                                    Color mouseOverForegroundColor,
+                                                                    Color rowSelectedForegroundColor,
+                                                                    string commandName, 
+                                                                    RelativeSource commandSource,
+                                                                    string? toolTip )
         {
             var button = new FrameworkElementFactory(typeof(Button));
 

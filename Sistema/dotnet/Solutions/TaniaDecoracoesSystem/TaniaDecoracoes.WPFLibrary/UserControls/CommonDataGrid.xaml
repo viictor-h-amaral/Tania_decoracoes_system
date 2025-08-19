@@ -6,12 +6,14 @@
              xmlns:local="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <Grid>
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/Buttons/GridButtonsStyle.xaml" />
                     <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/CommonGridStyle.xaml" />
+                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/Buttons/TableGridButtonsStyle.xaml" />
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
@@ -22,14 +24,38 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="Titulo" 
-                   Grid.Row="0" 
+        <TextBlock x:Name="Titulo"
+                   Grid.Row="0"
                    Text="{Binding Titulo}"
                    FontSize="35"
                    Margin="10"
                    FontFamily="Quicksand"
                    FontWeight="SemiBold"
-                   Foreground="#7A3A5C"/>
+                   Foreground="#7A3A5C"
+                   HorizontalAlignment="Left"/>
+
+        <ItemsControl ItemsSource="{Binding DataGridTableButtons}" 
+                      HorizontalAlignment="Right" 
+                      Grid.Row="0">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding Conteudo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Background="{Binding Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="{Binding Foreground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource TableGridButton}"
+                            Command="{Binding Command, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Tag="{Binding Icone}" 
+                            Margin="0,2"/>
+                    </DataTemplate> 
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <DataGrid x:Name="MainGrid" 
                   Grid.Row="1"

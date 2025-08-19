@@ -5,12 +5,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System.Windows.Media;
 using TaniaDecoracoes.Entities.Data.Contexto;
 using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.EntitiesLibrary;
-using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
 
@@ -19,6 +18,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
     public class CommonDataGridViewModel : ViewModelBase
     {
         private object _entityBase;
+        private Type ElementsType => TabelaSource.ModelType;
+
 
         private string? _titulo = "";
         public string? Titulo
@@ -55,7 +56,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
-        private Type ElementsType => TabelaSource.ModelType;
 
         private object? _selectedItem;
         public object? SelectedItem
@@ -63,6 +63,54 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             get => _selectedItem;
             set => SetProperty(ref _selectedItem, value);
         }
+
+        #region COMANDOS PERSONALIZADOS
+
+        private ObservableCollection<CustomGridButton> _dataGridTableButtons = [];
+        public ObservableCollection<CustomGridButton> DataGridTableButtons
+        {
+            get => _dataGridTableButtons ??= new ObservableCollection<CustomGridButton>();
+            set => SetProperty(ref _dataGridTableButtons, value);
+        }
+
+        private void AddTableButton(CustomGridButton button)
+        {
+            DataGridTableButtons.Add(button);
+            OnPropertyChanged(nameof(DataGridTableButtons));
+        }
+
+        public void AddTableButtons(params CustomGridButton[] buttons)
+        {
+            foreach (var button in buttons)
+            {
+                this.AddTableButton(button);
+            }
+            OnPropertyChanged(nameof(DataGridTableButtons));
+        }
+
+        public void AddDefaultTableButtons()
+        {
+            var newButton = new CustomGridButton
+            {
+                Conteudo = "Novo",
+                Icone = "\u002b",
+                Foreground = Colors.White,
+                MouseOverForeground = Colors.White,
+                PressedForeground = Colors.White,
+                Background = (Color)ColorConverter.ConvertFromString("#28a745"),
+                MouseOverBackground = (Color)ColorConverter.ConvertFromString("#218838"),
+                PressedBackground = (Color)ColorConverter.ConvertFromString("#1e7e34"),
+                Comando = new RelayCommand(() =>
+                {
+                    MessageBox.Show("Novo botão clicado!");
+                }),
+                Ordem = 0
+            };
+            this.AddTableButton(newButton);
+            OnPropertyChanged(nameof(DataGridTableButtons));
+        }
+
+        #endregion COMANDOS PERSONALIZADOS
 
         #region COLUNAS
 
@@ -140,6 +188,42 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             return new DataTemplate { VisualTree = factory };
         }
 
+        private void CriarComandosDefault()
+        {
+            EditCommand = new RelayCommand<object>(registro =>
+            {
+                var idProperty = registro.GetType().GetProperty("Id");
+                this.Titulo = $"Edit command executed: {idProperty.GetValue(registro)}";
+            });
+
+            DeleteCommand = new RelayCommand<object>(registro =>
+            {
+                var dialogService = new DialogService();
+                bool? dialogResult = dialogService.ShowYesNoDialog(
+                    questionText: "Apagar o registro?",
+                    yesButtonText: "Sim",
+                    noButtonText: "Não",
+                    useAlternativeNoButtonStyle: false
+                );
+                if (dialogResult != null && dialogResult == false)
+                    return;
+
+                var objectType = registro.GetType();
+
+                var deleteMethod = _entityBase.GetType().GetMethod("Delete");
+                deleteMethod?.Invoke(_entityBase, [registro]);
+
+                LoadSource();
+                OnPropertyChanged(nameof(Items));
+            });
+
+            ViewCommand = new RelayCommand<object>(registro =>
+            {
+                var idProperty = registro.GetType().GetProperty("Id");
+                this.Titulo = $"View command executed: {idProperty.GetValue(registro)}";
+            });
+        }
+
         #endregion COLUNAS
 
         #region COMANDOS
@@ -179,17 +263,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         #region CONSTRUTOR
 
-        public CommonDataGridViewModel(IEnumerable itens, string titulo, bool? autoGenerateColumns = true)
-        {
-            Items = itens;
-            Titulo = titulo;
-
-            if (autoGenerateColumns == true) GenerateColumns();
-
-            CriarComandosDefault();
-            CreateEntityBase();
-        }
-
         public CommonDataGridViewModel(GridConfigObject configObj)
         {
             TabelaSource = configObj.tabelaSource;
@@ -201,46 +274,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         }
 
-        private void CriarComandosDefault()
-        {
-            EditCommand = new RelayCommand<object>(registro =>
-            {
-                var idProperty = registro.GetType().GetProperty("Id");
-                this.Titulo = $"Edit command executed: {idProperty.GetValue(registro)}";
-            });
-
-            DeleteCommand = new RelayCommand<object>(registro =>
-            {
-                var dialogService = new DialogService();
-                bool? dialogResult = dialogService.ShowYesNoDialog(
-                    questionText: "Apagar o registro?",
-                    yesButtonText: "Sim",
-                    noButtonText: "Não",
-                    useAlternativeNoButtonStyle: false
-                );
-                if (dialogResult != null && dialogResult == false)
-                    return;
-
-                var objectType = registro.GetType();
-                //var idProperty = objectType.GetProperty("Id");
-
-                //var deleteMethod = typeof(EntityBase<>).MakeGenericType(objectType).GetMethod("Delete");
-
-                //deleteMethod?.Invoke(null, [registro]);
-
-                var deleteMethod = _entityBase.GetType().GetMethod("Delete");
-                deleteMethod?.Invoke(_entityBase, [registro]);
-
-                LoadSource();
-                OnPropertyChanged(nameof(Items));
-            });
-
-            ViewCommand = new RelayCommand<object>(registro =>
-            {
-                var idProperty = registro.GetType().GetProperty("Id");
-                this.Titulo = $"View command executed: {idProperty.GetValue(registro)}";
-            });
-        }
 
         private void GenerateColumns()
         {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata;
-using TaniaDecoracoes.Entities.Models;
+﻿using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.EntitiesLibrary.Utils;
 
 namespace TaniaDecoracoes.WPFLibrary.Utils.GridUtils

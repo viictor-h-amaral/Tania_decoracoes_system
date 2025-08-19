@@ -91,9 +91,7 @@
                             <!-- Aplicação do TemplateSelector aqui -->
                             <ContentControl Content="{Binding}"
                               ContentTemplateSelector="{StaticResource FieldTemplateSelector}"/>
-                            <TextBlock Text="{Binding ErrorMessage}" Foregroundc:\desenvolvimento\taniadecoracoes_system\projeto\sistema\dotnet\solutions\taniadecoracoessystem\taniadecoracoes.wpflibrary\usercontrols\commonform.xaml.cs
-c:\desenvolvimento\taniadecoracoes_system\projeto\sistema\dotnet\solutions\taniadecoracoessystem\taniadecoracoes.wpflibrary\usercontrols\commonform.xaml
-="Red" />
+                            <TextBlock Text="{Binding ErrorMessage}" />
                             <!-- Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}}"-->
                         </StackPanel>
 

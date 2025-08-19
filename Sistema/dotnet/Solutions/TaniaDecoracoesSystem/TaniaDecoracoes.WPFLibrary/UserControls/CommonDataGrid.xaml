@@ -34,15 +34,10 @@
                    Foreground="#7A3A5C"
                    HorizontalAlignment="Left"/>
 
-        <ItemsControl ItemsSource="{Binding DataGridTableButtons}" 
+        <ItemsControl x:Name="itemsControl"  ItemsSource="{Binding DataGridTableButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                       HorizontalAlignment="Right" 
-                      Grid.Row="0">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Right"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+                      Grid.Row="0" Width="Auto">
+            
             
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -50,7 +45,7 @@
                             Background="{Binding Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             Foreground="{Binding Foreground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             Style="{StaticResource TableGridButton}"
-                            Command="{Binding Command, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Command="{Binding Comando, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             Tag="{Binding Icone}" 
                             Margin="0,2"/>
                     </DataTemplate> 

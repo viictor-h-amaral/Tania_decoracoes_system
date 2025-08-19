@@ -66,7 +66,26 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         #region COMANDOS PERSONALIZADOS
 
-        private ObservableCollection<CustomGridButton> _dataGridTableButtons = [];
+        private ObservableCollection<CustomGridButton> _dataGridTableButtons = [
+
+                new CustomGridButton
+                {
+                    Conteudo = "Novo",
+                    Icone = "\u002b",
+                    Foreground = Colors.White,
+                    MouseOverForeground = Colors.White,
+                    PressedForeground = Colors.White,
+                    Background = (Color)ColorConverter.ConvertFromString("#28a745"),
+                    MouseOverBackground = (Color)ColorConverter.ConvertFromString("#218838"),
+                    PressedBackground = (Color)ColorConverter.ConvertFromString("#1e7e34"),
+                    Comando = new RelayCommand(() =>
+                    {
+                        MessageBox.Show("Novo botão clicado!");
+                    }),
+                    Ordem = 0
+                }
+            
+            ];
         public ObservableCollection<CustomGridButton> DataGridTableButtons
         {
             get => _dataGridTableButtons ??= new ObservableCollection<CustomGridButton>();

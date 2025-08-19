@@ -82,6 +82,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                 );
             });
 
+            DataGridVM.AddDefaultTableButtons();
             //Inicializa o ViewModel do Formulário
             FormVM = new CommonFormViewModel
             {

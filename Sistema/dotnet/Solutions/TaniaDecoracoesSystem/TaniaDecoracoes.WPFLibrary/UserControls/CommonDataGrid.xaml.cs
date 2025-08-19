@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
 
 namespace TaniaDecoracoes.WPFLibrary.UserControls
 {

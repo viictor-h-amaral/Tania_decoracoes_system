@@ -74,14 +74,14 @@
                     <ControlTemplate.Triggers>
                         
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Foreground" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplateParent}}"/>
-                            <Setter Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource TemplateParent}}"/>
+                            <Setter Property="Foreground" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <Setter Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource TemplatedParent}}"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                         </Trigger>
                         
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="{Binding MouseOverForeground, RelativeSource={RelativeSource TemplateParent}}"/>
-                            <Setter Property="Background" Value="{Binding MouseOverBackground, RelativeSource={RelativeSource TemplateParent}}"/>
+                            <Setter Property="Foreground" Value="{Binding MouseOverForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <Setter Property="Background" Value="{Binding MouseOverBackground, RelativeSource={RelativeSource TemplatedParent}}"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                         </Trigger>
 

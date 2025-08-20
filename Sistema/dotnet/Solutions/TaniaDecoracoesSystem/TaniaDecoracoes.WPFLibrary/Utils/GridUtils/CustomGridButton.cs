@@ -8,13 +8,8 @@ namespace TaniaDecoracoes.WPFLibrary.Utils.GridUtils
         public string Conteudo { get; set; }
         public string? Icone { get; set; }
 
-        public Color Foreground { get; set; }
-        public Color MouseOverForeground { get; set; }
-        public Color PressedForeground { get; set; }
-
-        public Color Background { get; set; }
-        public Color MouseOverBackground { get; set; }
-        public Color PressedBackground { get; set; }
+        public Brush Foreground { get; set; }
+        public Brush Background { get; set; }
 
         public ICommand Comando { get; set; }
         public int Ordem; 

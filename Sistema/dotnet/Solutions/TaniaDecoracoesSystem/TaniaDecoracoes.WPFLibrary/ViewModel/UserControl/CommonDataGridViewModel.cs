@@ -66,26 +66,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         #region COMANDOS PERSONALIZADOS
 
-        private ObservableCollection<CustomGridButton> _dataGridTableButtons = [
-
-                new CustomGridButton
-                {
-                    Conteudo = "Novo",
-                    Icone = "\u002b",
-                    Foreground = Colors.White,
-                    MouseOverForeground = Colors.White,
-                    PressedForeground = Colors.White,
-                    Background = (Color)ColorConverter.ConvertFromString("#28a745"),
-                    MouseOverBackground = (Color)ColorConverter.ConvertFromString("#218838"),
-                    PressedBackground = (Color)ColorConverter.ConvertFromString("#1e7e34"),
-                    Comando = new RelayCommand(() =>
-                    {
-                        MessageBox.Show("Novo botão clicado!");
-                    }),
-                    Ordem = 0
-                }
-            
-            ];
+        private ObservableCollection<CustomGridButton> _dataGridTableButtons = [];
         public ObservableCollection<CustomGridButton> DataGridTableButtons
         {
             get => _dataGridTableButtons ??= new ObservableCollection<CustomGridButton>();
@@ -113,12 +94,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             {
                 Conteudo = "Novo",
                 Icone = "\u002b",
-                Foreground = Colors.White,
-                MouseOverForeground = Colors.White,
-                PressedForeground = Colors.White,
-                Background = (Color)ColorConverter.ConvertFromString("#28a745"),
-                MouseOverBackground = (Color)ColorConverter.ConvertFromString("#218838"),
-                PressedBackground = (Color)ColorConverter.ConvertFromString("#1e7e34"),
+                Foreground = new SolidColorBrush(Colors.White),
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0271cc")),
                 Comando = new RelayCommand(() =>
                 {
                     MessageBox.Show("Novo botão clicado!");
@@ -155,7 +132,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             OnPropertyChanged(nameof(DataGridColumns));
         }
 
-        public void AddActionColumn(bool addDefaultButtons, params ActionGridButton[]? buttons)
+        public void AddActionColumn(bool addDefaultButtons, params ActionGridButton[]? buttons) //TROCAR ADDEFAULTBUTTONS PARA UM ENUM (OPÇÕES SERIAM (EDIT | DELETE | VIEW))
         {
             var cellTemplate = CreateActionButtonsColumnTemplate(addDefaultButtons, buttons);
 
@@ -282,7 +259,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         #region CONSTRUTOR
 
-        public CommonDataGridViewModel(GridConfigObject configObj)
+        public CommonDataGridViewModel(GridConfigObject configObj) //FAZER COM QUE AINDA NO CONSTRUTOR CRIEMOS (OU NÃO) A COLUNA DE AÇÃO
         {
             TabelaSource = configObj.tabelaSource;
             CreateEntityBase();

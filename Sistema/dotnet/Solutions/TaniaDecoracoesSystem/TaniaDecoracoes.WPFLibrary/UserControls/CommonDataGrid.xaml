@@ -32,13 +32,19 @@
                    FontFamily="Quicksand"
                    FontWeight="SemiBold"
                    Foreground="#7A3A5C"
-                   HorizontalAlignment="Left"/>
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"/>
 
         <ItemsControl x:Name="itemsControl"  ItemsSource="{Binding DataGridTableButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                       HorizontalAlignment="Right" 
                       Grid.Row="0" Width="Auto">
             
-            
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Width="Auto" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+                
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Content="{Binding Conteudo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -47,7 +53,8 @@
                             Style="{StaticResource TableGridButton}"
                             Command="{Binding Comando, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             Tag="{Binding Icone}" 
-                            Margin="0,2"/>
+                            Margin="6"
+                            Width="Auto"/>
                     </DataTemplate> 
             </ItemsControl.ItemTemplate>
         </ItemsControl>

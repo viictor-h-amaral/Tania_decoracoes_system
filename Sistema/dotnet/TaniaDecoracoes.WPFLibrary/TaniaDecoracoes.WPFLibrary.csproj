@@ -15,8 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TaniaDecoracoes.Entities.Models\TaniaDecoracoes.Entities.Models.csproj" />
-    <ProjectReference Include="..\..\..\TaniaDecoracoes.EntitiesLibrary\TaniaDecoracoes.EntitiesLibrary.csproj" />
+    <ProjectReference Include="..\TaniaDecoracoes.Entities.Data\TaniaDecoracoes.Entities.Data.csproj" />
+    <ProjectReference Include="..\TaniaDecoracoes.Entities.Models\TaniaDecoracoes.Entities.Models.csproj" />
+    <ProjectReference Include="..\TaniaDecoracoes.EntitiesLibrary\TaniaDecoracoes.EntitiesLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

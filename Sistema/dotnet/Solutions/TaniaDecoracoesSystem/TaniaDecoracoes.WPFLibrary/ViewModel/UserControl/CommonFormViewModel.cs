@@ -8,6 +8,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using TaniaDecoracoes.Entities.Data.Contexto;
+using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.WPFLibrary.Utils;
 
@@ -15,7 +21,21 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
     public class CommonFormViewModel : ViewModelBase
     {
-        #region Propriedades
+        private DbContext _dbContext;
+
+        #region PROPRIEDADES
+
+        private string _titulo;
+        public string Titulo 
+        {
+            get => _titulo;
+            set
+            {
+                _titulo = string.Empty;
+                if (value != null)
+                    _titulo = value;
+            } 
+        }
 
         private FormMode _mode;
         public FormMode Mode
@@ -28,25 +48,25 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
-        private object? _sourceObject;
-        public object? SourceObject
+        private object _sourceObject;
+        public object SourceObject
         {
             get => _sourceObject;
             set
             {
                 SetProperty(ref _sourceObject, value);
-                GenerateFieldsWithObject();
+                TypeObject = value?.GetType() ?? typeof(object);
             }
         }
 
-        private Type? _typeObject;
-        public Type? TypeObject
+        private Type _typeObject;
+        public Type TypeObject
         {
             get => _typeObject;
             set
             {
                 SetProperty(ref _typeObject, value);
-                GenerateFieldsWithType();
+                GenerateFields();
             }
         }
 
@@ -57,38 +77,14 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             private set => SetProperty(ref _fields, value);
         }
 
-        #endregion Propriedades
+        #endregion PROPRIEDADES
 
-        private void GenerateFieldsWithObject()
+        #region GERAÇÃO CAMPOS
+
+        private void GenerateFields()
         {
-            if (SourceObject is null)
-            {
-                Fields = Enumerable.Empty<FormFieldViewModel>();
-                return;
-            }
-
-            var properties = SourceObject.GetType().GetProperties();
-
-            Fields = GenerateFieldsWithProperties(properties);
-
-        }
-
-        private void GenerateFieldsWithType()
-        {
-            if (TypeObject is null)
-            {
-                Fields = Enumerable.Empty<FormFieldViewModel>();
-                return;
-            }
-
-            var fields = new List<FormFieldViewModel>();
             var properties = TypeObject.GetProperties();
 
-            Fields = GenerateFieldsWithProperties(properties);
-        }
-
-        private List<FormFieldViewModel> GenerateFieldsWithProperties(params PropertyInfo[] properties)
-        {
             var fields = new List<FormFieldViewModel>();
 
             foreach (var prop in properties)
@@ -99,20 +95,30 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 fields.Add(CreateFormFieldViewModel(prop));
             }
 
-            return fields;
+            Fields = fields;
         }
 
         private FormFieldViewModel CreateFormFieldViewModel(PropertyInfo prop)
         {
-            return new FormFieldViewModel
+            var field = new FormFieldViewModel();
+
+            field.Label = FormatPropertyLabelHelper.GetPropertyLabel(prop);
+            field.PropertyName = prop.Name;
+            field.PropertyType = prop.PropertyType;
+            field.ValidationRules = GetValidationRules(prop);
+
+            Binding binding = new Binding(prop.Name)
             {
-                Label = FormatPropertyLabelHelper.GetPropertyLabel(prop),
-                PropertyName = prop.Name,
-                //Value = prop.GetValue(SourceObject),
-                PropertyType = prop.PropertyType,
-                IsReadOnly = Mode == FormMode.View,
-                ValidationRules = GetValidationRules(prop)
+                Source = SourceObject,
+                Mode = BindingMode.TwoWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
+
+            field.Binding = binding;
+            field.IsReadOnly = Mode == FormMode.View; //chamar helper (a criar) que define, com base no modo do form e atributos, se o campo será readonly
+            field.Value = prop.GetValue(SourceObject);
+
+            return field;
         }
 
         private IEnumerable<ValidationRule> GetValidationRules(PropertyInfo prop)
@@ -126,6 +132,43 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
             return rules;
         }
+
+        #endregion GERAÇÃO CAMPOS
+
+        #region CONSTRUTORES
+
+        public CommonFormViewModel(string titulo, FormMode estado, object objeto, DbContext contexto, bool autoGenerateFields)
+        {
+            if (estado == FormMode.Create)
+                throw new ArgumentException("O estado 'Create' não deve ser usado com um objeto fonte.");
+
+            _dbContext = contexto;
+            Titulo = titulo;
+            Mode = estado;
+            SourceObject = objeto;
+            TypeObject = objeto.GetType();
+
+            if (autoGenerateFields) GenerateFields();
+            //if (estado == FormMode.Edit) CreateSaveButton();
+        }
+
+        public CommonFormViewModel(string titulo, ITabela tabelaReferencia, bool autoGenerateFields)
+        {
+            _dbContext = new TaniaDecoracoesDbContext();
+
+            Titulo = titulo;
+            Mode = FormMode.Create;
+
+            SourceObject = Activator.CreateInstance(tabelaReferencia.ModelType) ?? 
+                            throw new InvalidOperationException($"Não foi possível criar uma instância de {tabelaReferencia.ModelType.FullName}.");
+
+            TypeObject = tabelaReferencia.ModelType;
+            if (autoGenerateFields) GenerateFields();
+            //CreateSaveButton();
+        }
+
+
+        #endregion CONSTRUTORES
     }
 
     public enum FormMode

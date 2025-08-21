@@ -36,12 +36,12 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
         {
             _dbContext = new TaniaDecoracoesDbContext();
 
-            var itemEntity = new ItemEntity(_dbContext);
-            var source = itemEntity.GetMany();
+            var tipoItemEntity = new TipoItemEntity(_dbContext);
+            var source = tipoItemEntity.GetMany().FirstOrDefault();
 
             var gridConfig = new GridConfigObject(  source: new ItemTabela(),
                                                     criterio: null,
-                                                    title: "Tamanhos",
+                                                    title: "Itens",
                                                     readOnly: true,
                                                     autoGenerateColumns: true,
                                                     maxItensPerPage: 10 ); 
@@ -84,11 +84,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
 
             DataGridVM.AddDefaultTableButtons();
             //Inicializa o ViewModel do Formulário
-            FormVM = new CommonFormViewModel
-            {
-                Mode = FormMode.Create,
-                TypeObject = typeof(Decoracao)
-            };
+            FormVM = new CommonFormViewModel(titulo: "Cadastro de decorações", FormMode.View, source, _dbContext, true);
         }
 
         private ICommand _myCommandName;

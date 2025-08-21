@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
@@ -19,11 +20,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
-
         public string Label { get; set; }
         public string PropertyName { get; set; }
         public Type PropertyType { get; set; }
         public bool IsReadOnly { get; set; }
+        public Binding? Binding { get; set; }
         public IEnumerable<ValidationRule> ValidationRules { get; set; }
         public string ErrorMessage { get; private set; }
         public bool HasError => !string.IsNullOrEmpty(ErrorMessage);

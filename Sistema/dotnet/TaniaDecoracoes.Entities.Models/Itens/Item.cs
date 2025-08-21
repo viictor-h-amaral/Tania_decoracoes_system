@@ -13,6 +13,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// Retorna o Id do registro no banco de dados
         /// </summary>
         [IgnoreOnGrid]
+        [IgnoreOnForm]
         public int Id { get; set; }
 
         /// <summary>

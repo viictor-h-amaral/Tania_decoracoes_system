@@ -66,7 +66,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                                                 "DataContext.MyCommandName",
                                                 commandSource);
 
-            DataGridVM.AddActionColumn(true, myButton);
+            DataGridVM.AddActionColumn((DefaultActionButtons.None), myButton);
 
             MyCommandName = new RelayCommand<object>((registro) =>
             {

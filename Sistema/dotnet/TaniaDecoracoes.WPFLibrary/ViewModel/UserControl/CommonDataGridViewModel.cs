@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows;
@@ -32,22 +33,22 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         public IEnumerable? Items
         {
             get => _items;
-            set 
+            set
             {
                 if (value is not null)
                     SetProperty(ref _items, value);
                 else
-                    SetProperty(ref _items, 
-                        new ObservableCollection<object>() 
-                        { 
-                            new { campo = "Nenhum conteúdo a ser exibido." } 
+                    SetProperty(ref _items,
+                        new ObservableCollection<object>()
+                        {
+                            new { campo = "Nenhum conteúdo a ser exibido." }
                         });
             }
         }
 
         private ITabela _tabelaSource;
-        public ITabela TabelaSource 
-        { 
+        public ITabela TabelaSource
+        {
             get => _tabelaSource;
             set
             {
@@ -132,93 +133,111 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             OnPropertyChanged(nameof(DataGridColumns));
         }
 
-        public void AddActionColumn(bool addDefaultButtons, params ActionGridButton[]? buttons) //TROCAR ADDEFAULTBUTTONS PARA UM ENUM (OPÇÕES SERIAM (EDIT | DELETE | VIEW))
-        {
-            var cellTemplate = CreateActionButtonsColumnTemplate(addDefaultButtons, buttons);
+            #region ACTION COLUMN
 
-            if (cellTemplate is null)
-                return;
-
-            var column = new DataGridTemplateColumn
+            public void AddActionColumn(DefaultActionButtons defaultButtonsToAdd, params ActionGridButton[]? buttons)
             {
-                Header = "Ações",
-                Width = DataGridUnits.GridLengthAuto,
-                IsReadOnly = true,
-                CellTemplate = cellTemplate
-            };
-            DataGridColumns.Add(column);
-            OnPropertyChanged(nameof(DataGridColumns));
-        }
+                var cellTemplate = CreateActionButtonsColumnTemplate(defaultButtonsToAdd, buttons);
 
-        private DataTemplate? CreateActionButtonsColumnTemplate(bool addDefaultButtons, params ActionGridButton[]? buttons)
-        {
-            var factory = new FrameworkElementFactory(typeof(StackPanel));
-            factory.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
-            factory.SetValue(StackPanel.HorizontalAlignmentProperty, HorizontalAlignment.Center);
-            factory.SetValue(StackPanel.VerticalAlignmentProperty, VerticalAlignment.Center);;
-
-            var buttonsList = new List<FrameworkElementFactory>();
-
-            if (addDefaultButtons)
-            {
-                CriarComandosDefault();
-                buttonsList.Add(ActionGridButton.EditButton);
-                buttonsList.Add(ActionGridButton.DeleteButton);
-                buttonsList.Add(ActionGridButton.ViewButton);
-            }
-
-            foreach (var button in buttons ?? [])
-            {
-                var buttonFactory = button.ToFrameworkElement();
-                buttonsList.Add(buttonFactory);
-            }
-
-            if (buttonsList.Count == 0)
-                return null;
-
-            foreach (var buttonFactory in buttonsList)
-            {
-                factory.AppendChild(buttonFactory);
-            }
-
-            return new DataTemplate { VisualTree = factory };
-        }
-
-        private void CriarComandosDefault()
-        {
-            EditCommand = new RelayCommand<object>(registro =>
-            {
-                var idProperty = registro.GetType().GetProperty("Id");
-                this.Titulo = $"Edit command executed: {idProperty.GetValue(registro)}";
-            });
-
-            DeleteCommand = new RelayCommand<object>(registro =>
-            {
-                var dialogService = new DialogService();
-                bool? dialogResult = dialogService.ShowYesNoDialog(
-                    questionText: "Apagar o registro?",
-                    yesButtonText: "Sim",
-                    noButtonText: "Não",
-                    useAlternativeNoButtonStyle: false
-                );
-                if (dialogResult != null && dialogResult == false)
+                if (cellTemplate is null)
                     return;
 
-                var objectType = registro.GetType();
+                var column = new DataGridTemplateColumn
+                {
+                    Header = "Ações",
+                    Width = DataGridUnits.GridLengthAuto,
+                    IsReadOnly = true,
+                    CellTemplate = cellTemplate
+                };
+                DataGridColumns.Add(column);
+                OnPropertyChanged(nameof(DataGridColumns));
+            }
 
-                var deleteMethod = _entityBase.GetType().GetMethod("Delete");
-                deleteMethod?.Invoke(_entityBase, [registro]);
-
-                LoadSource();
-                OnPropertyChanged(nameof(Items));
-            });
-
-            ViewCommand = new RelayCommand<object>(registro =>
+            private DataTemplate? CreateActionButtonsColumnTemplate(DefaultActionButtons defaultButtonsToAdd, params ActionGridButton[]? buttons)
             {
-                var idProperty = registro.GetType().GetProperty("Id");
-                this.Titulo = $"View command executed: {idProperty.GetValue(registro)}";
-            });
-        }
+                var factory = new FrameworkElementFactory(typeof(StackPanel));
+                factory.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
+                factory.SetValue(StackPanel.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+                factory.SetValue(StackPanel.VerticalAlignmentProperty, VerticalAlignment.Center);
+
+                var buttonsList = new List<FrameworkElementFactory>();
+
+                if (!defaultButtonsToAdd.HasFlag(DefaultActionButtons.None))
+                    buttonsList.AddRange(CreateSelectedDefaultActionButtons(defaultButtonsToAdd));
+            
+                foreach (var button in buttons ?? [])
+                {
+                    var buttonFactory = button.ToFrameworkElement();
+                    buttonsList.Add(buttonFactory);
+                }
+
+                if (buttonsList.Count == 0)
+                    return null;
+
+                foreach (var buttonFactory in buttonsList)
+                {
+                    factory.AppendChild(buttonFactory);
+                }
+
+                return new DataTemplate { VisualTree = factory };
+            }
+
+            private List<FrameworkElementFactory> CreateSelectedDefaultActionButtons(DefaultActionButtons defaultButtonsToAdd)
+            {
+
+                var list = new List<FrameworkElementFactory>();
+
+                bool addAll = defaultButtonsToAdd.HasFlag(DefaultActionButtons.All);
+
+                if (addAll || defaultButtonsToAdd.HasFlag(DefaultActionButtons.View))
+                {
+                    ViewCommand = new RelayCommand<object>(registro =>
+                    {
+                        var idProperty = registro.GetType().GetProperty("Id");
+                        this.Titulo = $"View command executed: {idProperty.GetValue(registro)}";
+                    });
+                    list.Add(ActionGridButton.ViewButton);
+                }
+
+                if (addAll || defaultButtonsToAdd.HasFlag(DefaultActionButtons.Edit))
+                {
+                    EditCommand = new RelayCommand<object>(registro =>
+                    {
+                        var idProperty = registro.GetType().GetProperty("Id");
+                        this.Titulo = $"Edit command executed: {idProperty.GetValue(registro)}";
+                    });
+                    list.Add(ActionGridButton.EditButton);
+                }
+
+                if (addAll || defaultButtonsToAdd.HasFlag(DefaultActionButtons.Delete))
+                {
+                    DeleteCommand = new RelayCommand<object>(registro =>
+                    {
+                        var dialogService = new DialogService();
+                        bool? dialogResult = dialogService.ShowYesNoDialog(
+                            questionText: "Apagar o registro?",
+                            yesButtonText: "Sim",
+                            noButtonText: "Não",
+                            useAlternativeNoButtonStyle: false
+                        );
+                        if (dialogResult != null && dialogResult == false)
+                            return;
+
+                        var objectType = registro.GetType();
+
+                        var deleteMethod = _entityBase.GetType().GetMethod("Delete");
+                        deleteMethod?.Invoke(_entityBase, [registro]);
+
+                        LoadSource();
+                        OnPropertyChanged(nameof(Items));
+                    });
+                    list.Add(ActionGridButton.DeleteButton);
+                }
+
+                return list;
+            }
+
+            #endregion ACTION COLUMN
 
         #endregion COLUNAS
 
@@ -319,5 +338,14 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         }
 
         #endregion CONSTRUTOR
+    }
+
+    public enum DefaultActionButtons
+    {
+        None = 1,
+        Edit = 2,
+        Delete = 4,
+        View = 8,
+        All = 16 //14
     }
 }

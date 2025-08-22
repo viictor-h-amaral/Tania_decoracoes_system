@@ -57,19 +57,19 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             {
                 myButton
             };
-            // Inicializa o ViewModel do DataGrid
-            DataGridVM = new CommonDataGridViewModel(gridConfig) { };
-
-            DataGridVM.AddColumns( //passar essa configuração para GridConfigObject, pois isto faz parte da configuração do grid
+            gridConfig.CustomColumns = new List<DataGridColumn>()
+            {
                 new DataGridTextColumn
                 {
                     Header = "Tipo Item",
                     Binding = new Binding("TipoItemInstance.Nome"),
                     Width = DataGridLength.Auto
                 }
-            );
+            };
 
-            
+            // Inicializa o ViewModel do DataGrid
+            DataGridVM = new CommonDataGridViewModel(gridConfig) { };
+                       
 
             //DataGridVM.AddActionColumn((DefaultActionButtons.None), myButton);
 

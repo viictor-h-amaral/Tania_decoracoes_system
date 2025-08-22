@@ -124,7 +124,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             OnPropertyChanged(nameof(DataGridColumns));
         }
 
-        public void AddColumns(params DataGridColumn[] columns)
+        private void AddColumns(List<DataGridColumn> columns)
         {
             foreach (var column in columns)
             {
@@ -284,19 +284,23 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             CreateEntityBase();
             Titulo = configObj.Title;
 
-            bool hasNOActionButton = configObj.DefaultActionButtonsToAdd.HasFlag(DefaultActionButtons.None) &&
-                                     configObj.CustomActionButtons is null;
+            
             
             LoadSource();
 
             if (configObj.AutoGenerateColumns == true) GenerateColumns();
 
+            if (configObj.CustomColumns != null && configObj.CustomColumns.Count != 0)
+                AddColumns(configObj.CustomColumns);
+
+            bool hasNOActionButton = configObj.DefaultActionButtonsToAdd.HasFlag(DefaultActionButtons.None) &&
+                                        configObj.CustomActionButtons is null;
+
             if (!hasNOActionButton)
                 AddActionColumn(configObj.DefaultActionButtonsToAdd, configObj.CustomActionButtons);
 
         }
-
-
+        
         private void GenerateColumns()
         {
             var properties = ElementsType.GetProperties();
@@ -353,6 +357,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         Edit = 2,
         Delete = 4,
         View = 8,
-        All = 16 //14
+        All = 16
     }
 }

@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.Entities.Models;
+﻿using System.Windows.Controls;
+using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.EntitiesLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
 
@@ -27,6 +28,7 @@ namespace TaniaDecoracoes.WPFLibrary.Utils.GridUtils
 
         public DefaultActionButtons DefaultActionButtonsToAdd { get; set; } = DefaultActionButtons.All;
 
+        public List<DataGridColumn>? CustomColumns { get; set; } = null;
         public List<ActionGridButton>? CustomActionButtons { get; set; } = null;
         public Criterio? CriterioSelecao { get; set; }
 

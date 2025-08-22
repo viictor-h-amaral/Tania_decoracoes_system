@@ -39,25 +39,6 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             var tipoItemEntity = new TipoItemEntity(_dbContext);
             var source = tipoItemEntity.GetMany().FirstOrDefault();
 
-            var gridConfig = new GridConfigObject(  source: new ItemTabela(),
-                                                    criterio: null,
-                                                    title: "Itens",
-                                                    readOnly: true,
-                                                    autoGenerateColumns: true,
-                                                    maxItensPerPage: 10 ); 
-
-            // Inicializa o ViewModel do DataGrid
-            DataGridVM = new CommonDataGridViewModel(gridConfig) { };
-
-            DataGridVM.AddColumns(
-                new DataGridTextColumn
-                {
-                    Header = "Tipo Item",
-                    Binding = new Binding("TipoItemInstance.Nome"),
-                    Width = DataGridLength.Auto
-                }
-            );
-
             var commandSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Page), 1);
             var myButton = new ActionGridButton("\uf1ec",
                                                 "Black",
@@ -66,7 +47,31 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                                                 "DataContext.MyCommandName",
                                                 commandSource);
 
-            DataGridVM.AddActionColumn((DefaultActionButtons.None), myButton);
+            var gridConfig = new GridConfigObject(  source: new ItemTabela(),
+                                                    title: "Itens",
+                                                    readOnly: true,
+                                                    autoGenerateColumns: true,
+                                                    (DefaultActionButtons.Delete)); 
+
+            gridConfig.CustomActionButtons = new List<ActionGridButton>
+            {
+                myButton
+            };
+            // Inicializa o ViewModel do DataGrid
+            DataGridVM = new CommonDataGridViewModel(gridConfig) { };
+
+            DataGridVM.AddColumns( //passar essa configuração para GridConfigObject, pois isto faz parte da configuração do grid
+                new DataGridTextColumn
+                {
+                    Header = "Tipo Item",
+                    Binding = new Binding("TipoItemInstance.Nome"),
+                    Width = DataGridLength.Auto
+                }
+            );
+
+            
+
+            //DataGridVM.AddActionColumn((DefaultActionButtons.None), myButton);
 
             MyCommandName = new RelayCommand<object>((registro) =>
             {

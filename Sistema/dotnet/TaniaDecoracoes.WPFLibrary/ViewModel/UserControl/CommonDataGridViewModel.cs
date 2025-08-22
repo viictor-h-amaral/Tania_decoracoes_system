@@ -135,7 +135,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
             #region ACTION COLUMN
 
-            public void AddActionColumn(DefaultActionButtons defaultButtonsToAdd, params ActionGridButton[]? buttons)
+            private void AddActionColumn(DefaultActionButtons defaultButtonsToAdd, List<ActionGridButton>? buttons)
             {
                 var cellTemplate = CreateActionButtonsColumnTemplate(defaultButtonsToAdd, buttons);
 
@@ -153,7 +153,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 OnPropertyChanged(nameof(DataGridColumns));
             }
 
-            private DataTemplate? CreateActionButtonsColumnTemplate(DefaultActionButtons defaultButtonsToAdd, params ActionGridButton[]? buttons)
+            private DataTemplate? CreateActionButtonsColumnTemplate(DefaultActionButtons defaultButtonsToAdd, List<ActionGridButton>? buttons)
             {
                 var factory = new FrameworkElementFactory(typeof(StackPanel));
                 factory.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
@@ -278,14 +278,21 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         #region CONSTRUTOR
 
-        public CommonDataGridViewModel(GridConfigObject configObj) //FAZER COM QUE AINDA NO CONSTRUTOR CRIEMOS (OU NÃO) A COLUNA DE AÇÃO
+        public CommonDataGridViewModel(GridConfigObject configObj)
         {
             TabelaSource = configObj.tabelaSource;
             CreateEntityBase();
             Titulo = configObj.Title;
+
+            bool hasNOActionButton = configObj.DefaultActionButtonsToAdd.HasFlag(DefaultActionButtons.None) &&
+                                     configObj.CustomActionButtons is null;
+            
             LoadSource();
 
             if (configObj.AutoGenerateColumns == true) GenerateColumns();
+
+            if (!hasNOActionButton)
+                AddActionColumn(configObj.DefaultActionButtonsToAdd, configObj.CustomActionButtons);
 
         }
 

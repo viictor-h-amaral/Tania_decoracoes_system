@@ -9,19 +9,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TaniaDecoracoes.Entities.Data.Contexto;
 using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.EntitiesLibrary;
 using TaniaDecoracoes.WPFLibrary.Utils;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
     public class CommonFormViewModel : ViewModelBase
     {
-        private DbContext _dbContext;
+        private object _entityBase;
+
+        public ICommand SaveCommand { get; set; }
 
         #region PROPRIEDADES
 
@@ -100,23 +105,16 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         private FormFieldViewModel CreateFormFieldViewModel(PropertyInfo prop)
         {
-            var field = new FormFieldViewModel();
-
-            field.Label = FormatPropertyLabelHelper.GetPropertyLabel(prop);
-            field.PropertyName = prop.Name;
-            field.PropertyType = prop.PropertyType;
-            field.ValidationRules = GetValidationRules(prop);
-
-            Binding binding = new Binding(prop.Name)
+            var field = new FormFieldViewModel()
             {
-                Source = SourceObject,
-                Mode = BindingMode.TwoWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
+                Label = FormatPropertyLabelHelper.GetPropertyLabel(prop),
+                PropertyName = prop.Name,
+                PropertyType = prop.PropertyType,
+                ValidationRules = GetValidationRules(prop),
 
-            field.Binding = binding;
-            field.IsReadOnly = Mode == FormMode.View; //chamar helper (a criar) que define, com base no modo do form e atributos, se o campo será readonly
-            field.Value = prop.GetValue(SourceObject);
+                IsReadOnly = false, //Mode == FormMode.View, //chamar helper (a criar) que define, com base no modo do form e atributos, se o campo será readonly
+                Value = prop.GetValue(SourceObject)
+            };
 
             return field;
         }
@@ -142,11 +140,10 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             if (estado == FormMode.Create)
                 throw new ArgumentException("O estado 'Create' não deve ser usado com um objeto fonte.");
 
-            _dbContext = contexto;
             Titulo = titulo;
             Mode = estado;
             SourceObject = objeto;
-            TypeObject = objeto.GetType();
+            CreateEntityBase(contexto);
 
             if (autoGenerateFields) GenerateFields();
             //if (estado == FormMode.Edit) CreateSaveButton();
@@ -154,19 +151,33 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         public CommonFormViewModel(string titulo, ITabela tabelaReferencia, bool autoGenerateFields)
         {
-            _dbContext = new TaniaDecoracoesDbContext();
-
             Titulo = titulo;
             Mode = FormMode.Create;
 
             SourceObject = Activator.CreateInstance(tabelaReferencia.ModelType) ?? 
                             throw new InvalidOperationException($"Não foi possível criar uma instância de {tabelaReferencia.ModelType.FullName}.");
 
-            TypeObject = tabelaReferencia.ModelType;
+            CreateEntityBase(new TaniaDecoracoesDbContext());
+
             if (autoGenerateFields) GenerateFields();
+            SaveCommand = new RelayCommand(() =>
+            {
+                var saveMethod = _entityBase.GetType().GetMethod("Save");
+                saveMethod?.Invoke(_entityBase, [SourceObject]);
+            });
             //CreateSaveButton();
         }
 
+        private void CreateEntityBase(DbContext context)
+        {
+            var entityBaseType = typeof(EntityBase<>).MakeGenericType(TypeObject);
+            var entity = Activator.CreateInstance(entityBaseType, context);
+
+            if (entity == null)
+                throw new InvalidOperationException($"Não foi possível criar uma instância de EntityBase para o tipo {entityBaseType} do EntityBase do Grid.");
+
+            _entityBase = entity;
+        }
 
         #endregion CONSTRUTORES
     }

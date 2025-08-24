@@ -18,15 +18,13 @@
                            FontFamily="Quicksand"
                            Margin="2"/>
                 
-                <Border CornerRadius="6" Padding="2" Background="White">
-                <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         IsReadOnly="{Binding IsReadOnly}"
+                
+                    <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsReadOnly="{Binding IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          FontSize="18"
                          FontFamily="Quicksand"
                          Padding="5"
-                         BorderThickness="0"
-                         Background="Transparent"/>
-                </Border>
+                         Background="White"/>
 
             </StackPanel>
         </DataTemplate>
@@ -41,7 +39,7 @@
 
         <DataTemplate x:Key="NumericFieldTemplate">
             <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         IsReadOnly="{Binding IsReadOnly}"
+                         IsReadOnly="{Binding IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Margin="0,2"
                          HorizontalAlignment="Stretch"/>
         </DataTemplate>
@@ -66,9 +64,9 @@
         <Grid.RowDefinitions>
             <RowDefinition x:Name="TituloRow" Height="Auto"/>
             <!-- <RowDefinition x:Name="CloseButtonRow" Height="Auto"/> -->
-            <RowDefinition x:Name="CustomButtonsRow"  Height="10"/>
+            <RowDefinition x:Name="CustomButtonsRow"  Height="40"/>
             <RowDefinition x:Name="FieldsRow"  Height="*"/>
-            <RowDefinition x:Name="CustomButtonsRow2"  Height="Auto"/>
+            <RowDefinition x:Name="CustomButtonsRow2"  Height="40"/>
         </Grid.RowDefinitions>
 
         <TextBlock x:Name="Titulo"
@@ -91,9 +89,9 @@
                 HorizontalAlignment="Right"
                 Command="{Binding CloseCommand}"/> -->
         
-        <StackPanel Grid.Row="2" x:Name="stckPanelCommands" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Width="Auto">
+        <StackPanel Grid.Row="1" x:Name="stckPanelCommands" Orientation="Horizontal" HorizontalAlignment="Right" Width="Auto">
             <!-- Criar pelo código c# / definidos por quem instancia esse cara -->
-                        
+            <Button x:Name="Save" Command="{Binding SaveCommand}" Content="Save"/>
         </StackPanel>
 
         <ItemsControl ItemsSource="{Binding Fields}" Grid.Row="2" VerticalAlignment="Top">
@@ -115,8 +113,9 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <StackPanel Grid.Row="3" x:Name="stckPanelCommands2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Width="Auto">
+            <StackPanel Grid.Row="3" x:Name="stckPanelCommands2" Orientation="Horizontal" HorizontalAlignment="Right" Width="Auto">
             <!-- Criar pelo código c# / definidos por quem instancia esse cara / Cópia da estrutura de stckPanelCommands -->
+            <Button x:Name="Save2" Command="{Binding SaveCommand}" Content="Save"/>
 
         </StackPanel>
     </Grid>

@@ -23,7 +23,16 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         public string Label { get; set; }
         public string PropertyName { get; set; }
         public Type PropertyType { get; set; }
-        public bool IsReadOnly { get; set; }
+
+        private bool _isReadOnly;
+        public bool IsReadOnly { 
+            get => _isReadOnly;
+            set
+            {
+                SetProperty(ref _isReadOnly, value);
+                Console.WriteLine($"IsReadOnly set to {value} for {PropertyName}");
+            }
+        }
         public Binding? Binding { get; set; }
         public IEnumerable<ValidationRule> ValidationRules { get; set; }
         public string ErrorMessage { get; private set; }

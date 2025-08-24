@@ -4,6 +4,8 @@ using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using TaniaDecoracoes.Entities.Data.Contexto;
 using TaniaDecoracoes.Entities.Models.Decoracoes;
+using TaniaDecoracoes.Entities.Models.Decoracoes.Tabelas;
+using TaniaDecoracoes.Entities.Models.Enderecos;
 using TaniaDecoracoes.Entities.Models.Itens;
 using TaniaDecoracoes.Entities.Models.Itens.Tabelas;
 using TaniaDecoracoes.EntitiesLibrary.Entities.Itens;
@@ -39,7 +41,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             var tipoItemEntity = new TipoItemEntity(_dbContext);
             var source = tipoItemEntity.GetMany().FirstOrDefault();
 
-            var commandSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Page), 1);
+            /*var commandSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Page), 1);
             var myButton = new ActionGridButton("\uf1ec",
                                                 "Black",
                                                 "Green",
@@ -87,9 +89,10 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                 );
             });
 
-            DataGridVM.AddDefaultTableButtons();
+            DataGridVM.AddDefaultTableButtons();*/
             //Inicializa o ViewModel do Formulário
-            FormVM = new CommonFormViewModel(titulo: "Cadastro de decorações", FormMode.View, source, _dbContext, true);
+            //FormVM = new CommonFormViewModel(titulo: "Cadastro de decorações", FormMode.View, source, _dbContext, true);
+            FormVM = new CommonFormViewModel("cadastro de tipos de itens", FormMode.Edit, source, _dbContext, true);
         }
 
         private ICommand _myCommandName;

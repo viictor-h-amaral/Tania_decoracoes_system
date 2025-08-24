@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -19,6 +20,7 @@ using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.EntitiesLibrary;
 using TaniaDecoracoes.WPFLibrary.Utils;
+using TaniaDecoracoes.WPFLibrary.Utils.FormUtils;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
@@ -49,7 +51,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             set
             {
                 SetProperty(ref _mode, value);
-                //GenerateFields();
             }
         }
 
@@ -60,7 +61,13 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             set
             {
                 SetProperty(ref _sourceObject, value);
-                TypeObject = value.GetType().BaseType ?? value.GetType();
+
+                bool sourceIsProxy = value.GetType().BaseType != null && value.GetType().BaseType != typeof(object); //value.GetType().Namespace == "Castle.Proxies";
+
+                if (sourceIsProxy)
+                    TypeObject = value.GetType().BaseType;
+                else
+                    TypeObject = value.GetType();
             }
         }
 
@@ -81,6 +88,14 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             get => _fields;
             private set => SetProperty(ref _fields, value);
         }
+
+        private IEnumerable<CustomFormButton> _formComands;
+        public IEnumerable<CustomFormButton> FormCommands
+        {
+            get => _formComands;
+            private set => SetProperty(ref _formComands, value);
+        }
+
 
         #endregion PROPRIEDADES
 
@@ -149,14 +164,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             CreateEntityBase(contexto);
 
             if (autoGenerateFields) GenerateFields();
-            SaveCommand = new RelayCommand(() =>
-            {
-                var saveMethod = _entityBase.GetType().GetMethod("Update");
 
-                var entityToSave = ConvertToBaseType(SourceObject);
-                saveMethod?.Invoke(_entityBase, [entityToSave]);
-            });
-            //if (estado == FormMode.Edit) CreateSaveButton();
+            if (estado == FormMode.Edit) CreateFormCommands();
         }
 
         public CommonFormViewModel(string titulo, ITabela tabelaReferencia, bool autoGenerateFields)
@@ -170,13 +179,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             CreateEntityBase(new TaniaDecoracoesDbContext());
 
             if (autoGenerateFields) GenerateFields();
-            SaveCommand = new RelayCommand(() =>
-            {
-                var saveMethod = _entityBase.GetType().GetMethod("Save");
-                var entityToSave = ConvertToBaseType(SourceObject);
-                saveMethod?.Invoke(_entityBase, [entityToSave]);
-            });
-            //CreateSaveButton();
+
+            CreateFormCommands();
         }
 
         private void CreateEntityBase(DbContext context)
@@ -194,9 +198,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         public static object ConvertToBaseType(object proxy)
         {
-            /*bool isProxy = proxy.GetType().BaseType != null;
-            if (!isProxy) return proxy;*/
-
             var baseType = proxy.GetType().BaseType ?? proxy.GetType();
             var baseInstance = Activator.CreateInstance(baseType);
 
@@ -211,6 +212,41 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
             return baseInstance;
         }
+
+        private void CreateFormCommands()
+        {
+            if(Mode == FormMode.Create)
+            {
+                SaveCommand = new RelayCommand(() =>
+                {
+                    var saveMethod = _entityBase.GetType().GetMethod("Save");
+                    saveMethod?.Invoke(_entityBase, [SourceObject]);
+                });
+            }
+            else
+            {
+                SaveCommand = new RelayCommand(() =>
+                {
+                    var saveMethod = _entityBase.GetType().GetMethod("Update");
+                    var entityToSave = ConvertToBaseType(SourceObject);
+                    saveMethod?.Invoke(_entityBase, [entityToSave]);
+                });
+            }
+
+            var SaveButton = new CustomFormButton()
+            {
+                Conteudo = "Salvar",
+                Icone = "\uf0c7", // ícone de salvar
+                Foreground = Brushes.White,
+                Background = Brushes.Green,
+                Comando = SaveCommand
+            };
+
+            FormCommands = new List<CustomFormButton>
+            {
+                SaveButton
+            };
+        }   
     }
 
     public enum FormMode

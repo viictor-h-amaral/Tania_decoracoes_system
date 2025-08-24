@@ -11,15 +11,13 @@
         
         <DataTemplate x:Key="StringFieldTemplate">
             <StackPanel Orientation="Vertical" Margin="0, 0, 15, 15">
-                
+
                 <TextBlock Text="{Binding Label}" 
                            FontWeight="Bold" 
                            FontSize="22"
                            FontFamily="Quicksand"
                            Margin="2"/>
-                
-                
-                    <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          IsReadOnly="{Binding IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          FontSize="18"
                          FontFamily="Quicksand"
@@ -37,13 +35,6 @@
 
         </DataTemplate>
 
-        <DataTemplate x:Key="NumericFieldTemplate">
-            <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         IsReadOnly="{Binding IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,2"
-                         HorizontalAlignment="Stretch"/>
-        </DataTemplate>
-
         <local:FieldTemplateSelector x:Key="FieldTemplateSelector"
                     StringTemplate="{StaticResource StringFieldTemplate}"
                     BooleanTemplate="{StaticResource BooleanFieldTemplate}"/>
@@ -57,62 +48,93 @@
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/Buttons/CloseFormButtonStyle.xaml" />
+                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/Buttons/FormButtonsStyle.xaml" />
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition x:Name="TituloRow" Height="Auto"/>
-            <!-- <RowDefinition x:Name="CloseButtonRow" Height="Auto"/> -->
             <RowDefinition x:Name="CustomButtonsRow"  Height="40"/>
             <RowDefinition x:Name="FieldsRow"  Height="*"/>
             <RowDefinition x:Name="CustomButtonsRow2"  Height="40"/>
         </Grid.RowDefinitions>
 
         <TextBlock x:Name="Titulo"
-           Grid.Row="0"
-           Text="{Binding Titulo}"
-           FontSize="35"
-           Margin="10"
-           FontFamily="Quicksand"
-           FontWeight="SemiBold"
-           Foreground="#7A3A5C"
-           HorizontalAlignment="Left"
-           VerticalAlignment="Center"/>
+               Grid.Row="0"
+               Text="{Binding Titulo}"
+               FontSize="35"
+               Margin="10"
+               FontFamily="Quicksand"
+               FontWeight="SemiBold"
+               Foreground="#7A3A5C"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"/>
 
-        <!-- <Button Grid.Row="1"
-                x:Name="CloseButton"
-                Style="{StaticResource CloseFormButtonStyle}"
-                Tag="&#xf00d;"
-                Width="Auto"
-                Margin="5"
-                HorizontalAlignment="Right"
-                Command="{Binding CloseCommand}"/> -->
+        <ItemsControl x:Name="itemsControl"  ItemsSource="{Binding FormCommands, UpdateSourceTrigger=PropertyChanged}" 
+              HorizontalAlignment="Right" 
+              Grid.Row="1" Width="Auto">
 
-        <StackPanel Grid.Row="1" x:Name="stckPanelCommands" Orientation="Horizontal" HorizontalAlignment="Right" Width="Auto">
-            <Button x:Name="Save" Command="{Binding SaveCommand}" Content="Save"/>
-        </StackPanel>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Width="Auto" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-            <ItemsControl ItemsSource="{Binding Fields}" Grid.Row="2" VerticalAlignment="Top">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding Conteudo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Background="{Binding Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="{Binding Foreground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource FormButton}"
+                        Command="{Binding Comando, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Tag="{Binding Icone}" 
+                        Margin="6"
+                        Width="Auto"
+                        Height="Auto"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" Width="Auto" MaxWidth="500"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+        <ItemsControl ItemsSource="{Binding Fields}" Grid.Row="2" VerticalAlignment="Top">
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <ContentControl Content="{Binding}"
-                                  ContentTemplateSelector="{StaticResource FieldTemplateSelector}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                
-            </ItemsControl>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" Width="Auto" MaxWidth="500"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-        <StackPanel Grid.Row="3" x:Name="stckPanelCommands2" Orientation="Horizontal" HorizontalAlignment="Right" Width="Auto">
-            <Button x:Name="Save2" Command="{Binding SaveCommand}" Content="Save"/>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}"
+                                ContentTemplateSelector="{StaticResource FieldTemplateSelector}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
 
-        </StackPanel>
+        </ItemsControl>
+
+        <ItemsControl x:Name="itemsControl2"  ItemsSource="{Binding FormCommands, UpdateSourceTrigger=PropertyChanged}" 
+              HorizontalAlignment="Right" Grid.Row="3" Width="Auto">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Width="Auto" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding Conteudo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Background="{Binding Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="{Binding Foreground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource FormButton}"
+                        Command="{Binding Comando, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        Tag="{Binding Icone}" 
+                        Margin="6"
+                        Width="Auto"
+                        Height="Auto"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

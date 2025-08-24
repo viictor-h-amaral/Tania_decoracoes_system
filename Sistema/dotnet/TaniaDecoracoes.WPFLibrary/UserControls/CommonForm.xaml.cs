@@ -57,7 +57,6 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
     {
         public DataTemplate StringTemplate { get; set; }
         public DataTemplate BooleanTemplate { get; set; }
-        public DataTemplate NumericFieldTemplate { get; set; }
         // Adicione templates para outros tipos conforme necessário
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)

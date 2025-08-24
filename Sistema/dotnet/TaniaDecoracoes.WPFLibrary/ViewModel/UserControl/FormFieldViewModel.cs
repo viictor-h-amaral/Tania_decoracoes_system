@@ -9,13 +9,18 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
     public class FormFieldViewModel : ViewModelBase
     {
-        private object? _value;
-        public object? Value
+
+        private readonly Func<object> Getter;
+        private Action<object> Setter;
+
+        //private object? _value;
+        public object Value
         {
-            get => _value;
+            get => Getter();
             set
             {
-                SetProperty(ref _value, value);
+                Setter(value);
+                OnPropertyChanged();
                 Validate();
             }
         }
@@ -33,7 +38,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 Console.WriteLine($"IsReadOnly set to {value} for {PropertyName}");
             }
         }
-        public Binding? Binding { get; set; }
+
         public IEnumerable<ValidationRule> ValidationRules { get; set; }
         public string ErrorMessage { get; private set; }
         public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
@@ -57,6 +62,14 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             OnPropertyChanged(nameof(ErrorMessage));
             OnPropertyChanged(nameof(HasError));
         }
+
+        public FormFieldViewModel(Func<object> getter, Action<object> setter)
+        {
+            Getter = getter;
+            Setter = setter;
+            ValidationRules = new List<ValidationRule>();
+        }
+
     }
 
     public abstract class ValidationRule

@@ -60,7 +60,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             set
             {
                 SetProperty(ref _sourceObject, value);
-                TypeObject = value?.GetType() ?? typeof(object);
+                TypeObject = value.GetType().BaseType ?? value.GetType();
             }
         }
 
@@ -105,7 +105,10 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         private FormFieldViewModel CreateFormFieldViewModel(PropertyInfo prop)
         {
-            var field = new FormFieldViewModel()
+            Func<object> getter = () => prop.GetValue(SourceObject);
+            Action<object> setter = (value) => prop.SetValue(SourceObject, value);
+
+            var field = new FormFieldViewModel(getter, setter)
             {
                 Label = FormatPropertyLabelHelper.GetPropertyLabel(prop),
                 PropertyName = prop.Name,
@@ -146,6 +149,13 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             CreateEntityBase(contexto);
 
             if (autoGenerateFields) GenerateFields();
+            SaveCommand = new RelayCommand(() =>
+            {
+                var saveMethod = _entityBase.GetType().GetMethod("Update");
+
+                var entityToSave = ConvertToBaseType(SourceObject);
+                saveMethod?.Invoke(_entityBase, [entityToSave]);
+            });
             //if (estado == FormMode.Edit) CreateSaveButton();
         }
 
@@ -163,7 +173,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             SaveCommand = new RelayCommand(() =>
             {
                 var saveMethod = _entityBase.GetType().GetMethod("Save");
-                saveMethod?.Invoke(_entityBase, [SourceObject]);
+                var entityToSave = ConvertToBaseType(SourceObject);
+                saveMethod?.Invoke(_entityBase, [entityToSave]);
             });
             //CreateSaveButton();
         }
@@ -180,6 +191,26 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         }
 
         #endregion CONSTRUTORES
+
+        public static object ConvertToBaseType(object proxy)
+        {
+            /*bool isProxy = proxy.GetType().BaseType != null;
+            if (!isProxy) return proxy;*/
+
+            var baseType = proxy.GetType().BaseType ?? proxy.GetType();
+            var baseInstance = Activator.CreateInstance(baseType);
+
+            foreach (var prop in baseType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                if (prop.CanWrite)
+                {
+                    var value = prop.GetValue(proxy);
+                    prop.SetValue(baseInstance, value);
+                }
+            }
+
+            return baseInstance;
+        }
     }
 
     public enum FormMode

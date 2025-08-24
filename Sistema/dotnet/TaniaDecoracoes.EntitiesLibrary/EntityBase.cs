@@ -107,6 +107,19 @@ namespace TaniaDecoracoes.EntitiesLibrary
             }
         }
 
+        public bool Update(T entity)
+        {
+            try
+            {
+                //_dbContext.Set<T>().Update(entity);
+                return _dbContext.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+            }
+        }
+
         public bool Delete(T entity)
         {
             try

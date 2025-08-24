@@ -18,7 +18,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
 {
     public class DecoracoesMainPageViewModel : ViewModelBase
     {
-        private readonly DbContext _dbContext;
+        private DbContext _dbContext;
 
         private CommonDataGridViewModel? _dataGridVM;
         public CommonDataGridViewModel? DataGridVM

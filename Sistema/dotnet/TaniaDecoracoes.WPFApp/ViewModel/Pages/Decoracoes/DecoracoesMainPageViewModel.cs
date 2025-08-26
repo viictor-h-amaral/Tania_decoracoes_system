@@ -41,7 +41,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             var tipoItemEntity = new TipoItemEntity(_dbContext);
             var source = tipoItemEntity.GetMany().FirstOrDefault();
 
-            /*var commandSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Page), 1);
+            var commandSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Page), 1);
             var myButton = new ActionGridButton("\uf1ec",
                                                 "Black",
                                                 "Green",
@@ -71,9 +71,6 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
 
             // Inicializa o ViewModel do DataGrid
             DataGridVM = new CommonDataGridViewModel(gridConfig) { };
-                       
-
-            //DataGridVM.AddActionColumn((DefaultActionButtons.None), myButton);
 
             MyCommandName = new RelayCommand<object>((registro) =>
             {
@@ -89,12 +86,12 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                 );
             });
 
-            DataGridVM.AddDefaultTableButtons();*/
+            DataGridVM.AddDefaultTableButtons();
 
 
             //Inicializa o ViewModel do Formulário
             //FormVM = new CommonFormViewModel(titulo: "Cadastro de tipos de itens", new TipoItemTabela(), true);
-            FormVM = new CommonFormViewModel("cadastro de tipos de itens", FormMode.Edit, source, _dbContext, true);
+            //FormVM = new CommonFormViewModel("cadastro de tipos de itens", FormMode.View, source, _dbContext, true);
         }
 
         private ICommand _myCommandName;

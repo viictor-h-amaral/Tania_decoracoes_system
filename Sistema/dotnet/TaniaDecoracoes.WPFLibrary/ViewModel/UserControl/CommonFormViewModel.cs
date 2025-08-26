@@ -130,7 +130,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 PropertyType = prop.PropertyType,
                 ValidationRules = GetValidationRules(prop),
 
-                IsReadOnly = false, //Mode == FormMode.View, //chamar helper (a criar) que define, com base no modo do form e atributos, se o campo será readonly
+                IsReadOnly = Mode == FormMode.View, //chamar helper (a criar) que define, com base no modo do form e atributos, se o campo será readonly
                 Value = prop.GetValue(SourceObject)
             };
 

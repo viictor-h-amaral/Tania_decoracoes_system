@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.EntityFrameworkCore;
 using TaniaDecoracoes.Entities.Data.Contexto;
 using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
@@ -18,7 +19,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
     public class CommonDataGridViewModel : ViewModelBase
     {
-        private object _entityBase;
+        private readonly object _entityBase;
+        private readonly DbContext _context;
         private Type ElementsType => TabelaSource.ModelType;
 
 
@@ -193,8 +195,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 {
                     ViewCommand = new RelayCommand<object>(registro =>
                     {
-                        var idProperty = registro.GetType().GetProperty("Id");
-                        this.Titulo = $"View command executed: {idProperty.GetValue(registro)}";
+                        var formVm = new CommonFormViewModel("Tipos de itens", FormMode.View, registro, _context, true);
                     });
                     list.Add(ActionGridButton.ViewButton);
                 }
@@ -337,10 +338,10 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         private void CreateEntityBase()
         {
-            var context = new TaniaDecoracoesDbContext();
+            _context = new TaniaDecoracoesDbContext();
 
             var entityBaseType = typeof(EntityBase<>).MakeGenericType(ElementsType);
-            var entity = Activator.CreateInstance(entityBaseType, context);
+            var entity = Activator.CreateInstance(entityBaseType, _context);
 
             if (entity == null)
                 throw new InvalidOperationException($"Não foi possível criar uma instância de EntityBase para o tipo {entityBaseType} do EntityBase do Grid.");

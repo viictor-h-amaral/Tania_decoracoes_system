@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.Entities.Models.Decoracoes;
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Decoracoes;
 using TaniaDecoracoes.Entities.Models.Itens;
 
 namespace TaniaDecoracoes.Entities.Models.Associacao
@@ -8,12 +9,16 @@ namespace TaniaDecoracoes.Entities.Models.Associacao
     /// </summary>
     public partial class AssociacaoDecoracaoFlores
     {
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
         /// Retorna o Id do registro da decoração da associação
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int DecoracaoId { get; set; }
 
         /// <summary>
@@ -25,6 +30,8 @@ namespace TaniaDecoracoes.Entities.Models.Associacao
         /// Reotorna o Id do registro da flor associada
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int FlorId { get; set; }
 
         /// <summary>

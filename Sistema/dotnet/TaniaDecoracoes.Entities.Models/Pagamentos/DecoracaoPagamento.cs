@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.Entities.Models.Decoracoes;
 
 namespace TaniaDecoracoes.Entities.Models.Pagamentos
@@ -12,15 +13,16 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
     /// </summary>
     public class DecoracaoPagamento
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
         /// Retorna o Id da decoração
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int DecoracaoId { get; set; }
 
         /// <summary>
@@ -32,6 +34,8 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         /// Retorna o Id da forma de pagamento da entrada do pagamento da decoração
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int FormaPagamentoEntradaId { get; set; }
 
         /// <summary>
@@ -55,6 +59,8 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         /// Retorna o Id da forma de pagamento do restante do pagamento da decoração
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int FormaPagamentoRestanteId { get; set; }
 
         /// <summary>

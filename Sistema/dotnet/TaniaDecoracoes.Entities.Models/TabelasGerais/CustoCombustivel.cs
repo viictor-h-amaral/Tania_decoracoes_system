@@ -1,19 +1,22 @@
-﻿namespace TaniaDecoracoes.Entities.Models.TabelasGerais
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+
+namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 {
     /// <summary>
     /// Classe referente aos custos de combustíveis do sistema
     /// </summary>
     public class CustoCombustivel
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
         /// Retorna o Id do combustivel que possui esse custo
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int CombustivelId { get; set; }
 
         /// <summary>

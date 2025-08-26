@@ -1,4 +1,5 @@
 ﻿using TaniaDecoracoes.Entities.Models.Associacao;
+using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.Entities.Models.TabelasGerais;
 
 namespace TaniaDecoracoes.Entities.Models.Itens
@@ -8,9 +9,8 @@ namespace TaniaDecoracoes.Entities.Models.Itens
     /// </summary>
     public class Flor
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -41,6 +41,8 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// Retorna o Id da cor da flor
         /// <para>Optional</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int? CorId {  get; set; }
 
         /// <summary>
@@ -51,6 +53,8 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <summary>
         /// Coleção de associações entre decorações e esta flor
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<AssociacaoDecoracaoFlores>? AssociacaoDecoracaoFlores { get; set; }
     }
 }

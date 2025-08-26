@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.Entities.Models.Decoracoes;
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Decoracoes;
 using TaniaDecoracoes.Entities.Models.TabelasGerais;
 
 namespace TaniaDecoracoes.Entities.Models.Clientes
@@ -8,9 +9,8 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
     /// </summary>
     public partial class DependenteCliente
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -29,6 +29,8 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// Retorna o Id do registro do cliente responsável pelo dependente
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int ResponsavelId { get; set; }
 
         /// <summary>
@@ -40,6 +42,8 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// Retorna o Id do registro do gênero do dependente
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int GeneroId { get; set; }
 
         /// <summary>
@@ -51,6 +55,8 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// <summary>
         /// Retorna a lista de decorações associadas a este dependente
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

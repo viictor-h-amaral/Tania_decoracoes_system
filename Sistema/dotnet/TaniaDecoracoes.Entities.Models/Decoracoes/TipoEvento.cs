@@ -1,13 +1,14 @@
-﻿namespace TaniaDecoracoes.Entities.Models.Decoracoes
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+
+namespace TaniaDecoracoes.Entities.Models.Decoracoes
 {
     /// <summary>
     /// Classe referente aos tipos de eventos
     /// </summary>
     public partial class TipoEvento
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -20,6 +21,8 @@
         /// <summary>
         /// Decorações com este tipo de evento
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

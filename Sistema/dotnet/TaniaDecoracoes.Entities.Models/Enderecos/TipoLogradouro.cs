@@ -1,14 +1,16 @@
-﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+
+namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
     /// <summary>
     /// Classe referente aos tipos de logradouros
     /// </summary>
     public class TipoLogradouro
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
+
         /// <summary>
         /// Retorna o Nome do tipo de logradouro
         /// <para>Required</para>
@@ -18,6 +20,8 @@
         /// <summary>
         /// Coleção de logradouros tipo de logradouro
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Logradouro>? Logradouros { get; set; }
     }
 }

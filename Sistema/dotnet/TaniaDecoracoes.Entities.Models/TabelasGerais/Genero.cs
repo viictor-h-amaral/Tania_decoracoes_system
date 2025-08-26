@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.Entities.Models.Clientes;
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Clientes;
 
 namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 {
@@ -7,9 +8,8 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
     /// </summary>
     public class Genero
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -27,11 +27,15 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Coleção de clientes associados a esse gênero
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Cliente>? Clientes { get; set; }
 
         /// <summary>
         /// Coleção de dependentes de clientes
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<DependenteCliente>? DependentesClientes { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.Entities.Models.Decoracoes;
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Decoracoes;
 
 namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 {
@@ -7,9 +8,8 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
     /// </summary>
     public class Carro
     {
-        /// <summary>
-        /// Retorna o Id do registro do carro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -28,6 +28,8 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// Retorna o Id do tipo de combustível do carro
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int TipoCombustivelId { get; set; }
 
         /// <summary>
@@ -44,6 +46,8 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Coleção de decorações associadas a esse carro
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

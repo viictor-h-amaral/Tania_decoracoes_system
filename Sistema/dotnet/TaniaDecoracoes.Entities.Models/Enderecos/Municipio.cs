@@ -1,19 +1,22 @@
-﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+
+namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
     /// <summary>
     /// Classe referente aos municípios
     /// </summary>
     public class Municipio
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
         /// Retorna o Id do estado do município
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int EstadoId { get; set; }
 
         /// <summary>
@@ -36,16 +39,22 @@
         /// <summary>
         /// Coleção de bairros do município
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Bairro>? Bairros { get; set; }
 
         /// <summary>
         /// Coleção de endereços de clientes do município
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
 
         /// <summary>
         /// Coleção de endereços de eventos do município
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
     }
 }

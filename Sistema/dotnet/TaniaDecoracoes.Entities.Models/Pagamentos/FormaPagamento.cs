@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaniaDecoracoes.Entities.Models.Attributes;
 
 namespace TaniaDecoracoes.Entities.Models.Pagamentos
 {
@@ -11,9 +12,8 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
     /// </summary>
     public class FormaPagamento
     {
-        /// <summary>
-        /// Retorna o Id da forma de pagamento da entrada da decoração
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -37,6 +37,8 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
         /// Retorna o Id da taxa de parcelamento da forma de pagamento
         /// <para>Optional</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int? TaxaParcelamentoId { get; set; }
 
         /// <summary>

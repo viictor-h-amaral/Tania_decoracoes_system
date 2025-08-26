@@ -5,16 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TaniaDecoracoes.Entities.Models.Associacao.Tabelas;
 using TaniaDecoracoes.Entities.Models.Decoracoes;
+using TaniaDecoracoes.Entities.Models.Decoracoes.Tabelas;
 
 namespace TaniaDecoracoes.Entities.Data.Mapeamento.Decoracoes
 {
     internal class TipoEventoTypeConfiguration : IEntityTypeConfiguration<TipoEvento>
     {
+        private TipoEventoTabela tabela = new TipoEventoTabela();
+
         public void Configure(EntityTypeBuilder<TipoEvento> entity)
         {
             entity
-                .ToTable("dec_tiposeventos");
+                .ToTable(tabela.NameInDataBase);
 
             #region Propriedades
 

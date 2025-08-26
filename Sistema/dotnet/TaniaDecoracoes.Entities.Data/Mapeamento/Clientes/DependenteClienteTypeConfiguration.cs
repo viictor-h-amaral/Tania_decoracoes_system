@@ -1,15 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TaniaDecoracoes.Entities.Models.Associacao.Tabelas;
 using TaniaDecoracoes.Entities.Models.Clientes;
+using TaniaDecoracoes.Entities.Models.Clientes.Tabelas;
 
 namespace TaniaDecoracoes.Entities.Data.Mapeamento.Clientes
 {
     internal class DependenteClienteTypeConfiguration : IEntityTypeConfiguration<DependenteCliente>
     {
+        private DependenteClienteTabela tabela = new DependenteClienteTabela();
+
         public void Configure(EntityTypeBuilder<DependenteCliente> entity)
         {
             entity
-                .ToTable("cl_dependentesclientes");
+                .ToTable(tabela.NameInDataBase);
 
             #region Propriedades
 

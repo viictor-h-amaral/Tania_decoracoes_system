@@ -1,13 +1,14 @@
-﻿namespace TaniaDecoracoes.Entities.Models.Itens
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+
+namespace TaniaDecoracoes.Entities.Models.Itens
 {
     /// <summary>
     /// Classe referente aos tipos de itens
     /// </summary>
     public class TipoItem
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -19,6 +20,8 @@
         /// <summary>
         /// Coleção de itens deste tipo de item
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Item>? Itens { get; set; }
     }
 }

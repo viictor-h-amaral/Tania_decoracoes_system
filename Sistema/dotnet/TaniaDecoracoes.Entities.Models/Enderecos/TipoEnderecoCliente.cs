@@ -1,13 +1,14 @@
-﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+
+namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
     /// <summary>
     /// Classe referente aos tipos de endereço de cliente
     /// </summary>
     public class TipoEnderecoCliente
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -19,6 +20,8 @@
         /// <summary>
         /// Coleção de endereços de clientes deste tipo de endereço
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
     }
 }

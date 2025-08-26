@@ -14,10 +14,10 @@ namespace TaniaDecoracoes.WPFLibrary.Utils
         {
             var displayAttr = prop.GetCustomAttribute<TitleAttribute>();
 
-            if (displayAttr is null)
-                return prop.Name;
+            if (displayAttr is null || displayAttr.Title is null)
+                return FormatPropertyName(prop.Name);
 
-            return displayAttr.Title ?? FormatPropertyName(prop.Name);
+            return displayAttr.Title;
         }
 
         private static string FormatPropertyName(string propertyName)

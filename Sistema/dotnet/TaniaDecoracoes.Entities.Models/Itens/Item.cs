@@ -9,9 +9,6 @@ namespace TaniaDecoracoes.Entities.Models.Itens
     /// </summary>
     public class Item
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
         [IgnoreOnGrid]
         [IgnoreOnForm]
         public int Id { get; set; }
@@ -27,6 +24,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// Retorna o Id do tipo do item
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
         [IgnoreOnGrid]
         public int TipoItemId { get; set; }
 
@@ -52,6 +50,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// Retorna o Id da cor do item
         /// <para>Optional</para>
         /// </summary>
+        [IgnoreOnForm]
         [IgnoreOnGrid]
         public int? CorId { get; set; }
 
@@ -65,12 +64,14 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// Retorna o Id do tamanho do item
         /// <para>Optional</para>
         /// </summary>
+        [IgnoreOnForm]
         [IgnoreOnGrid]
         public int? TamanhoId { get; set; }
 
         /// <summary>
         /// Instância do tamanho do item
         /// </summary>
+        [IgnoreOnForm]
         [IgnoreOnGrid]
         public virtual Tamanho? TamanhoInstance { get; set; }
 
@@ -109,6 +110,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <summary>
         /// Retorna uma string com as dimensões do item
         /// </summary>
+        [IgnoreOnForm]
         [IgnoreOnGrid]
         public string Dimensoes => TamanhoInstance is null ?
                                     $@" L{(Largura.HasValue     ? Largura.Value     : string.Empty)}
@@ -116,6 +118,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
                                         A{(Altura.HasValue      ? Altura.Value      : string.Empty)}"
                                     : TamanhoInstance.Valor;
 
+        [IgnoreOnForm]
         [IgnoreOnGrid]
         public virtual ICollection<AssociacaoDecoracaoItens>? AssociacaoDecoracaoItens { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.Entities.Models.Itens;
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Itens;
 
 namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 {
@@ -7,9 +8,8 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
     /// </summary>
     public class Cor
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -27,10 +27,14 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Coleção de flores associados à essa cor
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Flor>? Flores { get; set; }
         /// <summary>
         /// Coleção de itens relacionados à essa cor
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Item>? Itens { get; set; }
     }
 }

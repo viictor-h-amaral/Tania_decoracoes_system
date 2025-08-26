@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.Entities.Models.Decoracoes;
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Decoracoes;
 
 namespace TaniaDecoracoes.Entities.Models.Pagamentos
 {
@@ -7,14 +8,15 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
     /// </summary>
     public class DecoracaoCustos
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
         /// Retorna o Id da decoração
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int  DecoracaoId { get; set; }
 
         /// <summary>

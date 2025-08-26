@@ -1,13 +1,14 @@
-﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+
+namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
     /// <summary>
     /// Classe referente aos tipos de endereço de evento
     /// </summary>
     public class TipoEnderecoEvento
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
@@ -19,6 +20,8 @@
         /// <summary>
         /// Coleção de endereços de eventos deste tipo de endereço
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
     }
 }

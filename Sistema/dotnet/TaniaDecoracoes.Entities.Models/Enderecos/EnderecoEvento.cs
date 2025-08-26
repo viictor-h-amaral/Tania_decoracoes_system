@@ -1,4 +1,5 @@
-﻿using TaniaDecoracoes.Entities.Models.Decoracoes;
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Decoracoes;
 
 namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
@@ -7,15 +8,16 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
     /// </summary>
     public class EnderecoEvento
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
         /// Retorna o Id do estado do endereço
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int EstadoId { get; set; }
 
         /// <summary>
@@ -27,6 +29,8 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// Retorna o Id do município do endereço
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int MunicipioId { get; set; }
 
         /// <summary>
@@ -38,6 +42,8 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// Retorna o Id do bairro do endereço
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int BairroId { get; set; }
 
         /// <summary>
@@ -49,6 +55,8 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// Retorna o Id do logradouro do endereço
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int LogradouroId { get; set; }
 
         /// <summary>
@@ -60,6 +68,8 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// Retorna o Id do tipo de endereço do evento
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int TipoEnderecoEventoId { get; set; }
 
         /// <summary>
@@ -100,6 +110,8 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Coleção de decorações associadas a este endereço de evento
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Decoracao>? Decoracoes { get; set; }
     }
 }

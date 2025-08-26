@@ -37,7 +37,6 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// <summary>
         /// Instância do cliente associado à decoração
         /// </summary>
-        [TitleAttribute()]
         public virtual required Cliente ClienteInstance { get; set; }
 
         /// <summary>
@@ -51,7 +50,6 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// <summary>
         /// Instância do dependente do cliente associado à decoração
         /// </summary>
-        [TitleAttribute()]
         public virtual DependenteCliente? ComemorandoInstance { get; set; }
 
         /// <summary>
@@ -107,28 +105,24 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// <summary>
         /// Instância do carro utilizado na decoração
         /// </summary>
-        [TitleAttribute()]
         public virtual required Carro CarroUtilizadoInstance { get; set; }
 
         /// <summary>
         /// Retorna a distância (em km) de casa até o local do evento
         /// <para>Optional</para>
         /// </summary>
-        [TitleAttribute()]
         public float? DistanciaDeCasa { get; set; }
 
         /// <summary>
         /// Retorna o valor sugerido pelo sistema para a decoração
         /// <para>Optional</para>
         /// </summary>
-        [TitleAttribute()]
         public decimal? ValorSugerido {  get; set; }
 
         /// <summary>
         /// Retorna o valor cobrado pelo serviço de decoração
         /// <para>Required</para>
         /// </summary>
-        [TitleAttribute()]
         public decimal ValorCobrado { get; set; }
 
         /// <summary>
@@ -148,7 +142,6 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// Retorna a data e hora da montagem da decoração
         /// <para>Optional</para>
         /// </summary>
-        [TitleAttribute()]
         public DateTime? DataHoraMontagem { get; set; }
 
         /// <summary>
@@ -157,7 +150,6 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// </summary>
         [TitleAttribute(title: "Pegue e monte?")]
         public bool PegueEMonte { get; set; }
-
 
         /// <summary>
         /// Instância do pagamento da decoração

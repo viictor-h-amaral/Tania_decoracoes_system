@@ -1,15 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaniaDecoracoes.Entities.Models.Associacao;
+using TaniaDecoracoes.Entities.Models.Associacao.Tabelas;
 
 namespace TaniaDecoracoes.Entities.Data.Mapeamento.Associacao
 {
     internal class AssociacaoDecoracaoItensTypeConfiguration : IEntityTypeConfiguration<AssociacaoDecoracaoItens>
     {
+        private AssociacaoDecoracaoItensTabela tabela = new AssociacaoDecoracaoItensTabela();
+
         public void Configure(EntityTypeBuilder<AssociacaoDecoracaoItens> entity)
         {
             entity
-                .ToTable("assoc_decoracoes_itens");
+                .ToTable(tabela.NameInDataBase);
 
             #region Propriedades
 

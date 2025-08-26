@@ -1,19 +1,22 @@
-﻿namespace TaniaDecoracoes.Entities.Models.Enderecos
+﻿using TaniaDecoracoes.Entities.Models.Attributes;
+
+namespace TaniaDecoracoes.Entities.Models.Enderecos
 {
     /// <summary>
     /// Classe referente aos logradouros
     /// </summary>
     public class Logradouro
     {
-        /// <summary>
-        /// Retorna o Id do registro no banco de dados
-        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int Id { get; set; }
 
         /// <summary>
         /// Retorna o Id do bairro associado ao logradouro
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int BairroId { get; set; }
 
         /// <summary>
@@ -31,6 +34,8 @@
         /// Retorna o Id do tipo de logradouro
         /// <para>Optional</para>
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public int? TipoLogradouroId { get; set; }
 
         /// <summary>
@@ -41,16 +46,22 @@
         /// <summary>
         /// Coleção de CEPs associados a este logradouro
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<Cep>? Ceps { get; set; }
 
         /// <summary>
         /// Coleção de endereços de clientes associados a este logradouro
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<EnderecoCliente>? EnderecosClientes { get; set; }
 
         /// <summary>
         /// Coleção de endereços de eventos associados a este logradouro
         /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
         public virtual ICollection<EnderecoEvento>? EnderecosEventos { get; set; }
     }
 }

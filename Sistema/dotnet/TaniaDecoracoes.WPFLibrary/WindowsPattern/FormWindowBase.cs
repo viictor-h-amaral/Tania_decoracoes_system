@@ -19,7 +19,7 @@ namespace TaniaDecoracoes.WPFLibrary.WindowsPattern
 
             var chrome = new WindowChrome
             {
-                CornerRadius = new CornerRadius(20),
+                CornerRadius = new CornerRadius(30),
                 GlassFrameThickness = new Thickness(1),
                 ResizeBorderThickness = new Thickness(3),
                 CaptionHeight = 0

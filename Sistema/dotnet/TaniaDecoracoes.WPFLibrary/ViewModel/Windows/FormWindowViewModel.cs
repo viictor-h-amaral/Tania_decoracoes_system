@@ -12,7 +12,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.Windows
     public class FormWindowViewModel : ViewModelBase
     {
         public event EventHandler RequestClose;
-        public ICommand CloseCommand { get; private set; }
+        public ICommand CloseCommand { get; set; }
 
         private CommonFormViewModel _formVM;
         public CommonFormViewModel FormVM

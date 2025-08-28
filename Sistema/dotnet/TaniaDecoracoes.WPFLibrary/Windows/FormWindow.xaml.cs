@@ -21,12 +21,14 @@ namespace TaniaDecoracoes.WPFLibrary.Windows
     /// <summary>
     /// Lógica interna para FormWindow.xaml
     /// </summary>
-    public partial class FormWindow : Window
+    public partial class FormWindow : FormWindowBase
     {
         
         public FormWindow(FormWindowViewModel vm)
         {
             this.DataContext = vm;
+            vm.RequestClose += (s, e) => Close();
+
             InitializeComponent();
         }
     }

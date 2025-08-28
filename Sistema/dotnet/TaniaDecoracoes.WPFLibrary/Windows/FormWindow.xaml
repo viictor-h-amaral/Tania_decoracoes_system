@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaniaDecoracoes.WPFLibrary.Windows"
+        xmlns:userControls="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls"
         mc:Ignorable="d"
         Title="FormWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <Button Content="btnClose" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding CloseCommand}"/>
+        <userControls:CommonForm x:Name="Form" DataContext="{Binding FormVM}"/>
+    </StackPanel>
 </Window>

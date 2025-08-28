@@ -14,13 +14,15 @@ using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.EntitiesLibrary;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
+using TaniaDecoracoes.WPFLibrary.ViewModel.Windows;
+using TaniaDecoracoes.WPFLibrary.Windows;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
     public class CommonDataGridViewModel : ViewModelBase
     {
-        private readonly object _entityBase;
-        private readonly DbContext _context;
+        private object _entityBase;
+        private DbContext _context;
         private Type ElementsType => TabelaSource.ModelType;
 
 
@@ -196,7 +198,12 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                     ViewCommand = new RelayCommand<object>(registro =>
                     {
                         var formVm = new CommonFormViewModel("Tipos de itens", FormMode.View, registro, _context, true);
-                    });
+                        var formWindowVM = new FormWindowViewModel(formVm);
+
+                        var formWindow = new FormWindow(formWindowVM);
+                        formWindow.Show();
+
+                    }); 
                     list.Add(ActionGridButton.ViewButton);
                 }
 

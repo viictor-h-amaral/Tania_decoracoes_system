@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
+using TaniaDecoracoes.WPFLibrary.ViewModel.Windows;
+using TaniaDecoracoes.WPFLibrary.WindowsPattern;
 
 namespace TaniaDecoracoes.WPFLibrary.Windows
 {
@@ -19,8 +23,10 @@ namespace TaniaDecoracoes.WPFLibrary.Windows
     /// </summary>
     public partial class FormWindow : Window
     {
-        public FormWindow()
+        
+        public FormWindow(FormWindowViewModel vm)
         {
+            this.DataContext = vm;
             InitializeComponent();
         }
     }

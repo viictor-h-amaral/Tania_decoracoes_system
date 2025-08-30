@@ -23,6 +23,7 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// Retorna a data de aniversário do dependente
         /// <para>Required</para>
         /// </summary>
+        [TitleAttribute(title: "Data de aniversário")]
         public DateOnly DataAniversario { get; set; }
 
         /// <summary>
@@ -36,6 +37,8 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// <summary>
         /// Instância do cliente responsável pelo dependente
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
+        [TitleAttribute(title: "Responsável")]
         public virtual required Cliente ResponsavelInstance { get; set; }
 
         /// <summary>
@@ -49,9 +52,11 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// <summary>
         /// Instância do gênero do dependente
         /// </summary>
+        [BindingAttribute(fieldName: "Identificacao")]
+        [TitleAttribute(title: "Gênero")]
         public virtual required Genero GeneroInstance { get; set; }
 
-
+        public string Identificacao => $"{Nome}, {ResponsavelInstance.Nome}";
         /// <summary>
         /// Retorna a lista de decorações associadas a este dependente
         /// </summary>

@@ -15,6 +15,7 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// Retorna o nome do combustível
         /// <para>Required</para>
         /// </summary>
+        [Title("Nome")]
         public required string NomeCombustivel { get; set; }
 
         /// <summary>

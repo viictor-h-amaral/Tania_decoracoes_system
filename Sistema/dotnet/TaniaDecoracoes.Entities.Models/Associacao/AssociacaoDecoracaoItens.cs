@@ -24,6 +24,8 @@ namespace TaniaDecoracoes.Entities.Models.Associacao
         /// <summary>
         /// Instância da decoração associada
         /// </summary>
+        [BindingAttribute(fieldName: "Identificacao")]
+        [TitleAttribute(title: "Decoração")]
         public virtual required Decoracao DecoracaoInstance { get; set; }
 
         /// <summary>
@@ -37,6 +39,8 @@ namespace TaniaDecoracoes.Entities.Models.Associacao
         /// <summary>
         /// Instância do item associado
         /// </summary>
+        [BindingAttribute(fieldName: "Identificacao")]
+        [TitleAttribute]
         public virtual required Item ItemInstance { get; set; }
     }
 }

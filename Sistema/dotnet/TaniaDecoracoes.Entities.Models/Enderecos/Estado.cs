@@ -23,6 +23,10 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// </summary>
         public required string Sigla { get; set; }
 
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
+        public string Identificacao => $"{Nome} - {Sigla}";
+
         /// <summary>
         /// Coleção de municípios do estado
         /// </summary>

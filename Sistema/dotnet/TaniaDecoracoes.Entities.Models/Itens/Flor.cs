@@ -23,18 +23,21 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// Retorna o preço da flor em época de temporada
         /// <para>Optional</para>
         /// </summary>
+        [TitleAttribute(title: "Preço durante temporada")]
         public decimal? PrecoTemporada { get; set; }
 
         /// <summary>
         /// Retorna o preço padrão da flor
         /// <para>Required</para>
         /// </summary>
+        [TitleAttribute(title: "Preço padrão")]
         public decimal PrecoPadrao { get; set; }
 
         /// <summary>
         /// Retorna o endereço da imagem da flor
         /// <para>Optional</para>
         /// </summary>
+        [TitleAttribute(title: "Endereço da imagem")]
         public string? EnderecoImagem { get; set; }
 
         /// <summary>
@@ -48,6 +51,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <summary>
         /// Instância da cor da flor
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
         public virtual Cor? CorInstance { get; set; }
 
         /// <summary>

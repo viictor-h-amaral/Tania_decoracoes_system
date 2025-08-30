@@ -18,6 +18,7 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// Retorna a data de cadastro do cliente
         /// <para>Required</para>
         /// </summary>
+        [TitleAttribute("Data de cadastro")]
         public DateOnly DataCadastro { get; set; }
 
         /// <summary>
@@ -36,6 +37,7 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// Retorna a data de nascimento do cliente
         /// <para>Optional</para>
         /// </summary>
+        [TitleAttribute("Data de nascimento")]
         public DateOnly? DataNascimento { get; set; }
 
         /// <summary>
@@ -49,6 +51,8 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// <summary>
         /// Instncia do gênero do cliente
         /// </summary>
+        [BindingAttribute(fieldName: "Identificacao")]
+        [TitleAttribute(title: "Gênero")]
         public virtual Genero? GeneroInstance { get; set; }
 
         /// <summary>
@@ -62,6 +66,8 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// <summary>
         /// Instância do endereço do cliente
         /// </summary>
+        [BindingAttribute(fieldName: "Identificacao")]
+        [TitleAttribute(title: "Endereco do cliente")]
         public virtual required EnderecoCliente EnderecoClienteInstance {  get; set; }
 
         /// <summary>
@@ -75,7 +81,6 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         /// <para>Optional</para>
         /// </summary>
         public string? Cpf { get; set; }
-
 
         /// <summary>
         /// Retorna os dependentes do cliente

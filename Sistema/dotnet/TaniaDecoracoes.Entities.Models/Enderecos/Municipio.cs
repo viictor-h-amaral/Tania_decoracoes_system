@@ -22,6 +22,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do estado do município
         /// </summary>
+        [BindingAttribute(fieldName: "Identificacao")]
         public virtual required Estado EstadoInstance { get; set; }
 
         /// <summary>
@@ -34,6 +35,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// Retorna o código IBGE do município
         /// <para>Optional</para>
         /// </summary>
+        [TitleAttribute(title: "Código IBGE")]
         public int? CodigoIBGE { get; set; }
 
         /// <summary>

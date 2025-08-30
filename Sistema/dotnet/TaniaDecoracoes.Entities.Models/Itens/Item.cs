@@ -17,7 +17,6 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// Retorna o apelido do item
         /// <para>Optional</para>
         /// </summary>
-        [IgnoreOnGrid]
         public string? Apelido { get; set; }
 
         /// <summary>
@@ -31,12 +30,15 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <summary>
         /// Instância do tipo do item
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
+        [TitleAttribute(title: "Tipo do item")]
         public virtual required TipoItem TipoItemInstance { get; set; }
 
         /// <summary>
         /// Retorna a quantidade em estoque do item
         /// <para>Required</para>
         /// </summary>
+        [TitleAttribute(title: "Quantidade em estoque")]
         public int QuantidadeEstoque { get; set; }
 
         /// <summary>
@@ -44,6 +46,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <para>Optional</para>
         /// </summary>
         [IgnoreOnGrid]
+        [TitleAttribute(title: "Preço")]
         public decimal? Preco { get; set; }
 
         /// <summary>
@@ -57,7 +60,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <summary>
         /// Instância da cor do item
         /// </summary>
-        [IgnoreOnGrid]
+        [BindingAttribute(fieldName: "Nome")]
         public virtual Cor? CorInstance { get; set; }
 
         /// <summary>
@@ -71,8 +74,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <summary>
         /// Instância do tamanho do item
         /// </summary>
-        [IgnoreOnForm]
-        [IgnoreOnGrid]
+        [BindingAttribute(fieldName: "Valor")]
         public virtual Tamanho? TamanhoInstance { get; set; }
 
         /// <summary>
@@ -110,13 +112,16 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// <summary>
         /// Retorna uma string com as dimensões do item
         /// </summary>
+        [TitleAttribute(title: "Dimensões")]
+        public string Dimensoes => TamanhoInstance is null ?
+                                    $@" L{(Largura.HasValue     ? Largura.Value     : string.Empty)}"+
+                                     $" C{(Comprimento.HasValue ? Comprimento.Value : string.Empty)}"+
+                                     $" A{(Altura.HasValue      ? Altura.Value      : string.Empty)}"
+                                    : TamanhoInstance.Valor;
+
         [IgnoreOnForm]
         [IgnoreOnGrid]
-        public string Dimensoes => TamanhoInstance is null ?
-                                    $@" L{(Largura.HasValue     ? Largura.Value     : string.Empty)}
-                                        C{(Comprimento.HasValue ? Comprimento.Value : string.Empty)}
-                                        A{(Altura.HasValue      ? Altura.Value      : string.Empty)}"
-                                    : TamanhoInstance.Valor;
+        public string Identificacao => $"{TipoItemInstance.Nome}{(CorInstance is null ? string.Empty : $" - {CorInstance.Nome}")} {Dimensoes}";
 
         [IgnoreOnForm]
         [IgnoreOnGrid]

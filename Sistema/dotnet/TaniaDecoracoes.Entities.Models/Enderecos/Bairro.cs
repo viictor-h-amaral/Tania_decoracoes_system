@@ -10,6 +10,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         [IgnoreOnForm]
         [IgnoreOnGrid]
         public int Id { get; set; }
+
         /// <summary>
         /// Retorna o Id do registro do município do bairro
         /// <para>Required</para>
@@ -21,6 +22,8 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do município do bairro
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
+        [TitleAttribute(title: "Município")]
         public virtual required Municipio MunicipioInstance { get; set; }
 
         /// <summary>

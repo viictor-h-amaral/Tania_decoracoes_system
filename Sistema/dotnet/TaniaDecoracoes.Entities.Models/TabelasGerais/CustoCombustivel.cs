@@ -22,6 +22,8 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Instância do combustível que possui esse custo
         /// </summary>
+        [BindingAttribute(fieldName: "NomeCombustivel")]
+        [TitleAttribute(title: "Tipo de combustível")]
         public virtual required TipoCombustivel CombustivelInstance { get; set; }
 
         /// <summary>

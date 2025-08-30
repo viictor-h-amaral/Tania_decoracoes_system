@@ -37,6 +37,8 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// <summary>
         /// Instância do cliente associado à decoração
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
+        [TitleAttribute]
         public virtual required Cliente ClienteInstance { get; set; }
 
         /// <summary>
@@ -50,6 +52,8 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// <summary>
         /// Instância do dependente do cliente associado à decoração
         /// </summary>
+        [BindingAttribute(fieldName: "Identificacao")]
+        [TitleAttribute]
         public virtual DependenteCliente? ComemorandoInstance { get; set; }
 
         /// <summary>
@@ -63,7 +67,8 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// <summary>
         /// Retorna a instância do endereço do evento
         /// </summary>
-        [TitleAttribute(title : "Endereço do evento")]
+        [BindingAttribute(fieldName: "Identificacao")]
+        [TitleAttribute(title: "Endereço do evento")]
         public virtual EnderecoEvento? EnderecoEventoInstance { get; set; }
 
         /// <summary>
@@ -77,6 +82,7 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// <summary>
         /// Instância do tipo de evento da decoração
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
         [TitleAttribute(title: "Tipo do evento")]
         public virtual required TipoEvento TipoEventoInstance { get; set; }
 
@@ -91,6 +97,7 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// <summary>
         /// Instância do tema de aniversário da decoração
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
         [TitleAttribute(title: "Tema do aniversário")]
         public virtual TemaAniversario? TemaAniversarioInstance { get; set; }
 
@@ -105,6 +112,8 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// <summary>
         /// Instância do carro utilizado na decoração
         /// </summary>
+        [BindingAttribute(fieldName: "Apelido")]
+        [TitleAttribute(title: "Carro utilizado")]
         public virtual required Carro CarroUtilizadoInstance { get; set; }
 
         /// <summary>
@@ -142,6 +151,7 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// Retorna a data e hora da montagem da decoração
         /// <para>Optional</para>
         /// </summary>
+        [TitleAttribute(title: "Data e hora da montagem")]
         public DateTime? DataHoraMontagem { get; set; }
 
         /// <summary>

@@ -35,12 +35,15 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// <summary>
         /// Instância do tipo de combustível do carro
         /// </summary>
+        [BindingAttribute(fieldName: "NomeCombustivel")]
+        [TitleAttribute(title: "Tipo de combustível")]
         public virtual required TipoCombustivel TipoCombustivelInstance { get; set; }
 
         /// <summary>
         /// Retorna se o carro está, ou não, ativo
         /// <para>Optional</para>
         /// </summary>
+        [TitleAttribute(title: "Ativo")]
         public bool? EstaAtivo { get; set; }
 
         /// <summary>

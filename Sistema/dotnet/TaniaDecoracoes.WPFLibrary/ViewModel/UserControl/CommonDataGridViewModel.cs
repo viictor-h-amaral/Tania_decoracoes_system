@@ -105,11 +105,12 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0271cc")),
                 Comando = new RelayCommand(() =>
                 {
-                    var formVm = new CommonFormViewModel("Tipos de itens", new TipoItemTabela(), true);
+                    var formVm = new CommonFormViewModel(Titulo, TabelaSource, true);
                     var formWindowVM = new FormWindowViewModel(formVm);
 
                     var formWindow = new FormWindow(formWindowVM);
                     formWindow.ShowDialog();
+                    LoadSource();
                 }),
                 Ordem = 0
             };
@@ -208,7 +209,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
                         var formWindow = new FormWindow(formWindowVM);
                         formWindow.ShowDialog();
-
                     }); 
                     list.Add(ActionGridButton.ViewButton);
                 }
@@ -222,7 +222,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
                         var formWindow = new FormWindow(formWindowVM);
                         formWindow.ShowDialog();
-
+                        LoadSource();
                     });
                     list.Add(ActionGridButton.EditButton);
                 }
@@ -302,8 +302,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             CreateEntityBase();
             Titulo = configObj.Title;
 
-            
-            
             LoadSource();
 
             if (configObj.AutoGenerateColumns == true) GenerateColumns();
@@ -328,15 +326,25 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 if (property.GetCustomAttribute<IgnoreOnGridAttribute>() != null)
                     continue;
 
+                string bindingPath = SetBindingPath(property);
+
                 var column = new DataGridTextColumn
                 {
                     Header = FormatPropertyLabelHelper.GetPropertyLabel(property),
-                    Binding = new Binding(property.Name),
+                    Binding = new Binding(bindingPath),
                     Width = DataGridUnits.GridLengthAuto
                 };
 
                 AddColumn(column);
             }
+        }
+
+        private string SetBindingPath (PropertyInfo prop)
+        {
+            string binding = prop.Name;
+            if (prop.GetCustomAttribute<BindingAttribute>() != null) binding += "."+prop.GetCustomAttribute<BindingAttribute>()!.FieldToBringFromInstance;
+
+            return binding;
         }
 
         private void LoadSource()

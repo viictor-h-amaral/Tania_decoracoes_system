@@ -22,6 +22,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do bairro associado ao logradouro
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
         public virtual required Bairro BairroInstance { get; set; }
 
         /// <summary>
@@ -41,7 +42,13 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do tipo de logradouro
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
+        [TitleAttribute(title: "Tipo de logradouro")]
         public virtual TipoLogradouro? TipoLogradouroInstance { get; set; }
+
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
+        public string Identificacao => $"{(TipoLogradouroInstance?.Nome+" ") ?? string.Empty}{Nome}";
 
         /// <summary>
         /// Coleção de CEPs associados a este logradouro

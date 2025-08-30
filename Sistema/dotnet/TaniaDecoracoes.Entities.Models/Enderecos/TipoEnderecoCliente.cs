@@ -15,6 +15,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// Retorna o tipo de endereço do cliente
         /// <para>Required</para>
         /// </summary>
+        [TitleAttribute(title: "Tipo de endereço")]
         public required string TipoEndereco { get; set; }
 
         /// <summary>

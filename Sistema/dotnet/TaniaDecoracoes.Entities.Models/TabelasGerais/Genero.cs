@@ -24,6 +24,10 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
         /// </summary>
         public char? Letra { get; set; }
 
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
+        public string Identificacao => Letra.HasValue ? Letra.Value.ToString() : Sexo;
+
         /// <summary>
         /// Coleção de clientes associados a esse gênero
         /// </summary>

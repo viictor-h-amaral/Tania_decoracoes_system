@@ -23,6 +23,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do estado do endereço
         /// </summary>
+        [BindingAttribute(fieldName: "Identificacao")]
         public virtual required Estado EstadoInstance { get; set; }
 
         /// <summary>
@@ -36,6 +37,8 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do município do endereço
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
+        [TitleAttribute(title: "Município")]
         public virtual required Municipio MunicipioInstance { get; set; }
 
         /// <summary>
@@ -49,6 +52,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do bairro do endereço
         /// </summary>
+        [BindingAttribute(fieldName: "Nome")]
         public virtual required Bairro BairroInstance { get; set; }
 
         /// <summary>
@@ -62,6 +66,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do logradouro do endereço
         /// </summary>
+        [BindingAttribute(fieldName: "Identificacao")]
         public virtual required Logradouro LogradouroInstance { get; set; }
 
         /// <summary>
@@ -75,12 +80,15 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// <summary>
         /// Instância do tipo de endereço do evento
         /// </summary>
+        [BindingAttribute(fieldName: "TipoEndereco")]
+        [TitleAttribute(title: "Tipo de endereço")]
         public virtual required TipoEnderecoEvento TipoEnderecoEventoInstance { get; set; }
 
         /// <summary>
         /// Retorna o número do endereço
         /// <para>Required</para>
         /// </summary>
+        [TitleAttribute(title: "Número do endereço")]
         public int NumeroEndereco { get; set; }
 
         /// <summary>
@@ -93,19 +101,26 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
         /// Observações adicionais do endereço
         /// <para>Optional</para>
         /// </summary>
+        [TitleAttribute(title: "Observações")]
         public string? Observacoes { get; set; }
 
         /// <summary>
         /// Retorna o andar do apartamento
         /// <para>Optional</para>
         /// </summary>
+        [TitleAttribute(title: "Andar do apartamento")]
         public int? AndarApartamento { get; set; }
 
         /// <summary>
         /// Retorna o número do apartamento
         /// <para>Optional</para>
         /// </summary>
+        [TitleAttribute(title: "Número do apartamento")]
         public int? NumeroApartamento { get; set; }
+
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
+        public string Identificacao => $"{LogradouroInstance.TipoLogradouroInstance?.Nome} {LogradouroInstance.Nome} - N{NumeroEndereco}, {BairroInstance.Nome}, {MunicipioInstance.Nome}-{EstadoInstance.Sigla}";
 
         /// <summary>
         /// Coleção de decorações associadas a este endereço de evento

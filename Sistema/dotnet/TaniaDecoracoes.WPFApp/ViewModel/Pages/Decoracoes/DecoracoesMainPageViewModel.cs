@@ -53,7 +53,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                                                     title: "Itens",
                                                     readOnly: true,
                                                     autoGenerateColumns: true,
-                                                    (DefaultActionButtons.Delete | DefaultActionButtons.View)); 
+                                                    (DefaultActionButtons.All)); 
 
             gridConfig.CustomActionButtons = new List<ActionGridButton>
             {

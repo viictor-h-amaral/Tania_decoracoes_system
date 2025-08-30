@@ -8,9 +8,11 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using TaniaDecoracoes.Entities.Data.Contexto;
 using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
+using TaniaDecoracoes.Entities.Models.Itens.Tabelas;
 using TaniaDecoracoes.EntitiesLibrary;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
@@ -103,7 +105,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0271cc")),
                 Comando = new RelayCommand(() =>
                 {
-                    MessageBox.Show("Novo botão clicado!");
+                    var formVm = new CommonFormViewModel("Tipos de itens", new TipoItemTabela(), true);
+                    var formWindowVM = new FormWindowViewModel(formVm);
+
+                    var formWindow = new FormWindow(formWindowVM);
+                    formWindow.ShowDialog();
                 }),
                 Ordem = 0
             };
@@ -201,7 +207,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                         var formWindowVM = new FormWindowViewModel(formVm);
 
                         var formWindow = new FormWindow(formWindowVM);
-                        formWindow.Show();
+                        formWindow.ShowDialog();
 
                     }); 
                     list.Add(ActionGridButton.ViewButton);
@@ -211,8 +217,12 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 {
                     EditCommand = new RelayCommand<object>(registro =>
                     {
-                        var idProperty = registro.GetType().GetProperty("Id");
-                        this.Titulo = $"Edit command executed: {idProperty.GetValue(registro)}";
+                        var formVm = new CommonFormViewModel("Tipos de itens", FormMode.Edit, registro, _context, true);
+                        var formWindowVM = new FormWindowViewModel(formVm);
+
+                        var formWindow = new FormWindow(formWindowVM);
+                        formWindow.ShowDialog();
+
                     });
                     list.Add(ActionGridButton.EditButton);
                 }

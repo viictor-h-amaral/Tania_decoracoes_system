@@ -7,21 +7,8 @@
         xmlns:userControls="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls"
         xmlns:padroesJanelas="clr-namespace:TaniaDecoracoes.WPFLibrary.WindowsPattern"
         mc:Ignorable="d"
-        Title="FormWindow" Height="450" Width="800">
-    <StackPanel Orientation="Vertical">
+        Title="FormWindow" >
+    <Grid>
 
-        <StackPanel.Resources>
-            <ResourceDictionary>
-                <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="/TaniaDecoracoes.WPFLibrary;component/Styles/ControleJanelaStyle.xaml" />
-                </ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary>
-        </StackPanel.Resources>
-
-        <Button Content="×" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding CloseCommand}"
-                Style="{StaticResource ControleJanelaClose}" Height="30" Width="30"/>
-        
-        <userControls:CommonForm x:Name="Form" DataContext="{Binding FormVM}"/>
-        
-    </StackPanel>
+    </Grid>
 </padroesJanelas:FormWindowBase>

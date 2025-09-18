@@ -59,7 +59,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             {
                 myButton
             };
-            gridConfig.CustomColumns = new List<DataGridColumn>()
+            /*gridConfig.CustomColumns = new List<DataGridColumn>()
             {
                 new DataGridTextColumn
                 {
@@ -67,7 +67,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                     Binding = new Binding("TipoItemInstance.Nome"),
                     Width = DataGridLength.Auto
                 }
-            };
+            };*/
 
             // Inicializa o ViewModel do DataGrid
             DataGridVM = new CommonDataGridViewModel(gridConfig) { };

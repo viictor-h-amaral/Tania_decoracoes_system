@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using TaniaDecoracoes.Entities.Models.Attributes;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
@@ -13,10 +15,45 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         private readonly Func<object> Getter;
         private Action<object> Setter;
 
+        private object Getter2()
+        {
+            bool ehInstancia = Property.GetCustomAttribute<BindingAttribute>() != null;
+
+            var result = ehInstancia
+                ? Getter()?.GetType().GetProperty(
+                    Property.GetCustomAttribute<BindingAttribute>().FieldToBringFromInstance)?.GetValue(
+                        Getter())
+                : Getter();
+            return result;
+        }
+
+        /*private object Setter2(object value)
+        {
+            bool ehInstancia = Property.GetCustomAttribute<BindingAttribute>() != null;
+            if (ehInstancia)
+            {
+                var instance = Property.GetValue(Getter());
+                var propToSet = instance?.GetType().GetProperty(
+                    Property.GetCustomAttribute<BindingAttribute>().FieldToBringFromInstance);
+                if (propToSet != null && instance != null)
+                {
+                    propToSet.SetValue(instance, value);
+                    Property.SetValue(Getter(), instance);
+                }
+            }
+            else
+            {
+                Property.SetValue(Getter(), value);
+            }
+            return null;
+        }*/
+
+        private PropertyInfo Property { get; set; }
+
         //private object? _value;
         public object Value
         {
-            get => Getter();
+            get => Getter2();
             set
             {
                 Setter(value);
@@ -63,8 +100,9 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             OnPropertyChanged(nameof(HasError));
         }
 
-        public FormFieldViewModel(Func<object> getter, Action<object> setter)
+        public FormFieldViewModel(Func<object> getter, Action<object> setter, PropertyInfo prop = null)
         {
+            Property = prop;
             Getter = getter;
             Setter = setter;
             ValidationRules = new List<ValidationRule>();

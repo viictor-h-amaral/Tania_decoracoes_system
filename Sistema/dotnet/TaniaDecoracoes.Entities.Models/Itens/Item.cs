@@ -113,6 +113,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
         /// Retorna uma string com as dimensões do item
         /// </summary>
         [TitleAttribute(title: "Dimensões")]
+        [IgnoreOnForm]
         public string Dimensoes => TamanhoInstance is null ?
                                     $@" L{(Largura.HasValue     ? Largura.Value     : string.Empty)}"+
                                      $" C{(Comprimento.HasValue ? Comprimento.Value : string.Empty)}"+

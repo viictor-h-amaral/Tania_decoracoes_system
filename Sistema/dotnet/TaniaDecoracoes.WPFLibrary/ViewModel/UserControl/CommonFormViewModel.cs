@@ -123,7 +123,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             Func<object> getter = () => prop.GetValue(SourceObject);
             Action<object> setter = (value) => prop.SetValue(SourceObject, value);
 
-            var field = new FormFieldViewModel(getter, setter)
+            var field = new FormFieldViewModel(getter, setter, prop)
             {
                 Label = FormatPropertyLabelHelper.GetPropertyLabel(prop),
                 PropertyName = prop.Name,

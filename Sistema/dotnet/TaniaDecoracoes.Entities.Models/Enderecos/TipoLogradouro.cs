@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
     /// <summary>
     /// Classe referente aos tipos de logradouros
     /// </summary>
-    public class TipoLogradouro
+    public class TipoLogradouro : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

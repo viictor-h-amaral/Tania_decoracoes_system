@@ -14,17 +14,19 @@ using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.Entities.Models.Itens.Tabelas;
 using TaniaDecoracoes.EntitiesLibrary;
+using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
+using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 using TaniaDecoracoes.WPFLibrary.ViewModel.Windows;
 using TaniaDecoracoes.WPFLibrary.Windows;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
-    public class CommonDataGridViewModel : ViewModelBase
+    public class CommonDataGridViewModel<T> : ViewModelBase, IGridViewModel where T : class, IEntityModel
     {
-        private object _entityBase;
-        private DbContext _context;
+        private readonly IEntityBase<T> _entityBase;
+        private readonly DbContext _context;
         private Type ElementsType => TabelaSource.ModelType;
 
 
@@ -64,8 +66,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         }
 
 
-        private object? _selectedItem;
-        public object? SelectedItem
+        private T? _selectedItem;
+        public T? SelectedItem
         {
             get => _selectedItem;
             set => SetProperty(ref _selectedItem, value);
@@ -204,7 +206,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
                 if (addAll || defaultButtonsToAdd.HasFlag(DefaultActionButtons.View))
                 {
-                    ViewCommand = new RelayCommand<object>(registro =>
+                    ViewCommand = new RelayCommand<T>(registro =>
                     {
                         var formVmType = typeof(CommonFormViewModel<>).MakeGenericType(TabelaSource.ModelType);
                         var formVm = Activator.CreateInstance(formVmType, Titulo, FormMode.View, registro, _context, true) as IFormViewModel;
@@ -219,7 +221,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
                 if (addAll || defaultButtonsToAdd.HasFlag(DefaultActionButtons.Edit))
                 {
-                    EditCommand = new RelayCommand<object>(registro =>
+                    EditCommand = new RelayCommand<T>(registro =>
                     {
                         var formVmType = typeof(CommonFormViewModel<>).MakeGenericType(TabelaSource.ModelType);
                         var formVm = Activator.CreateInstance(formVmType, Titulo, FormMode.Edit, registro, _context, true) as IFormViewModel;
@@ -235,7 +237,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
                 if (addAll || defaultButtonsToAdd.HasFlag(DefaultActionButtons.Delete))
                 {
-                    DeleteCommand = new RelayCommand<object>(registro =>
+                    DeleteCommand = new RelayCommand<T>(registro =>
                     {
                         var dialogService = new DialogService();
                         bool? dialogResult = dialogService.ShowYesNoDialog(
@@ -247,10 +249,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                         if (dialogResult != null && dialogResult == false)
                             return;
 
-                        var objectType = registro.GetType();
+                        //var objectType = registro.GetType();
 
-                        var deleteMethod = _entityBase.GetType().GetMethod("Delete");
-                        deleteMethod?.Invoke(_entityBase, [registro]);
+                        //var deleteMethod = _entityBase.GetType().GetMethod("Delete");
+                        //deleteMethod?.Invoke(_entityBase, [registro]);
+                        _entityBase.Delete(registro);
 
                         LoadSource();
                         OnPropertyChanged(nameof(Items));
@@ -305,7 +308,9 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         public CommonDataGridViewModel(GridConfigObject configObj)
         {
             TabelaSource = configObj.tabelaSource;
-            CreateEntityBase();
+            _context = new TaniaDecoracoesDbContext();
+            _entityBase = new EntityBase<T>(_context);
+            //CreateEntityBase();
             Titulo = configObj.Title;
 
             LoadSource();
@@ -357,8 +362,9 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         {
             try
             {
-                var getManyMethod = _entityBase.GetType().GetMethod("GetMany");
-                Items = getManyMethod?.Invoke(_entityBase, [null]) as IEnumerable;
+                //var getManyMethod = _entityBase.GetType().GetMethod("GetMany");
+                //Items = getManyMethod?.Invoke(_entityBase, [null]) as IEnumerable;
+                Items = _entityBase.GetMany();
             }
             catch (Exception ex)
             {
@@ -367,7 +373,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
-        private void CreateEntityBase()
+        /*private void CreateEntityBase()
         {
             _context = new TaniaDecoracoesDbContext();
 
@@ -378,7 +384,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 throw new InvalidOperationException($"Não foi possível criar uma instância de EntityBase para o tipo {entityBaseType} do EntityBase do Grid.");
 
             _entityBase = entity;
-        }
+        }*/
 
         #endregion CONSTRUTOR
     }

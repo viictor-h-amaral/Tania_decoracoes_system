@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
     /// <summary>
     /// Classe referente aos bairros
     /// </summary>
-    public class Bairro
+    public class Bairro : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
     /// <summary>
     /// Classe referente aos estados
     /// </summary>
-    public class Estado
+    public class Estado : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
     /// <summary>
     /// Classe referente aos temas de aniversário
     /// </summary>
-    public partial class TemaAniversario
+    public partial class TemaAniversario : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

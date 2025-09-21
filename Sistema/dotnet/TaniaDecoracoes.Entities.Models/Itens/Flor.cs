@@ -7,7 +7,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
     /// <summary>
     /// Classe referente às flores do sistema
     /// </summary>
-    public class Flor
+    public class Flor : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

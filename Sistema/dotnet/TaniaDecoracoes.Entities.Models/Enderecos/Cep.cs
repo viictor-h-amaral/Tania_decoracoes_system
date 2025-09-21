@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
     /// <summary>
     /// Classe referente aos CEPs
     /// </summary>
-    public class Cep
+    public class Cep : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

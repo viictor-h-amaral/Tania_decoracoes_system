@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TaniaDecoracoes.WPFLibrary.Utils;
+using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.Windows

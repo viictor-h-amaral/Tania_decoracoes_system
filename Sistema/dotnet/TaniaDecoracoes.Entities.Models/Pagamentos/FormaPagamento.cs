@@ -10,7 +10,7 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
     /// <summary>
     /// Classe referente à forma de pagamento
     /// </summary>
-    public class FormaPagamento
+    public class FormaPagamento : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

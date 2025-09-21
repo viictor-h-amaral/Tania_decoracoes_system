@@ -10,7 +10,7 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
     /// <summary>
     /// Classe referente às decorações
     /// </summary>
-    public partial class Decoracao
+    public partial class Decoracao : IEntityModel
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados

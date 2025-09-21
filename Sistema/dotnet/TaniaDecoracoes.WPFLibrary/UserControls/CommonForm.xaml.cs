@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TaniaDecoracoes.Entities.Models;
+using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
 
 namespace TaniaDecoracoes.WPFLibrary.UserControls
@@ -55,22 +46,41 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
 
     public class FieldTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate StringTemplate { get; set; }
-        public DataTemplate BooleanTemplate { get; set; }
-        public DataTemplate ObjectsTemplate { get; set; }
-        // Adicione templates para outros tipos conforme necessário
+        public DataTemplate? StringTemplate { get; set; }
+        public DataTemplate? BooleanTemplate { get; set; }
+        public DataTemplate? ObjectsTemplate { get; set; }
+        //public DataTemplate? NumericTemplate { get; set; }
+        //public DataTemplate? MonetaryTemplate { get; set; }
+        //public DataTemplate? DateTimeTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item is FormFieldViewModel field)
+            if (item is not IFormFieldViewModel) return base.SelectTemplate(item, container);
+
+            if (item is FormFieldViewModel<string>)
             {
-                if (field.ehInstance)
-                    return ObjectsTemplate;
-                else if (field.PropertyType == typeof(bool))
-                    return BooleanTemplate;
-                else
-                    return StringTemplate;
+                return StringTemplate ?? throw new Exception("StringTemplate não encontrado.");
             }
+            else if (item is FormFieldViewModel<int>)
+            {
+                return StringTemplate;//NumericTemplate ?? throw new Exception("NumericTemplate não encontrado.");
+            }
+            else if (item is FormFieldViewModel<decimal>)
+            {
+                return StringTemplate;//MonetaryTemplate ?? throw new Exception("MonetaryTemplate não encontrado.");
+            }
+            else if (item is FormFieldViewModel<bool>)
+            {
+                return BooleanTemplate ?? throw new Exception("BooleanTemplate não encontrado.");
+            }
+            else if (item is FormFieldViewModel<DateTime>)
+            {
+                return StringTemplate;// DateTimeTemplate ?? throw new Exception("DateTimeTemplate não encontrado.");
+            }
+            else// if (item is InstanceFormFieldViewModel<IEntityModel>)
+            {
+                return ObjectsTemplate ?? throw new Exception("ObjectsTemplate(combobox) não encontrado.");
+            }   
 
             return base.SelectTemplate(item, container);
         }

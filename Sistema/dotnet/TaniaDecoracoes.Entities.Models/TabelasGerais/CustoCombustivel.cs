@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
     /// <summary>
     /// Classe referente aos custos de combustíveis do sistema
     /// </summary>
-    public class CustoCombustivel
+    public class CustoCombustivel : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

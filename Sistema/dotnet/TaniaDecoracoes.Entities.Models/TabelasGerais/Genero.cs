@@ -6,7 +6,7 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
     /// <summary>
     /// Classe referente aos gêneros do sistema
     /// </summary>
-    public class Genero
+    public class Genero : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

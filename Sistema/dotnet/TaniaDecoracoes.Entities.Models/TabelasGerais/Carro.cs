@@ -6,7 +6,7 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
     /// <summary>
     /// Classe referente aos carros do sistema
     /// </summary>
-    public class Carro
+    public class Carro : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

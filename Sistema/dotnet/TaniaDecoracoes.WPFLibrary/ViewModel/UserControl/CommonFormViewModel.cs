@@ -4,15 +4,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.EntityFrameworkCore;
 using TaniaDecoracoes.Entities.Data.Contexto;
+using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.EntitiesLibrary;
 using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.Utils.FormUtils;
+using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
-    public class CommonFormViewModel<T> : ViewModelBase, IFormViewModel where T: class
+    public class CommonFormViewModel<T> : ViewModelBase, IFormViewModel where T: class, IEntityModel
     {
         private readonly IEntityBase<T> _entityBase;
 
@@ -56,8 +58,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                                     ? SourceObject.GetType().BaseType
                                     : SourceObject.GetType();
 
-        private IEnumerable<FormFieldViewModel> _fields;
-        public IEnumerable<FormFieldViewModel> Fields
+        private IEnumerable<IFormFieldViewModel> _fields;
+        public IEnumerable<IFormFieldViewModel> Fields
         {
             get => _fields;
             private set => SetProperty(ref _fields, value);
@@ -78,7 +80,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         {
             var properties = TypeObject.GetProperties();
 
-            var fields = new List<FormFieldViewModel>();
+            var fields = new List<IFormFieldViewModel>();
 
             foreach (var prop in properties)
             {
@@ -91,14 +93,66 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             Fields = fields;
         }
 
-        private FormFieldViewModel CreateFormFieldViewModel(PropertyInfo prop)
+        private IFormFieldViewModel CreateFormFieldViewModel(PropertyInfo prop)
         {
-            var field = new FormFieldViewModel(prop, SourceObject)
+            /*var field = new FormFieldViewModel<prop.GetType()>(prop, SourceObject)
             {
-                Label = FormatPropertyLabelHelper.GetPropertyLabel(prop),
-                ValidationRules = GetValidationRules(prop),
-                IsReadOnly = Mode == FormMode.View, 
-            };
+            Label = FormatPropertyLabelHelper.GetPropertyLabel(prop),
+            ValidationRules = GetValidationRules(prop),
+            IsReadOnly = Mode == FormMode.View,
+            Value = prop.GetValue(SourceObject)
+            };*/
+            Type? tipoField = null;
+
+            if (prop.PropertyType == typeof(string))
+                tipoField = typeof(FormFieldViewModel<>);
+            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(int?))
+                tipoField = typeof(FormFieldViewModel<>);
+            else if (prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(decimal?))
+                tipoField = typeof(FormFieldViewModel<>);
+            else if (prop.PropertyType == typeof(bool) || prop.PropertyType == typeof(bool?))
+                tipoField = typeof(FormFieldViewModel<>);
+            else if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?))
+                tipoField = typeof(FormFieldViewModel<>);
+            else if (typeof(IEntityModel).IsAssignableFrom(prop.PropertyType) || 
+                     (prop.PropertyType.IsGenericType && 
+                      prop.PropertyType.GetGenericArguments().Length == 1 && 
+                      typeof(IEntityModel).IsAssignableFrom(prop.PropertyType.GetGenericArguments()[0])))
+                tipoField = typeof(InstanceFormFieldViewModel<>);
+            else
+                tipoField = typeof(FormFieldViewModel<>);
+
+            /*if (prop.GetValue(SourceObject)?.GetType().IsInstanceOfType(typeof(IEntityModel)) ?? false)
+                tipoField = typeof(InstanceFormFieldViewModel<>);
+            else
+                tipoField = typeof(FormFieldViewModel<>);*/
+
+            object? objForm = Activator.CreateInstance(
+                    tipoField.MakeGenericType(prop.PropertyType),
+                    prop,
+                    SourceObject
+                );
+
+            IFormFieldViewModel? field = 
+                objForm as IFormFieldViewModel 
+                ?? throw new InvalidOperationException($"Não foi possível criar a instância de IFormFieldViewModel para a propriedade {prop} de tipo {prop.PropertyType}.");
+
+            field.Label = FormatPropertyLabelHelper.GetPropertyLabel(prop);
+            field.IsReadOnly = Mode == FormMode.View;
+            field.Value = prop.GetValue(SourceObject);
+
+            /* As propriedades abaixo podem ser definidas via reflexão, pois o tipo é genérico
+            var labelProp = field.GetType().GetProperty("Label");
+            labelProp?.SetValue(field, FormatPropertyLabelHelper.GetPropertyLabel(prop));
+
+            var validationRulesProp = field.GetType().GetProperty("ValidationRules");
+            validationRulesProp?.SetValue(field, GetValidationRules(prop));
+
+            var isReadOnlyProp = field.GetType().GetProperty("IsReadOnly");
+            isReadOnlyProp?.SetValue(field, Mode == FormMode.View);
+
+            var valueProp = field.GetType().GetProperty("Value");
+            valueProp?.SetValue(field, prop.GetValue(SourceObject));*/
 
             return field;
         }
@@ -188,6 +242,4 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         Edit,
         Create
     }
-
-    public interface IFormViewModel { }
 }

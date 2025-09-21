@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
     /// <summary>
     /// Classe referente aos tipos de endereço de cliente
     /// </summary>
-    public class TipoEnderecoCliente
+    public class TipoEnderecoCliente : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

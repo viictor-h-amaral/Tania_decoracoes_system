@@ -1,47 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics.PerformanceData;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using TaniaDecoracoes.Entities.Data.Contexto;
-using TaniaDecoracoes.Entities.Models.Attributes;
+﻿using System.Reflection;
+using TaniaDecoracoes.EntitiesLibrary.Interfaces;
+using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
-    public class FormFieldViewModel : ViewModelBase
+    public class FormFieldViewModel<T> : ViewModelBase, IFormFieldViewModel
     {
-        private object _entityBase;
-        private object _sourceObject;
+        public object SourceObject { get; set; }
 
-        private PropertyInfo _property;
+        public PropertyInfo Property { get; set; }
 
-        public string PropertyName => _property.Name;
+        public string PropertyName => Property.Name;
 
-        public Type PropertyType => _property.PropertyType;
-        public bool ehInstance => _property.GetCustomAttribute<BindingAttribute>() != null;
-        private object GetPropValue()
+        public Type PropertyType => Property.PropertyType;
+
+        private object GetPropValue() => Property.GetValue(SourceObject);
+
+        private void SetPropValue(object? value)
         {
-            var bindingAttr = _property.GetCustomAttribute<BindingAttribute>();
-            //bool ehInstancia = bindingAttr != null;
-
-            var result = bindingAttr != null //ehInstancia
-                ? _property.GetValue(_sourceObject)?.GetType().GetProperty(
-                    bindingAttr.FieldToBringFromInstance)?.GetValue(
-                        _property.GetValue(_sourceObject))
-                : _property.GetValue(_sourceObject);
-            return result ?? "";
+            Property.SetValue(SourceObject, value);
         }
 
-        private void SetPropValue(object value)
-        {
-            _property.SetValue(_sourceObject, value);
-        }
-
-        public object Value
+        public object? Value
         {
             get => GetPropValue();
             set
@@ -52,41 +32,12 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
-        //private string _instanceObjectsDisplayProperty;
-        public string InstanceObjectsDisplayProperty
-        {
-            get
-            {
-                var bindingAttr = _property.GetCustomAttribute<BindingAttribute>();
-                if (bindingAttr == null)
-                    return "";
-                return bindingAttr.FieldToBringFromInstance;
-            }/*
-            set
-            {
-                var bindingAttr = _property.GetCustomAttribute<BindingAttribute>();
-                if (bindingAttr != null)
-                    _instanceObjectsDisplayProperty = bindingAttr.FieldToBringFromInstance;
-            }*/
-        }
-
-        private ObservableCollection<object>? _instanceValues = new ObservableCollection<object>();
-
-        public ObservableCollection<object>? InstanceValues
-        {
-            get => _instanceValues;
-            set
-            {
-                SetProperty(ref _instanceValues, value);
-            }
-        }
-
         public string Label { get; set; }
 
         #region ESTADO_CAMPO
 
         private bool _isReadOnly;
-        public bool IsReadOnly { 
+        public bool IsReadOnly {
             get => _isReadOnly;
             set
             {
@@ -100,22 +51,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         public FormFieldViewModel(PropertyInfo prop, object sourceObject)
         {
-            _property = prop;
-            _sourceObject = sourceObject;
-
-            var bindingAttr = _property.GetCustomAttribute<BindingAttribute>();
-            if (bindingAttr != null)
-            {
-                //InstanceObjectsDisplayProperty = bindingAttr.FieldToBringFromInstance;
-                Type instanceType = _property.PropertyType;
-                var context = new TaniaDecoracoesDbContext();
-                // Corrigido: Use o método Set com o tipo explicitamente especificado
-                var setMethod = typeof(TaniaDecoracoesDbContext).GetMethod("Set", Type.EmptyTypes);
-                var genericSetMethod = setMethod.MakeGenericMethod(instanceType);
-                var objs = ((IEnumerable<object>)genericSetMethod.Invoke(context, null)).ToList();
-                // Se quiser usar os valores, atribua a InstanceValues:
-                InstanceValues = new ObservableCollection<object>(objs);
-            }
+            Property = prop;
+            SourceObject = sourceObject;
 
             ValidationRules = new List<ValidationRule>();
         }

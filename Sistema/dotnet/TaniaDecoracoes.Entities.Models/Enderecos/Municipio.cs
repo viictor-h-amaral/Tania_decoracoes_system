@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
     /// <summary>
     /// Classe referente aos municípios
     /// </summary>
-    public class Municipio
+    public class Municipio : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

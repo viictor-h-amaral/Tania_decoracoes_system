@@ -11,7 +11,7 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
     /// <summary>
     /// Classe referente à taxa de parcelamento
     /// </summary>
-    public class TaxaParcelamento
+    public class TaxaParcelamento : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

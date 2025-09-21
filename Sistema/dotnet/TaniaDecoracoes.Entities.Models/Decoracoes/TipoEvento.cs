@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
     /// <summary>
     /// Classe referente aos tipos de eventos
     /// </summary>
-    public partial class TipoEvento
+    public partial class TipoEvento : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

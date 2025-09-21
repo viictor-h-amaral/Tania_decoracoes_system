@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaniaDecoracoes.Entities.Models.TabelasGerais
 {
-    public partial class Tamanho
+    public partial class Tamanho : IEntityModel
     {
         public class Fields
         {

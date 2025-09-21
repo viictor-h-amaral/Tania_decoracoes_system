@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
     /// <summary>
     /// Classe referente aos tipos de combustíveis
     /// </summary>
-    public class TipoCombustivel
+    public class TipoCombustivel : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

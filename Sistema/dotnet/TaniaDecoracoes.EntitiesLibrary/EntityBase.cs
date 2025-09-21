@@ -1,11 +1,12 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using TaniaDecoracoes.Entities.Data.Contexto;
+using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 
 namespace TaniaDecoracoes.EntitiesLibrary
 {
-    public class EntityBase<T> : IEntityBase<T> where T : class
+    public class EntityBase<T> : IEntityBase<T> where T : class, IEntityModel
     {
         private readonly DbContext _dbContext;
 

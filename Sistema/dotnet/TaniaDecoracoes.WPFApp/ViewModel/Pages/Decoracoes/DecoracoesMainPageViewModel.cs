@@ -12,6 +12,7 @@ using TaniaDecoracoes.EntitiesLibrary.Entities.Itens;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
 using TaniaDecoracoes.WPFLibrary.ViewModel;
+using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
 
 namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
@@ -20,8 +21,8 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
     {
         private DbContext _dbContext;
 
-        private CommonDataGridViewModel? _dataGridVM;
-        public CommonDataGridViewModel? DataGridVM
+        private IGridViewModel? _dataGridVM;
+        public IGridViewModel? DataGridVM
         {
             get => _dataGridVM;
             set => SetProperty(ref _dataGridVM, value);
@@ -32,7 +33,6 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             _dbContext = new TaniaDecoracoesDbContext();
 
             var tipoItemEntity = new TipoItemEntity(_dbContext);
-            var source = tipoItemEntity.GetMany().FirstOrDefault();
 
             var commandSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Page), 1);
             var myButton = new ActionGridButton("\uf1ec",
@@ -63,7 +63,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             };*/
 
             // Inicializa o ViewModel do DataGrid
-            DataGridVM = new CommonDataGridViewModel(gridConfig) { };
+            DataGridVM = new CommonDataGridViewModel<Item>(gridConfig) { };
 
             MyCommandName = new RelayCommand<object>((registro) =>
             {

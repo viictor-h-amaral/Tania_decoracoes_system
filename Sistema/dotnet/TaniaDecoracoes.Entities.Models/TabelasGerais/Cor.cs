@@ -6,7 +6,7 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
     /// <summary>
     /// Classe referente às cores do sistema
     /// </summary>
-    public class Cor
+    public class Cor : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

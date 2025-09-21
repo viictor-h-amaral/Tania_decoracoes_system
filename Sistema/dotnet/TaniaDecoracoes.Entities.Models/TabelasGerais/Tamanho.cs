@@ -6,7 +6,7 @@ namespace TaniaDecoracoes.Entities.Models.TabelasGerais
     /// <summary>
     /// Classe referente aos tamanhos
     /// </summary>
-    public partial class Tamanho
+    public partial class Tamanho : IEntityModel
     {
         /// <summary>
         /// Retorna o Id do registro no banco de dados

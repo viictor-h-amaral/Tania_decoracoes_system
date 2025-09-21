@@ -11,7 +11,7 @@ namespace TaniaDecoracoes.Entities.Models.Pagamentos
     /// <summary>
     /// Classe referente ao pagamento das decorações
     /// </summary>
-    public class DecoracaoPagamento
+    public class DecoracaoPagamento : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

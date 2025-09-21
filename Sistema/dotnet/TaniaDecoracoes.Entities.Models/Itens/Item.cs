@@ -7,7 +7,7 @@ namespace TaniaDecoracoes.Entities.Models.Itens
     /// <summary>
     /// Classe referente aos itens de decorações
     /// </summary>
-    public class Item
+    public class Item : IEntityModel
     {
         [IgnoreOnGrid]
         [IgnoreOnForm]

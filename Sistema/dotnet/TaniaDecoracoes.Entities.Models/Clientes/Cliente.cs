@@ -8,7 +8,7 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
     /// <summary>
     /// Classe referente aos clientes 
     /// </summary>
-    public partial class Cliente
+    public partial class Cliente : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

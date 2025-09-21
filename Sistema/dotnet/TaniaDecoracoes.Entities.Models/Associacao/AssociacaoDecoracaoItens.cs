@@ -7,7 +7,7 @@ namespace TaniaDecoracoes.Entities.Models.Associacao
     /// <summary>
     /// Classe referente à associação entre decorações e itens
     /// </summary>
-    public partial class AssociacaoDecoracaoItens
+    public partial class AssociacaoDecoracaoItens : IEntityModel
     {
         [IgnoreOnForm]
         [IgnoreOnGrid]

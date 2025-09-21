@@ -16,6 +16,7 @@ namespace TaniaDecoracoes.EntitiesLibrary
 
         public EntityBase()
         {
+            _dbContext = new TaniaDecoracoesDbContext();
         }
 
         /// <summary>
@@ -34,39 +35,14 @@ namespace TaniaDecoracoes.EntitiesLibrary
             }
             catch (Exception ex)
             {
-                throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
             }
         }
-
-
-        /*
-        /// <summary>
-        /// Usado para retornar uma lista de entidades do tipo <typeparamref name="T"/> que satisfazem as restrições fornecidas.
-        /// </summary>
-        /// <param name="predicado">Parâmetro opcional que define a cláusula where para buscar os registros. Se <see langword="null"/>, todos registros de <typeparamref name="T"/> são retornados.</param>
-        /// <returns>Uma lista de elementos do tipo <typeparamref name="T"/> que satisfazem o critério passado como parâmetro. Retorna <see langword="null"/> Se nenhum registro for encontrado.</returns>
-        public static List<T>? GetMany(Expression<Func<T, bool>>? predicado = null)
-        {
-            using (var context = new TaniaDecoracoesDbContext())
-            {
-                try
-                {
-                    var registros = predicado is null ?
-                        context.Set<T>().ToList()
-                        : context.Set<T>().Where(predicado).ToList();
-                    return registros;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
-                }
-                finally 
-                {
-                    context.Dispose();
-                }
-            }
-        }
-        */
 
         /// <summary>
         /// Usado para retornar a primeira entidade do tipo <typeparamref name="T"/> que satisfaz as restrições fornecidas.
@@ -84,7 +60,12 @@ namespace TaniaDecoracoes.EntitiesLibrary
             }
             catch (Exception ex)
             {
-                throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
             }
         }
 
@@ -103,7 +84,12 @@ namespace TaniaDecoracoes.EntitiesLibrary
             }
             catch (Exception ex)
             {
-                throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
             }
         }
 
@@ -116,7 +102,12 @@ namespace TaniaDecoracoes.EntitiesLibrary
             }
             catch (Exception ex)
             {
-                throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
             }
         }
 
@@ -129,7 +120,12 @@ namespace TaniaDecoracoes.EntitiesLibrary
             }
             catch (Exception ex)
             {
-                throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
             }
         }
 

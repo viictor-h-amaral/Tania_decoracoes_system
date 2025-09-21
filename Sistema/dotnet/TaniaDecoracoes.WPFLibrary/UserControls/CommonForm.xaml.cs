@@ -24,12 +24,12 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
     {
 
         public static readonly DependencyProperty ViewModelProperty =
-        DependencyProperty.Register("ViewModel", typeof(CommonForm), typeof(CommonForm),
+        DependencyProperty.Register("ViewModel", typeof(IFormViewModel), typeof(CommonForm),
             new PropertyMetadata(null, OnViewModelChanged));
 
-        public CommonFormViewModel ViewModel
+        public IFormViewModel ViewModel
         {
-            get => (CommonFormViewModel)GetValue(ViewModelProperty);
+            get => (IFormViewModel)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
@@ -57,17 +57,19 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
     {
         public DataTemplate StringTemplate { get; set; }
         public DataTemplate BooleanTemplate { get; set; }
+        public DataTemplate ObjectsTemplate { get; set; }
         // Adicione templates para outros tipos conforme necessário
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is FormFieldViewModel field)
             {
-                if (field.PropertyType == typeof(bool))
+                if (field.ehInstance)
+                    return ObjectsTemplate;
+                else if (field.PropertyType == typeof(bool))
                     return BooleanTemplate;
-
-                // Padrão para strings e outros tipos
-                return StringTemplate;
+                else
+                    return StringTemplate;
             }
 
             return base.SelectTemplate(item, container);

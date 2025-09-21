@@ -27,13 +27,6 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             set => SetProperty(ref _dataGridVM, value);
         }
 
-        private CommonFormViewModel? _formVM;
-        public CommonFormViewModel? FormVM
-        {
-            get => _formVM;
-            set => SetProperty(ref _formVM, value);
-        }
-
         public DecoracoesMainPageViewModel()
         {
             _dbContext = new TaniaDecoracoesDbContext();
@@ -88,10 +81,6 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
 
             DataGridVM.AddDefaultTableButtons();
 
-
-            //Inicializa o ViewModel do Formulário
-            //FormVM = new CommonFormViewModel(titulo: "Cadastro de tipos de itens", new TipoItemTabela(), true);
-            //FormVM = new CommonFormViewModel("cadastro de tipos de itens", FormMode.View, source, _dbContext, true);
         }
 
         private ICommand _myCommandName;

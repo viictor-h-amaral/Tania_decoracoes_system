@@ -14,14 +14,14 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.Windows
         public event EventHandler RequestClose;
         public ICommand CloseCommand { get; set; }
 
-        private CommonFormViewModel _formVM;
-        public CommonFormViewModel FormVM
+        private IFormViewModel _formVM;
+        public IFormViewModel FormVM
         {
             get => _formVM;
             set => SetProperty(ref _formVM, value);
         }
 
-        public FormWindowViewModel(CommonFormViewModel formVM)
+        public FormWindowViewModel(IFormViewModel formVM)
         {
             CloseCommand = new RelayCommand(() => RequestClose?.Invoke(this, EventArgs.Empty));
             FormVM = formVM;

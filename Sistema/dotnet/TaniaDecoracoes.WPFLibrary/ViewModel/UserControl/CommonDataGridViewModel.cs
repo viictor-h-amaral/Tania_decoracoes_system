@@ -105,7 +105,9 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0271cc")),
                 Comando = new RelayCommand(() =>
                 {
-                    var formVm = new CommonFormViewModel(Titulo, TabelaSource, true);
+                    var formVmType = typeof(CommonFormViewModel<>).MakeGenericType(TabelaSource.ModelType);
+                    var formVm = Activator.CreateInstance(formVmType, Titulo, true) as IFormViewModel;
+
                     var formWindowVM = new FormWindowViewModel(formVm);
 
                     var formWindow = new FormWindow(formWindowVM);
@@ -204,7 +206,9 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 {
                     ViewCommand = new RelayCommand<object>(registro =>
                     {
-                        var formVm = new CommonFormViewModel("Tipos de itens", FormMode.View, registro, _context, true);
+                        var formVmType = typeof(CommonFormViewModel<>).MakeGenericType(TabelaSource.ModelType);
+                        var formVm = Activator.CreateInstance(formVmType, Titulo, FormMode.View, registro, _context, true) as IFormViewModel;
+
                         var formWindowVM = new FormWindowViewModel(formVm);
 
                         var formWindow = new FormWindow(formWindowVM);
@@ -217,7 +221,9 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 {
                     EditCommand = new RelayCommand<object>(registro =>
                     {
-                        var formVm = new CommonFormViewModel("Tipos de itens", FormMode.Edit, registro, _context, true);
+                        var formVmType = typeof(CommonFormViewModel<>).MakeGenericType(TabelaSource.ModelType);
+                        var formVm = Activator.CreateInstance(formVmType, Titulo, FormMode.Edit, registro, _context, true) as IFormViewModel;
+
                         var formWindowVM = new FormWindowViewModel(formVm);
 
                         var formWindow = new FormWindow(formWindowVM);

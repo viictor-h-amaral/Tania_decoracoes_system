@@ -1,70 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using TaniaDecoracoes.Entities.Data.Contexto;
 using TaniaDecoracoes.Entities.Models.Attributes;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
     public class FormFieldViewModel : ViewModelBase
     {
+        private object _entityBase;
+        private object _sourceObject;
 
-        private readonly Func<object> Getter;
-        private Action<object> Setter;
+        private PropertyInfo _property;
 
-        private object Getter2()
+        public string PropertyName => _property.Name;
+
+        public Type PropertyType => _property.PropertyType;
+        public bool ehInstance => _property.GetCustomAttribute<BindingAttribute>() != null;
+        private object GetPropValue()
         {
-            bool ehInstancia = Property.GetCustomAttribute<BindingAttribute>() != null;
+            var bindingAttr = _property.GetCustomAttribute<BindingAttribute>();
+            //bool ehInstancia = bindingAttr != null;
 
-            var result = ehInstancia
-                ? Getter()?.GetType().GetProperty(
-                    Property.GetCustomAttribute<BindingAttribute>().FieldToBringFromInstance)?.GetValue(
-                        Getter())
-                : Getter();
-            return result;
+            var result = bindingAttr != null //ehInstancia
+                ? _property.GetValue(_sourceObject)?.GetType().GetProperty(
+                    bindingAttr.FieldToBringFromInstance)?.GetValue(
+                        _property.GetValue(_sourceObject))
+                : _property.GetValue(_sourceObject);
+            return result ?? "";
         }
 
-        /*private object Setter2(object value)
+        private void SetPropValue(object value)
         {
-            bool ehInstancia = Property.GetCustomAttribute<BindingAttribute>() != null;
-            if (ehInstancia)
-            {
-                var instance = Property.GetValue(Getter());
-                var propToSet = instance?.GetType().GetProperty(
-                    Property.GetCustomAttribute<BindingAttribute>().FieldToBringFromInstance);
-                if (propToSet != null && instance != null)
-                {
-                    propToSet.SetValue(instance, value);
-                    Property.SetValue(Getter(), instance);
-                }
-            }
-            else
-            {
-                Property.SetValue(Getter(), value);
-            }
-            return null;
-        }*/
+            _property.SetValue(_sourceObject, value);
+        }
 
-        private PropertyInfo Property { get; set; }
-
-        //private object? _value;
         public object Value
         {
-            get => Getter2();
+            get => GetPropValue();
             set
             {
-                Setter(value);
+                SetPropValue(value);
                 OnPropertyChanged();
                 Validate();
             }
         }
 
+        //private string _instanceObjectsDisplayProperty;
+        public string InstanceObjectsDisplayProperty
+        {
+            get
+            {
+                var bindingAttr = _property.GetCustomAttribute<BindingAttribute>();
+                if (bindingAttr == null)
+                    return "";
+                return bindingAttr.FieldToBringFromInstance;
+            }/*
+            set
+            {
+                var bindingAttr = _property.GetCustomAttribute<BindingAttribute>();
+                if (bindingAttr != null)
+                    _instanceObjectsDisplayProperty = bindingAttr.FieldToBringFromInstance;
+            }*/
+        }
+
+        private ObservableCollection<object>? _instanceValues = new ObservableCollection<object>();
+
+        public ObservableCollection<object>? InstanceValues
+        {
+            get => _instanceValues;
+            set
+            {
+                SetProperty(ref _instanceValues, value);
+            }
+        }
+
         public string Label { get; set; }
-        public string PropertyName { get; set; }
-        public Type PropertyType { get; set; }
+
+        #region ESTADO_CAMPO
 
         private bool _isReadOnly;
         public bool IsReadOnly { 
@@ -72,13 +91,38 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             set
             {
                 SetProperty(ref _isReadOnly, value);
-                Console.WriteLine($"IsReadOnly set to {value} for {PropertyName}");
             }
         }
 
         public IEnumerable<ValidationRule> ValidationRules { get; set; }
         public string ErrorMessage { get; private set; }
         public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
+
+        public FormFieldViewModel(PropertyInfo prop, object sourceObject)
+        {
+            _property = prop;
+            _sourceObject = sourceObject;
+
+            var bindingAttr = _property.GetCustomAttribute<BindingAttribute>();
+            if (bindingAttr != null)
+            {
+                //InstanceObjectsDisplayProperty = bindingAttr.FieldToBringFromInstance;
+                Type instanceType = _property.PropertyType;
+                var context = new TaniaDecoracoesDbContext();
+                // Corrigido: Use o método Set com o tipo explicitamente especificado
+                var setMethod = typeof(TaniaDecoracoesDbContext).GetMethod("Set", Type.EmptyTypes);
+                var genericSetMethod = setMethod.MakeGenericMethod(instanceType);
+                var objs = ((IEnumerable<object>)genericSetMethod.Invoke(context, null)).ToList();
+                // Se quiser usar os valores, atribua a InstanceValues:
+                InstanceValues = new ObservableCollection<object>(objs);
+            }
+
+            ValidationRules = new List<ValidationRule>();
+        }
+
+        #endregion CONSTRUTORES
+
+        #region VALIDACAO
 
         private void Validate()
         {
@@ -100,15 +144,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             OnPropertyChanged(nameof(HasError));
         }
 
-        public FormFieldViewModel(Func<object> getter, Action<object> setter, PropertyInfo prop = null)
-        {
-            Property = prop;
-            Getter = getter;
-            Setter = setter;
-            ValidationRules = new List<ValidationRule>();
-        }
+        #endregion VALIDACAO
 
     }
+
+    #region VALIDATION RULES
 
     public abstract class ValidationRule
     {
@@ -128,4 +168,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             return value != null && !string.IsNullOrWhiteSpace(value.ToString());
         }
     }
+
+    #endregion
 }

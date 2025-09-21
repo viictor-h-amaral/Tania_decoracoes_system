@@ -1,32 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.DirectoryServices;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TaniaDecoracoes.Entities.Data.Contexto;
-using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.EntitiesLibrary;
+using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.Utils.FormUtils;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
-    public class CommonFormViewModel : ViewModelBase
+    public class CommonFormViewModel<T> : ViewModelBase, IFormViewModel where T: class
     {
-        private object _entityBase;
+        private readonly IEntityBase<T> _entityBase;
 
         public ICommand SaveCommand { get; set; }
 
@@ -54,33 +42,19 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
-        private object _sourceObject;
-        public object SourceObject
+        private T _sourceObject;
+        public T SourceObject
         {
             get => _sourceObject;
             set
             {
                 SetProperty(ref _sourceObject, value);
-
-                bool sourceIsProxy = value.GetType().BaseType != null && value.GetType().BaseType != typeof(object); //value.GetType().Namespace == "Castle.Proxies";
-
-                if (sourceIsProxy)
-                    TypeObject = value.GetType().BaseType;
-                else
-                    TypeObject = value.GetType();
             }
         }
 
-        private Type _typeObject;
-        public Type TypeObject
-        {
-            get => _typeObject;
-            set
-            {
-                SetProperty(ref _typeObject, value);
-                GenerateFields();
-            }
-        }
+        private Type? TypeObject => (SourceObject.GetType().BaseType != null && SourceObject.GetType().BaseType != typeof(object))
+                                    ? SourceObject.GetType().BaseType
+                                    : SourceObject.GetType();
 
         private IEnumerable<FormFieldViewModel> _fields;
         public IEnumerable<FormFieldViewModel> Fields
@@ -96,8 +70,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             private set => SetProperty(ref _formComands, value);
         }
 
-
-        #endregion PROPRIEDADES
+        #endregion 
 
         #region GERAÇÃO CAMPOS
 
@@ -120,18 +93,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         private FormFieldViewModel CreateFormFieldViewModel(PropertyInfo prop)
         {
-            Func<object> getter = () => prop.GetValue(SourceObject);
-            Action<object> setter = (value) => prop.SetValue(SourceObject, value);
-
-            var field = new FormFieldViewModel(getter, setter, prop)
+            var field = new FormFieldViewModel(prop, SourceObject)
             {
                 Label = FormatPropertyLabelHelper.GetPropertyLabel(prop),
-                PropertyName = prop.Name,
-                PropertyType = prop.PropertyType,
                 ValidationRules = GetValidationRules(prop),
-
-                IsReadOnly = Mode == FormMode.View, //chamar helper (a criar) que define, com base no modo do form e atributos, se o campo será readonly
-                Value = prop.GetValue(SourceObject)
+                IsReadOnly = Mode == FormMode.View, 
             };
 
             return field;
@@ -149,11 +115,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             return rules;
         }
 
-        #endregion GERAÇÃO CAMPOS
+        #endregion
 
         #region CONSTRUTORES
 
-        public CommonFormViewModel(string titulo, FormMode estado, object objeto, DbContext contexto, bool autoGenerateFields)
+        public CommonFormViewModel(string titulo, FormMode estado, T objeto, DbContext contexto, bool autoGenerateFields)
         {
             if (estado == FormMode.Create)
                 throw new ArgumentException("O estado 'Create' não deve ser usado com um objeto fonte.");
@@ -161,57 +127,27 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             Titulo = titulo;
             Mode = estado;
             SourceObject = objeto;
-            CreateEntityBase(contexto);
+            _entityBase = new EntityBase<T>(contexto);
 
             if (autoGenerateFields) GenerateFields();
 
             if (estado == FormMode.Edit) CreateFormCommands();
         }
 
-        public CommonFormViewModel(string titulo, ITabela tabelaReferencia, bool autoGenerateFields)
+        public CommonFormViewModel(string titulo, bool autoGenerateFields)
         {
             Titulo = titulo;
             Mode = FormMode.Create;
-
-            SourceObject = Activator.CreateInstance(tabelaReferencia.ModelType) ?? 
-                            throw new InvalidOperationException($"Não foi possível criar uma instância de {tabelaReferencia.ModelType.FullName}.");
-
-            CreateEntityBase(new TaniaDecoracoesDbContext());
+            
+            SourceObject = Activator.CreateInstance<T>();
+            _entityBase = new EntityBase<T>(new TaniaDecoracoesDbContext());
 
             if (autoGenerateFields) GenerateFields();
 
             CreateFormCommands();
         }
 
-        private void CreateEntityBase(DbContext context)
-        {
-            var entityBaseType = typeof(EntityBase<>).MakeGenericType(TypeObject);
-            var entity = Activator.CreateInstance(entityBaseType, context);
-
-            if (entity == null)
-                throw new InvalidOperationException($"Não foi possível criar uma instância de EntityBase para o tipo {entityBaseType} do EntityBase do Grid.");
-
-            _entityBase = entity;
-        }
-
-        #endregion CONSTRUTORES
-
-        public static object ConvertToBaseType(object proxy)
-        {
-            var baseType = proxy.GetType().BaseType ?? proxy.GetType();
-            var baseInstance = Activator.CreateInstance(baseType);
-
-            foreach (var prop in baseType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
-            {
-                if (prop.CanWrite)
-                {
-                    var value = prop.GetValue(proxy);
-                    prop.SetValue(baseInstance, value);
-                }
-            }
-
-            return baseInstance;
-        }
+        #endregion
 
         private void CreateFormCommands()
         {
@@ -219,24 +155,21 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             {
                 SaveCommand = new RelayCommand(() =>
                 {
-                    var saveMethod = _entityBase.GetType().GetMethod("Save");
-                    saveMethod?.Invoke(_entityBase, [SourceObject]);
+                    _entityBase.Save(SourceObject);
                 });
             }
             else
             {
                 SaveCommand = new RelayCommand(() =>
                 {
-                    var saveMethod = _entityBase.GetType().GetMethod("Update");
-                    var entityToSave = ConvertToBaseType(SourceObject);
-                    saveMethod?.Invoke(_entityBase, [entityToSave]);
+                    _entityBase.Update(SourceObject);
                 });
             }
 
             var SaveButton = new CustomFormButton()
             {
                 Conteudo = "Salvar",
-                Icone = "\uf0c7", // ícone de salvar
+                Icone = "\uf0c7",
                 Foreground = Brushes.White,
                 Background = Brushes.Green,
                 Comando = SaveCommand
@@ -255,4 +188,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         Edit,
         Create
     }
+
+    public interface IFormViewModel { }
 }

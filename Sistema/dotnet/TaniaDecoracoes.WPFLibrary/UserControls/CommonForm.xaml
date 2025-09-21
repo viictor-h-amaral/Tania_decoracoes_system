@@ -27,6 +27,26 @@
             </StackPanel>
         </DataTemplate>
 
+        <DataTemplate x:Key="ObjectsFieldTemplate">
+            <StackPanel Orientation="Vertical" Margin="0, 0, 15, 30">
+
+                <TextBlock Text="{Binding Label}" 
+                   FontWeight="Bold" 
+                   FontSize="22"
+                   FontFamily="Quicksand"
+                   Margin="2"/>
+                <ComboBox ItemsSource="{Binding Path=InstanceValues, UpdateSourceTrigger=PropertyChanged}"
+                 DisplayMemberPath="{Binding InstanceObjectsDisplayProperty}"
+                 IsReadOnly="{Binding IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 SelectedItem="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 FontSize="18"
+                 FontFamily="Quicksand"
+                 Padding="5"
+                 Background="White"/>
+
+            </StackPanel>
+        </DataTemplate>
+
         <DataTemplate x:Key="BooleanFieldTemplate">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="{Binding Label}" FontWeight="Bold"/>
@@ -37,7 +57,8 @@
 
         <local:FieldTemplateSelector x:Key="FieldTemplateSelector"
                     StringTemplate="{StaticResource StringFieldTemplate}"
-                    BooleanTemplate="{StaticResource BooleanFieldTemplate}"/>
+                    BooleanTemplate="{StaticResource BooleanFieldTemplate}"
+                    ObjectsTemplate="{StaticResource ObjectsFieldTemplate}"/>
 
     </UserControl.Resources>
     

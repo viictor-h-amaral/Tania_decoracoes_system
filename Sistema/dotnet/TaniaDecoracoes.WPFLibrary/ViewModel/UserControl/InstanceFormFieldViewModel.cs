@@ -26,6 +26,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         private object GetPropValue()
         {
+            return Property.GetValue(SourceObject);
             var bindingAttr = Property.GetCustomAttribute<BindingAttribute>();
 
             var result = bindingAttr != null
@@ -86,34 +87,24 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
-        public InstanceFormFieldViewModel(PropertyInfo prop, object sourceObject)
+        object? IFormFieldViewModel.Value 
+        { get => Value; 
+            set => throw new NotImplementedException(); 
+        }
+
+        public InstanceFormFieldViewModel(PropertyInfo prop, object sourceObject, object valueId)
         {
             Property = prop;
             SourceObject = sourceObject;
-
-            Type instanceType = Property.PropertyType;
             var context = new TaniaDecoracoesDbContext();
             _entityBase = new EntityBase<T>(context);
 
-            // Corrigido: Use o método Set com o tipo explicitamente especificado
-            /*var setMethod = typeof(TaniaDecoracoesDbContext).GetMethod("Set", Type.EmptyTypes);
-            var genericSetMethod = setMethod.MakeGenericMethod(instanceType);
-            var objs = ((IEnumerable<object>)genericSetMethod.Invoke(context, null)).ToList();
-            objs.Insert(0, Activator.CreateInstance(instanceType)); // Adiciona uma opção vazia no início
-            objs.Add(Value);*/
-            // Se quiser usar os valores, atribua a InstanceValues:
-            Value = prop.GetValue(sourceObject);
-            // Substitua esta linha:
-            // value_id = Value?.Id ?? 0;
-
-            // Por esta linha:
-            var valueId = (Value as IEntityModel)?.Id ?? 0;
-            InstanceValues = new ObservableCollection<object>(_entityBase.GetMany(x => x.Id != valueId));
-            if (Value is not null) InstanceValues.Add(Value);
-
-            //var itens = _entityBase.GetMany(x => x.Id != Value.Id);
-            //InstanceValues = new ObservableCollection<T>(itens ?? []);
-            //InstanceValues.Add(Value);
+            InstanceValues = new ObservableCollection<object>(_entityBase.GetMany() ?? []);
+            if (valueId is int valueIds)
+            {
+                // Busca pelo Id, ignorando o tipo concreto/proxy
+                Value = InstanceValues.Select(x => (IEntityModel)x).FirstOrDefault(x => x.Id == valueIds);
+            }
         }
 
         #endregion CONSTRUTORES

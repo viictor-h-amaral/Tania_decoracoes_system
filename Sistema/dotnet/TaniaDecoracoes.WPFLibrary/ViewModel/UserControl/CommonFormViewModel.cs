@@ -95,15 +95,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         private IFormFieldViewModel CreateFormFieldViewModel(PropertyInfo prop)
         {
-            /*var field = new FormFieldViewModel<prop.GetType()>(prop, SourceObject)
-            {
-            Label = FormatPropertyLabelHelper.GetPropertyLabel(prop),
-            ValidationRules = GetValidationRules(prop),
-            IsReadOnly = Mode == FormMode.View,
-            Value = prop.GetValue(SourceObject)
-            };*/
             Type? tipoField = null;
-
             if (prop.PropertyType == typeof(string))
                 tipoField = typeof(FormFieldViewModel<>);
             else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(int?))
@@ -114,45 +106,35 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 tipoField = typeof(FormFieldViewModel<>);
             else if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?))
                 tipoField = typeof(FormFieldViewModel<>);
-            else if (typeof(IEntityModel).IsAssignableFrom(prop.PropertyType) || 
-                     (prop.PropertyType.IsGenericType && 
-                      prop.PropertyType.GetGenericArguments().Length == 1 && 
+            else if (typeof(IEntityModel).IsAssignableFrom(prop.PropertyType) ||
+                     (prop.PropertyType.IsGenericType &&
+                      prop.PropertyType.GetGenericArguments().Length == 1 &&
                       typeof(IEntityModel).IsAssignableFrom(prop.PropertyType.GetGenericArguments()[0])))
                 tipoField = typeof(InstanceFormFieldViewModel<>);
             else
                 tipoField = typeof(FormFieldViewModel<>);
 
-            /*if (prop.GetValue(SourceObject)?.GetType().IsInstanceOfType(typeof(IEntityModel)) ?? false)
-                tipoField = typeof(InstanceFormFieldViewModel<>);
-            else
-                tipoField = typeof(FormFieldViewModel<>);*/
+            object? value = prop.GetValue(SourceObject);
+
+            object? idValue = null;
+            if (value is IEntityModel entityModel)
+            {
+                idValue = entityModel.Id;
+            }
 
             object? objForm = Activator.CreateInstance(
                     tipoField.MakeGenericType(prop.PropertyType),
                     prop,
-                    SourceObject
+                    SourceObject,
+                    idValue
                 );
 
-            IFormFieldViewModel? field = 
-                objForm as IFormFieldViewModel 
+            IFormFieldViewModel? field =
+                objForm as IFormFieldViewModel
                 ?? throw new InvalidOperationException($"Não foi possível criar a instância de IFormFieldViewModel para a propriedade {prop} de tipo {prop.PropertyType}.");
 
             field.Label = FormatPropertyLabelHelper.GetPropertyLabel(prop);
             field.IsReadOnly = Mode == FormMode.View;
-            field.Value = prop.GetValue(SourceObject);
-
-            /* As propriedades abaixo podem ser definidas via reflexão, pois o tipo é genérico
-            var labelProp = field.GetType().GetProperty("Label");
-            labelProp?.SetValue(field, FormatPropertyLabelHelper.GetPropertyLabel(prop));
-
-            var validationRulesProp = field.GetType().GetProperty("ValidationRules");
-            validationRulesProp?.SetValue(field, GetValidationRules(prop));
-
-            var isReadOnlyProp = field.GetType().GetProperty("IsReadOnly");
-            isReadOnlyProp?.SetValue(field, Mode == FormMode.View);
-
-            var valueProp = field.GetType().GetProperty("Value");
-            valueProp?.SetValue(field, prop.GetValue(SourceObject));*/
 
             return field;
         }

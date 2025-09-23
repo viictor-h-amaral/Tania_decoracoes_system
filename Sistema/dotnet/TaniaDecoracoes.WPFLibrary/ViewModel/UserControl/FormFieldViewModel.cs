@@ -49,11 +49,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         public string ErrorMessage { get; private set; }
         public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
 
-        public FormFieldViewModel(PropertyInfo prop, object sourceObject)
+        public FormFieldViewModel(PropertyInfo prop, object sourceObject, object value)
         {
             Property = prop;
             SourceObject = sourceObject;
-
+            //Value = value;
             ValidationRules = new List<ValidationRule>();
         }
 

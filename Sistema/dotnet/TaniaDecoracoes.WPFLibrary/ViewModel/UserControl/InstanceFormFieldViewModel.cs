@@ -100,11 +100,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             _entityBase = new EntityBase<T>(context);
 
             InstanceValues = new ObservableCollection<object>(_entityBase.GetMany() ?? []);
-            if (valueId is int valueIds)
+            /*if (valueId is int valueIds)
             {
                 // Busca pelo Id, ignorando o tipo concreto/proxy
-                Value = InstanceValues.Select(x => (IEntityModel)x).FirstOrDefault(x => x.Id == valueIds);
-            }
+                //Value = InstanceValues.Select(x => (IEntityModel)x).FirstOrDefault(x => x.Id == valueIds);
+            }*/
         }
 
         #endregion CONSTRUTORES

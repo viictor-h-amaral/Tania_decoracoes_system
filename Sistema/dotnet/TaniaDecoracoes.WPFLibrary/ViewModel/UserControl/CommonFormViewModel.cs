@@ -155,28 +155,28 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         #region CONSTRUTORES
 
-        public CommonFormViewModel(string titulo, FormMode estado, T objeto, DbContext contexto, bool autoGenerateFields)
+        public CommonFormViewModel(string titulo, FormMode estado, T objeto, DbContext context, bool autoGenerateFields)
         {
             if (estado == FormMode.Create)
                 throw new ArgumentException("O estado 'Create' não deve ser usado com um objeto fonte.");
 
             Titulo = titulo;
             Mode = estado;
+            _entityBase = new EntityBase<T>(context);
             SourceObject = objeto;
-            _entityBase = new EntityBase<T>(contexto);
 
             if (autoGenerateFields) GenerateFields();
 
             if (estado == FormMode.Edit) CreateFormCommands();
         }
 
-        public CommonFormViewModel(string titulo, bool autoGenerateFields)
+        public CommonFormViewModel(string titulo, bool autoGenerateFields, DbContext context)
         {
             Titulo = titulo;
             Mode = FormMode.Create;
             
             SourceObject = Activator.CreateInstance<T>();
-            _entityBase = new EntityBase<T>(new TaniaDecoracoesDbContext());
+            _entityBase = new EntityBase<T>(context);
 
             if (autoGenerateFields) GenerateFields();
 

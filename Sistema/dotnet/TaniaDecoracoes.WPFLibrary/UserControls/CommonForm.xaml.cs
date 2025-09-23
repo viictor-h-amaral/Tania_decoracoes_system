@@ -57,7 +57,10 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
         {
             if (item is not IFormFieldViewModel) return base.SelectTemplate(item, container);
 
-            if (item is FormFieldViewModel<string>)
+            if (item.GetType().IsGenericType &&
+                     item.GetType().GetGenericTypeDefinition() == typeof(FormFieldViewModel<>))
+                return StringTemplate;
+            /*if (item is FormFieldViewModel<string>)
             {
                 return StringTemplate ?? throw new Exception("StringTemplate não encontrado.");
             }
@@ -76,11 +79,12 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
             else if (item is FormFieldViewModel<DateTime>)
             {
                 return StringTemplate;// DateTimeTemplate ?? throw new Exception("DateTimeTemplate não encontrado.");
-            }
-            else// if (item is InstanceFormFieldViewModel<IEntityModel>)
+            }*/
+            else if (item.GetType().IsGenericType &&
+                     item.GetType().GetGenericTypeDefinition() == typeof(InstanceFormFieldViewModel<>))
             {
                 return ObjectsTemplate ?? throw new Exception("ObjectsTemplate(combobox) não encontrado.");
-            }   
+            }
 
             return base.SelectTemplate(item, container);
         }

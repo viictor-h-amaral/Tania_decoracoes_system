@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows;
@@ -8,11 +7,9 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32;
 using TaniaDecoracoes.Entities.Data.Contexto;
 using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.Entities.Models.Attributes;
-using TaniaDecoracoes.Entities.Models.Itens.Tabelas;
 using TaniaDecoracoes.EntitiesLibrary;
 using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 using TaniaDecoracoes.WPFLibrary.Utils;
@@ -108,7 +105,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 Comando = new RelayCommand(() =>
                 {
                     var formVmType = typeof(CommonFormViewModel<>).MakeGenericType(TabelaSource.ModelType);
-                    var formVm = Activator.CreateInstance(formVmType, Titulo, true) as IFormViewModel;
+                    var formVm = Activator.CreateInstance(formVmType, Titulo, true, _context) as IFormViewModel;
 
                     var formWindowVM = new FormWindowViewModel(formVm);
 

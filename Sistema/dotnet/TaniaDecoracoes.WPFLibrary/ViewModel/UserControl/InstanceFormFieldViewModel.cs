@@ -99,7 +99,9 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             var context = new TaniaDecoracoesDbContext();
             _entityBase = new EntityBase<T>(context);
 
-            InstanceValues = new ObservableCollection<object>(_entityBase.GetMany() ?? []);
+            InstanceValues = new ObservableCollection<object>(
+                    _entityBase.GetMany()?.Select(x => (object)x).ToList()
+                    ?? []);
             /*if (valueId is int valueIds)
             {
                 // Busca pelo Id, ignorando o tipo concreto/proxy

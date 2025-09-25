@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Automation;
 using System.Windows.Data;
 using TaniaDecoracoes.Entities.Data.Contexto;
 using TaniaDecoracoes.Entities.Models;
@@ -24,27 +25,40 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         public PropertyInfo Property { get; set; }
 
-        private object GetPropValue()
+        private T? GetPropValue()
         {
-            return Property.GetValue(SourceObject);
-            var bindingAttr = Property.GetCustomAttribute<BindingAttribute>();
+            return Property.GetValue(SourceObject) as T;
+            /*var bindingAttr = Property.GetCustomAttribute<BindingAttribute>();
 
             var result = bindingAttr != null
                 ? Property.GetValue(SourceObject)?.GetType().GetProperty(
                     bindingAttr.FieldToBringFromInstance)?.GetValue(
                         Property.GetValue(SourceObject))
                 : Property.GetValue(SourceObject);
-            return result;
+            return result;*/
         }
 
-        private void SetPropValue(object? value)
+        private void SetPropValue(DataTransfer? value)
         {
-            Property.SetValue(SourceObject, value);
+            int valueId = 0;
+            if (value != null) valueId = value.Id;
+            var newObj = _entityBase.FirstOrDefault(x => x.Id == valueId);
+            Property.SetValue(SourceObject, newObj);
         }
 
-        public object? Value
+        public DataTransfer? Value
         {
-            get => GetPropValue();
+            get
+            {
+                var propValue = GetPropValue();
+                if (propValue is null) return null;
+                var result = new DataTransfer()
+                {
+                    Id = propValue.Id,
+                    Identificacao = propValue.GetType().GetProperty(InstanceObjectsDisplayProperty)?.GetValue(propValue) ?? ""
+                };
+                return result;
+            }
             set
             {
                 SetPropValue(value);
@@ -63,9 +77,9 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
-        private ObservableCollection<object>? _instanceValues = new ObservableCollection<object>();
+        private ObservableCollection<DataTransfer>? _instanceValues = new ObservableCollection<DataTransfer>();
 
-        public ObservableCollection<object>? InstanceValues
+        public ObservableCollection<DataTransfer>? InstanceValues
         {
             get => _instanceValues;
             set
@@ -87,29 +101,49 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
-        object? IFormFieldViewModel.Value 
-        { get => Value; 
-            set => throw new NotImplementedException(); 
-        }
+        object? IFormFieldViewModel.Value { get => Value; set => throw new Exception("a_a"); }
 
-        public InstanceFormFieldViewModel(PropertyInfo prop, object sourceObject, object valueId)
+        public InstanceFormFieldViewModel(PropertyInfo prop, IEntityModel sourceObject, int? valueId)
         {
             Property = prop;
             SourceObject = sourceObject;
             var context = new TaniaDecoracoesDbContext();
             _entityBase = new EntityBase<T>(context);
 
-            InstanceValues = new ObservableCollection<object>(
-                    _entityBase.GetMany()?.Select(x => (object)x).ToList()
-                    ?? []);
-            /*if (valueId is int valueIds)
+            var objs = _entityBase.GetMany();
+
+            InstanceValues = new ObservableCollection<DataTransfer>(
+                    objs?.Select(x => 
+                        new DataTransfer() { 
+                            Id = x.Id, 
+                            Identificacao = x.GetType().GetProperty(InstanceObjectsDisplayProperty)?.GetValue(x) ?? "" }).ToList()
+                    ?? [new DataTransfer() { Id=0, Identificacao = "Nenhum item"}]);
+
+            //Value = InstanceValues?.FirstOrDefault(x => x.Id == valueId);
+
+            /*var x = objs?.FirstOrDefault(x => x.Id == valueId);
+            if (x != null)
             {
-                // Busca pelo Id, ignorando o tipo concreto/proxy
-                //Value = InstanceValues.Select(x => (IEntityModel)x).FirstOrDefault(x => x.Id == valueIds);
+                var Value = new DataTransfer() { Id = x.Id, Identificacao = x.GetType().GetProperty(InstanceObjectsDisplayProperty)?.GetValue(x) ?? "" };
             }*/
+
+
         }
 
         #endregion CONSTRUTORES
 
+        public class DataTransfer : IEntityModel
+        {
+            public DataTransfer(int id, object identificacao)
+            {
+                Id = id;
+                Identificacao = identificacao;
+            }
+
+            public DataTransfer() { }
+
+            public int Id { get; set; }
+            public required object Identificacao { get; set; }
+        }
     }
 }

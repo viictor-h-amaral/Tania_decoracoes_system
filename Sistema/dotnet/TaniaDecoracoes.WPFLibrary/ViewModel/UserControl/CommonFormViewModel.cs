@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.EntityFrameworkCore;
@@ -116,7 +117,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
             object? value = prop.GetValue(SourceObject);
 
-            object? idValue = null;
+            int? idValue = null;
             if (value is IEntityModel entityModel)
             {
                 idValue = entityModel.Id;
@@ -185,7 +186,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         #endregion
 
-        private void CreateFormCommands()
+        /*private void CreateFormCommands()
         {
             if(Mode == FormMode.Create)
             {
@@ -215,7 +216,155 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             {
                 SaveButton
             };
-        }   
+        } */
+
+        private void CreateFormCommands()
+        {
+            if (Mode == FormMode.Create)
+            {
+                SaveCommand = new RelayCommand(() =>
+                {
+                    SalvarEntidade();
+                });
+            }
+            else
+            {
+                SaveCommand = new RelayCommand(() =>
+                {
+                    AtualizarEntidade();
+                });
+            }
+
+            var SaveButton = new CustomFormButton()
+            {
+                Conteudo = "Salvar",
+                Icone = "\uf0c7",
+                Foreground = Brushes.White,
+                Background = Brushes.Green,
+                Comando = SaveCommand
+            };
+
+            FormCommands = new List<CustomFormButton> { SaveButton };
+        }
+
+        private void SalvarEntidade()
+        {
+            try
+            {
+                // Para criação, é mais simples - criar novo contexto
+                using (var context = new TaniaDecoracoesDbContext())
+                {
+                    var entityBase = new EntityBase<T>(context);
+
+                    // Anexar entidades relacionadas ao contexto
+                    AnexarEntidadesRelacionadas(context, SourceObject);
+
+                    entityBase.Save(SourceObject);
+
+                    // Mensagem de sucesso
+                    MessageBox.Show("Registro salvo com sucesso!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao salvar: {ex.Message}");
+            }
+        }
+
+        private void AtualizarEntidade()
+        {
+            try
+            {
+                using (var context = new TaniaDecoracoesDbContext())
+                {
+                    var entityBase = new EntityBase<T>(context);
+
+                    // Buscar a entidade existente no banco
+                    var existingEntity = context.Set<T>().Find(SourceObject.Id);
+                    if (existingEntity == null)
+                    {
+                        MessageBox.Show("Registro não encontrado!");
+                        return;
+                    }
+
+                    // Copiar propriedades escalares
+                    context.Entry(existingEntity).CurrentValues.SetValues(SourceObject);
+
+                    // Gerenciar entidades relacionadas
+                    GerenciarEntidadesRelacionadas(context, existingEntity, SourceObject);
+
+                    entityBase.Update(existingEntity);
+
+                    MessageBox.Show("Registro atualizado com sucesso!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao atualizar: {ex.Message}");
+            }
+        }
+
+        private IEntityModel? ObterEntidadeRastreada(DbContext context, IEntityModel entity)
+        {
+            if (entity == null || entity.Id == 0) return null;
+
+            var trackedEntry = context.ChangeTracker.Entries()
+                .FirstOrDefault(e => e.Entity is IEntityModel trackedEntity &&
+                                   trackedEntity.GetType() == entity.GetType() &&
+                                   trackedEntity.Id == entity.Id);
+
+            return trackedEntry?.Entity as IEntityModel;
+        }
+
+        private void GerenciarEntidadesRelacionadas(DbContext context, T existingEntity, T newEntity)
+        {
+            var properties = typeof(T).GetProperties()
+                .Where(p => typeof(IEntityModel).IsAssignableFrom(p.PropertyType));
+
+            foreach (var prop in properties)
+            {
+                var newRelatedEntity = prop.GetValue(newEntity) as IEntityModel;
+
+                if (newRelatedEntity != null && newRelatedEntity.Id > 0)
+                {
+                    var trackedEntity = ObterEntidadeRastreada(context, newRelatedEntity);
+                    prop.SetValue(existingEntity, trackedEntity ?? newRelatedEntity);
+
+                    if (trackedEntity == null)
+                    {
+                        context.Attach(newRelatedEntity);
+                    }
+                }
+                else
+                {
+                    prop.SetValue(existingEntity, null);
+                }
+            }
+        }
+
+        private void AnexarEntidadesRelacionadas(DbContext context, T entity)
+        {
+            var properties = typeof(T).GetProperties()
+                .Where(p => typeof(IEntityModel).IsAssignableFrom(p.PropertyType));
+
+            foreach (var prop in properties)
+            {
+                var relatedEntity = prop.GetValue(entity) as IEntityModel;
+                if (relatedEntity != null && relatedEntity.Id > 0)
+                {
+                    var trackedEntity = ObterEntidadeRastreada(context, relatedEntity);
+
+                    if (trackedEntity != null)
+                    {
+                        prop.SetValue(entity, trackedEntity);
+                    }
+                    else
+                    {
+                        context.Attach(relatedEntity);
+                    }
+                }
+            }
+        }
     }
 
     public enum FormMode

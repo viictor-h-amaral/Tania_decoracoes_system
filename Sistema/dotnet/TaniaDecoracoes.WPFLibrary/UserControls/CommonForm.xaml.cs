@@ -49,41 +49,24 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
         public DataTemplate? StringTemplate { get; set; }
         public DataTemplate? BooleanTemplate { get; set; }
         public DataTemplate? ObjectsTemplate { get; set; }
-        //public DataTemplate? NumericTemplate { get; set; }
-        //public DataTemplate? MonetaryTemplate { get; set; }
-        //public DataTemplate? DateTimeTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is not IFormFieldViewModel) return base.SelectTemplate(item, container);
 
-            if (item.GetType().IsGenericType &&
-                     item.GetType().GetGenericTypeDefinition() == typeof(FormFieldViewModel<>))
-                return StringTemplate;
-            /*if (item is FormFieldViewModel<string>)
+            // Para tipos genéricos
+            if (item.GetType().IsGenericType)
             {
-                return StringTemplate ?? throw new Exception("StringTemplate não encontrado.");
-            }
-            else if (item is FormFieldViewModel<int>)
-            {
-                return StringTemplate;//NumericTemplate ?? throw new Exception("NumericTemplate não encontrado.");
-            }
-            else if (item is FormFieldViewModel<decimal>)
-            {
-                return StringTemplate;//MonetaryTemplate ?? throw new Exception("MonetaryTemplate não encontrado.");
-            }
-            else if (item is FormFieldViewModel<bool>)
-            {
-                return BooleanTemplate ?? throw new Exception("BooleanTemplate não encontrado.");
-            }
-            else if (item is FormFieldViewModel<DateTime>)
-            {
-                return StringTemplate;// DateTimeTemplate ?? throw new Exception("DateTimeTemplate não encontrado.");
-            }*/
-            else if (item.GetType().IsGenericType &&
-                     item.GetType().GetGenericTypeDefinition() == typeof(InstanceFormFieldViewModel<>))
-            {
-                return ObjectsTemplate ?? throw new Exception("ObjectsTemplate(combobox) não encontrado.");
+                var genericType = item.GetType().GetGenericTypeDefinition();
+
+                if (genericType == typeof(FormFieldViewModel<>))
+                {
+                    return StringTemplate ?? throw new Exception("StringTemplate não encontrado.");
+                }
+                else if (genericType == typeof(InstanceFormFieldViewModel<>))
+                {
+                    return ObjectsTemplate ?? throw new Exception("ObjectsTemplate não encontrado.");
+                }
             }
 
             return base.SelectTemplate(item, container);

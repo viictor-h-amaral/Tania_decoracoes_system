@@ -36,7 +36,7 @@
                    FontFamily="Quicksand"
                    Margin="2"/>
                 <ComboBox ItemsSource="{Binding Path=InstanceValues, UpdateSourceTrigger=PropertyChanged}"
-                 DisplayMemberPath="{Binding InstanceObjectsDisplayProperty}"
+                 DisplayMemberPath="Identificacao"
                  IsReadOnly="{Binding IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  SelectedItem="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  FontSize="18"

@@ -25,13 +25,13 @@ namespace TaniaDecoracoes.EntitiesLibrary
         /// </summary>
         /// <param name="predicado">Parâmetro opcional que define a cláusula where para buscar os registros. Se <see langword="null"/>, todos registros de <typeparamref name="T"/> são retornados.</param>
         /// <returns>Uma lista de elementos do tipo <typeparamref name="T"/> que satisfazem o critério passado como parâmetro. Retorna <see langword="null"/> Se nenhum registro for encontrado.</returns>
-        public List<T>? GetMany(Expression<Func<T, bool>>? predicado = null)
+        public IEnumerable<T>? GetMany(Expression<Func<T, bool>>? predicado = null)
         {
             try
             {
                 var registros = predicado is null ?
                     _dbContext.Set<T>().ToList()
-                    : _dbContext.Set<T>().Where(predicado).ToList();
+                    : _dbContext.Set<T>().Where(predicado).ToList() as IEnumerable<T>;
                 return registros;
             }
             catch (Exception ex)

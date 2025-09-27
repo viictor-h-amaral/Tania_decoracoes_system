@@ -88,6 +88,12 @@ public class InstanceFormFieldViewModel<T> : ViewModelBase, IFormFieldViewModel 
         set => SetProperty(ref _isReadOnly, value);
     }
 
+    public bool IsEnabled
+    {
+        get => !_isReadOnly;
+        set => SetProperty(ref _isReadOnly, !value);
+    }
+
     object? IFormFieldViewModel.Value
     {
         get => Value;

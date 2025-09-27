@@ -18,7 +18,7 @@
                            FontFamily="Quicksand"
                            Margin="2"/>
                 <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         IsReadOnly="{Binding IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          FontSize="18"
                          FontFamily="Quicksand"
                          Padding="5"
@@ -37,7 +37,7 @@
                    Margin="2"/>
                 <ComboBox ItemsSource="{Binding Path=InstanceValues, UpdateSourceTrigger=PropertyChanged}"
                  DisplayMemberPath="Identificacao"
-                 IsReadOnly="{Binding IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 IsEnabled="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  SelectedItem="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  FontSize="18"
                  FontFamily="Quicksand"

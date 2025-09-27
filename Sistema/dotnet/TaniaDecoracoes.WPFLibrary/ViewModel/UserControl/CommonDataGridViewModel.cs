@@ -34,20 +34,14 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             set => SetProperty(ref _titulo, value);
         }
 
-        private IEnumerable? _items;
-        public IEnumerable? Items
+        private IList<T>? _items;
+        public IList<T>? Items
         {
             get => _items;
             set
             {
                 if (value is not null)
                     SetProperty(ref _items, value);
-                else
-                    SetProperty(ref _items,
-                        new ObservableCollection<object>()
-                        {
-                            new { campo = "Nenhum conteúdo a ser exibido." }
-                        });
             }
         }
 
@@ -359,9 +353,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         {
             try
             {
-                //var getManyMethod = _entityBase.GetType().GetMethod("GetMany");
-                //Items = getManyMethod?.Invoke(_entityBase, [null]) as IEnumerable;
-                Items = _entityBase.GetMany();
+                Items?.Clear();
+                Items = _entityBase.GetMany() as IList<T>;
             }
             catch (Exception ex)
             {

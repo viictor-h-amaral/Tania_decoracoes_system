@@ -5,7 +5,7 @@ namespace TaniaDecoracoes.EntitiesLibrary.Interfaces
 {
     public interface IEntityBase<T>
     {
-        List<T>? GetMany(Expression<Func<T, bool>>? predicado = null);
+        IEnumerable<T>? GetMany(Expression<Func<T, bool>>? predicado = null);
         T? FirstOrDefault(Expression<Func<T, bool>>? predicado = null);
         bool Save(T entity);
         bool Delete(T entity);

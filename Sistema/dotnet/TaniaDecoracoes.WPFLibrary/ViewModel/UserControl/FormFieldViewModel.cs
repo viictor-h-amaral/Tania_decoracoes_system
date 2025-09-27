@@ -45,6 +45,12 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             }
         }
 
+        public bool IsEnabled
+        {
+            get => !_isReadOnly;
+            set => SetProperty(ref _isReadOnly, !value);
+        }
+
         public IEnumerable<ValidationRule> ValidationRules { get; set; }
         public string ErrorMessage { get; private set; }
         public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
@@ -53,7 +59,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         {
             Property = prop;
             SourceObject = sourceObject;
-            //Value = value;
             ValidationRules = new List<ValidationRule>();
         }
 

@@ -9,7 +9,7 @@ using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 
 namespace TaniaDecoracoes.EntitiesLibrary.Entities.Associacao
 {
-    public class AssociacaoDecoracaoFloresDao : EntityBase<AssociacaoDecoracaoFlores>
+    public class AssociacaoDecoracaoFloresDao //: EntityBase<AssociacaoDecoracaoFlores>
     {
     }
 }

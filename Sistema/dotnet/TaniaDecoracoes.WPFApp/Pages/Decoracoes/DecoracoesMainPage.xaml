@@ -30,10 +30,8 @@
             DataContext="{Binding DataGridVM}" 
             ColumnsSource="{Binding DataGridColumns}"/>
 
-        <userControls:CommonForm
-            HorizontalAlignment="Center"
-            DataContext="{Binding FormVM}"
-            />
+            <Button Content="Ir para Tipos de Eventos" Command="{Binding NavegarParaTiposEventosCommand}" />
+            
         </StackPanel>
     </Grid>
 </Page>

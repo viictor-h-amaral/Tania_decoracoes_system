@@ -31,7 +31,14 @@ namespace TaniaDecoracoes.WPFApp.Pages.Decoracoes
         {
             InitializeComponent();
 
-            this.DataContext = new DecoracoesMainPageViewModel();
+            var vm = new DecoracoesMainPageViewModel();
+            this.DataContext = vm;
+
+            vm.OnNavegarParaTiposEventos += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.TiposEventosPage);
+            };
 
         }
     }

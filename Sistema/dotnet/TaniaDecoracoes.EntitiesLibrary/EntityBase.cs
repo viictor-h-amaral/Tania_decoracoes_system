@@ -15,11 +15,6 @@ namespace TaniaDecoracoes.EntitiesLibrary
             _dbContext = dbContext;
         }
 
-        public EntityBase()
-        {
-            _dbContext = new TaniaDecoracoesDbContext();
-        }
-
         /// <summary>
         /// Usado para retornar uma lista de entidades do tipo <typeparamref name="T"/> que satisfazem as restrições fornecidas.
         /// </summary>

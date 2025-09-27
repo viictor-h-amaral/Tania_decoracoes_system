@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using TaniaDecoracoes.WPFApp.ViewModel;
 using TaniaDecoracoes.WPFLibrary.ViewModel.Windows;
 using TaniaDecoracoes.WPFLibrary.WindowsPattern;
@@ -21,6 +22,11 @@ namespace TaniaDecoracoes.WPFApp
 
             this.StateChanged += (s, e) => viewModel.WindowState = this.WindowState;
             InitializeComponent();
+        }
+
+        public void NavegarPara(Page page)
+        {
+            frmModulos.Navigate(page);
         }
 
     }

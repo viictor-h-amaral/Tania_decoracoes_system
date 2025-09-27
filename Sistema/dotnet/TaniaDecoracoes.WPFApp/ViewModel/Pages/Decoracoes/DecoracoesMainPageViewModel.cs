@@ -30,6 +30,12 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
 
         public DecoracoesMainPageViewModel()
         {
+            NavegarParaTiposEventosCommand = new RelayCommand<object>(_ =>
+            {
+                // Aqui você pode usar um serviço de navegação ou evento
+                OnNavegarParaTiposEventos?.Invoke();
+            });
+
             _dbContext = new TaniaDecoracoesDbContext();
 
             var tipoItemEntity = new TipoItemEntity(_dbContext);
@@ -89,6 +95,11 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
             get => _myCommandName;
             set => SetProperty(ref _myCommandName, value);
         }
+
+        // DecoracoesMainPageViewModel.cs
+        public ICommand NavegarParaTiposEventosCommand { get; }
+
+        public event Action? OnNavegarParaTiposEventos;
 
     }
 }

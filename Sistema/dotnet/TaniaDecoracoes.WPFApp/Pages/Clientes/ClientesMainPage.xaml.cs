@@ -1,19 +1,19 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes;
+using TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes;
 
-namespace TaniaDecoracoes.WPFApp.Pages.Decoracoes
+namespace TaniaDecoracoes.WPFApp.Pages.Clientes
 {
     /// <summary>
-    /// Interação lógica para DecoracoesMainPage.xam
+    /// Interação lógica para ClientesMainPage.xam
     /// </summary>
-    public partial class DecoracoesMainPage : Page
+    public partial class ClientesMainPage : Page
     {
-        public DecoracoesMainPage()
+        public ClientesMainPage()
         {
             InitializeComponent();
 
-            var vm = new DecoracoesMainPageViewModel();
+            var vm = new ClientesMainPageViewModel();
             this.DataContext = vm;
 
             vm.OnNavegarParaTiposEventos += () =>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TaniaDecoracoes.WPFApp.Pages;
+using TaniaDecoracoes.WPFApp.Pages.Clientes;
 using TaniaDecoracoes.WPFApp.Pages.Decoracoes;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
@@ -52,6 +53,9 @@ namespace TaniaDecoracoes.WPFApp.ViewModel
                     break;
                 case "_ModuloDecoracoes":
                     PaginaAtual = new DecoracoesMainPage();
+                    break;
+                case "_ModuloClientes":
+                    PaginaAtual = new ClientesMainPage();
                     break;
                 default:
                     PaginaAtual = new DefaultTestePage(); // Página padrão

@@ -45,6 +45,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
                                                     (DefaultActionButtons.All));
 
             DataGridVM = new CommonDataGridViewModel<Cliente>(gridConfig) { };
+            DataGridVM.AddDefaultTableButtons();
         }
     }
 }

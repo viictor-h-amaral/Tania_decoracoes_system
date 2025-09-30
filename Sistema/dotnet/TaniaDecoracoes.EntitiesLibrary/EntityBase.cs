@@ -93,7 +93,6 @@ namespace TaniaDecoracoes.EntitiesLibrary
         {
             try
             {
-                //_dbContext.Set<T>().Update(entity);
                 return _dbContext.SaveChanges() > 0;
             }
             catch (Exception ex)

@@ -54,6 +54,7 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// </summary>
         [BindingAttribute(fieldName: "Identificacao")]
         [TitleAttribute]
+        [IgnoreOnGrid]
         public virtual DependenteCliente? ComemorandoInstance { get; set; }
 
         /// <summary>
@@ -84,6 +85,7 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// </summary>
         [BindingAttribute(fieldName: "Nome")]
         [TitleAttribute(title: "Tipo do evento")]
+        [IgnoreOnGrid]
         public virtual required TipoEvento TipoEventoInstance { get; set; }
 
         /// <summary>
@@ -99,6 +101,7 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// </summary>
         [BindingAttribute(fieldName: "Nome")]
         [TitleAttribute(title: "Tema do aniversário")]
+        [IgnoreOnGrid]
         public virtual TemaAniversario? TemaAniversarioInstance { get; set; }
 
         /// <summary>
@@ -114,30 +117,36 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         /// </summary>
         [BindingAttribute(fieldName: "Apelido")]
         [TitleAttribute(title: "Carro utilizado")]
+        [IgnoreOnGrid]
+        [IgnoreOnForm]
         public virtual required Carro CarroUtilizadoInstance { get; set; }
 
         /// <summary>
         /// Retorna a distância (em km) de casa até o local do evento
         /// <para>Optional</para>
         /// </summary>
+        [IgnoreOnGrid]
         public float? DistanciaDeCasa { get; set; }
 
         /// <summary>
         /// Retorna o valor sugerido pelo sistema para a decoração
         /// <para>Optional</para>
         /// </summary>
+        [IgnoreOnGrid]
         public decimal? ValorSugerido {  get; set; }
 
         /// <summary>
         /// Retorna o valor cobrado pelo serviço de decoração
         /// <para>Required</para>
         /// </summary>
+        [IgnoreOnGrid]
         public decimal ValorCobrado { get; set; }
 
         /// <summary>
         /// Retorna o valor do lucro da decoração
         /// <para>Optional</para>>
         /// </summary>
+        [IgnoreOnGrid]
         public decimal? Lucro {  get; set; }
 
         /// <summary>

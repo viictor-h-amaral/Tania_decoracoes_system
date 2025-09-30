@@ -23,7 +23,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
     {
         private readonly IEntityBase<T> _entityBase;
         private readonly DbContext _context;
-        private Type ElementsType => TabelaSource.ModelType;
+        private Type ElementsType => typeof(T);
 
 
         private string? _titulo = "";
@@ -43,18 +43,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                     SetProperty(ref _items, value);
             }
         }
-
-        private ITabela _tabelaSource;
-        public ITabela TabelaSource
-        {
-            get => _tabelaSource;
-            set
-            {
-                if (value != null)
-                    SetProperty(ref _tabelaSource, value);
-            }
-        }
-
 
         private T? _selectedItem;
         public T? SelectedItem
@@ -97,8 +85,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0271cc")),
                 Comando = new RelayCommand(() =>
                 {
-                    var formVmType = typeof(CommonFormViewModel<>).MakeGenericType(TabelaSource.ModelType);
-                    var formVm = Activator.CreateInstance(formVmType, Titulo, true, _context) as IFormViewModel;
+                    var formVm = new CommonFormViewModel<T>(Titulo, true, _context) as IFormViewModel;
 
                     var formWindowVM = new FormWindowViewModel(formVm);
 
@@ -198,8 +185,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 {
                     ViewCommand = new RelayCommand<T>(registro =>
                     {
-                        var formVmType = typeof(CommonFormViewModel<>).MakeGenericType(TabelaSource.ModelType);
-                        var formVm = Activator.CreateInstance(formVmType, Titulo, FormMode.View, registro, _context, true) as IFormViewModel;
+                        var formVm = new CommonFormViewModel<T>(Titulo, FormMode.View, registro, _context, true) as IFormViewModel;
 
                         var formWindowVM = new FormWindowViewModel(formVm);
 
@@ -213,8 +199,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 {
                     EditCommand = new RelayCommand<T>(registro =>
                     {
-                        var formVmType = typeof(CommonFormViewModel<>).MakeGenericType(TabelaSource.ModelType);
-                        var formVm = Activator.CreateInstance(formVmType, Titulo, FormMode.Edit, registro, _context, true) as IFormViewModel;
+                        var formVm = new CommonFormViewModel<T>(Titulo, FormMode.Edit, registro, _context, true) as IFormViewModel;
 
                         var formWindowVM = new FormWindowViewModel(formVm);
 
@@ -239,10 +224,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                         if (dialogResult != null && dialogResult == false)
                             return;
 
-                        //var objectType = registro.GetType();
-
-                        //var deleteMethod = _entityBase.GetType().GetMethod("Delete");
-                        //deleteMethod?.Invoke(_entityBase, [registro]);
                         _entityBase.Delete(registro);
 
                         LoadSource();
@@ -297,10 +278,9 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         public CommonDataGridViewModel(GridConfigObject configObj)
         {
-            TabelaSource = configObj.tabelaSource;
             _context = new TaniaDecoracoesDbContext();
             _entityBase = new EntityBase<T>(_context);
-            //CreateEntityBase();
+
             Titulo = configObj.Title;
 
             LoadSource();

@@ -38,8 +38,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
 
             _dbContext = new TaniaDecoracoesDbContext();
 
-            var gridConfig = new GridConfigObject(source: new ClienteTabela(),
-                                                    title: "Clientes",
+            var gridConfig = new GridConfigObject(title: "Clientes",
                                                     readOnly: true,
                                                     autoGenerateColumns: true,
                                                     (DefaultActionButtons.All));

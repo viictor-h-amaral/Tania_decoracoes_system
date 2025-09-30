@@ -45,8 +45,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                                                 "DataContext.MyCommandName",
                                                 commandSource);
 
-            var gridConfig = new GridConfigObject(  source: new ItemTabela(),
-                                                    title: "Tipos de itens",
+            var gridConfig = new GridConfigObject(  title: "Tipos de itens",
                                                     readOnly: true,
                                                     autoGenerateColumns: true,
                                                     (DefaultActionButtons.All)); 

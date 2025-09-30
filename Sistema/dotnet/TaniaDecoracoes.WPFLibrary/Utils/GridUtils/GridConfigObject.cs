@@ -7,9 +7,6 @@ namespace TaniaDecoracoes.WPFLibrary.Utils.GridUtils
 {
     public class GridConfigObject
     {
-        //public required IEnumerable<object> SourceObjList { get; set; }
-        public ITabela tabelaSource { get; set; }
-
         public string Title { get; set; } = "Título";
 
         private int maxItensPerPage = 10;
@@ -35,27 +32,23 @@ namespace TaniaDecoracoes.WPFLibrary.Utils.GridUtils
 
         public GridConfigObject() { }
 
-        public GridConfigObject(ITabela source,
-                                string title, 
+        public GridConfigObject(string title, 
                                 bool readOnly, 
                                 bool autoGenerateColumns,
                                 DefaultActionButtons defaultActionButtonsToAdd) 
         { 
-            tabelaSource = source;
             Title = title;
             IsGridReadOnly = readOnly;
             AutoGenerateColumns = autoGenerateColumns;
             DefaultActionButtonsToAdd = defaultActionButtonsToAdd;
         }
 
-        public GridConfigObject(ITabela source,
-                                Criterio? criterio,
+        public GridConfigObject(Criterio? criterio,
                                 string title,
                                 bool readOnly,
                                 bool autoGenerateColumns,
                                 DefaultActionButtons defaultActionButtonsToAdd)
         {
-            tabelaSource = source;
             CriterioSelecao = criterio;
             Title = title;
             IsGridReadOnly = readOnly;

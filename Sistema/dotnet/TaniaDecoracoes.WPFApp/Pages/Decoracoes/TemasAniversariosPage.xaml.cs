@@ -17,15 +17,15 @@ using TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes;
 namespace TaniaDecoracoes.WPFApp.Pages.Decoracoes
 {
     /// <summary>
-    /// Interação lógica para TiposEventosPage.xam
+    /// Interação lógica para TemasAniversariosPage.xam
     /// </summary>
-    public partial class TiposEventosPage : Page
+    public partial class TemasAniversariosPage : Page
     {
-        public TiposEventosPage()
+        public TemasAniversariosPage()
         {
             InitializeComponent();
 
-            var vm = new TiposEventosPageViewModel();
+            var vm = new TemasAniversariosPageViewModel();
             this.DataContext = vm;
         }
     }

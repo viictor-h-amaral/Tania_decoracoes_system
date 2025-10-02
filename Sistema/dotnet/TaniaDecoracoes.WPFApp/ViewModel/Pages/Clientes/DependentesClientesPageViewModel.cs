@@ -14,22 +14,36 @@ using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
 
 namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
 {
-    public class DependentesClientesPageViewModel : ViewModelBase
+    public class ClientesMainPageViewModel : ViewModelBase
     {
+        private DbContext _dbContext;
+
         private IGridViewModel? _dataGridVM;
         public IGridViewModel? DataGridVM
         {
             get => _dataGridVM;
             set => SetProperty(ref _dataGridVM, value);
         }
-        public DependentesClientesPageViewModel()
+
+        public ICommand NavegarParaTiposEventosCommand { get; }
+
+        public event Action? OnNavegarParaTiposEventos;
+
+        public ClientesMainPageViewModel()
         {
-            var gridConfig = new GridConfigObject(title: "Dependentes de clientes",
+            NavegarParaTiposEventosCommand = new RelayCommand<object>(_ =>
+            {
+                OnNavegarParaTiposEventos?.Invoke();
+            });
+
+            _dbContext = new TaniaDecoracoesDbContext();
+
+            var gridConfig = new GridConfigObject(title: "Clientes",
                                                     readOnly: true,
                                                     autoGenerateColumns: true,
                                                     (DefaultActionButtons.All));
 
-            DataGridVM = new CommonDataGridViewModel<DependenteCliente>(gridConfig) { };
+            DataGridVM = new CommonDataGridViewModel<Cliente>(gridConfig) { };
             DataGridVM.AddDefaultTableButtons();
         }
     }

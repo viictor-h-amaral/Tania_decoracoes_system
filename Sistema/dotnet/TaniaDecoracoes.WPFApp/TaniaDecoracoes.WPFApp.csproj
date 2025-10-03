@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Itens\" />
     <Folder Include="Pages\Estatisticas\" />
     <Folder Include="Pages\Home\" />
     <Folder Include="Pages\Mídias\" />

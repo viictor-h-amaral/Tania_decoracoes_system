@@ -38,5 +38,9 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
             }
         }
 
+        private void MainGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

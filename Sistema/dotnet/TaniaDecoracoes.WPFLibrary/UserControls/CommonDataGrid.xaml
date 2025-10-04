@@ -67,7 +67,7 @@
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   AutoGenerateColumns="False"
                   CanUserAddRows ="False"
-                  CanUserDeleteRows="False">
+                  CanUserDeleteRows="False" SelectionChanged="MainGrid_SelectionChanged">
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Width="Auto">

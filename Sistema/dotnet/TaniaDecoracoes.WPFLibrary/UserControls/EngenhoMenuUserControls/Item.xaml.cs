@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoMenu;
 
 namespace TaniaDecoracoes.WPFLibrary.UserControls.EngenhoMenuUserControls
 {
@@ -20,6 +21,7 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls.EngenhoMenuUserControls
     /// </summary>
     public partial class Item : UserControl
     {
+
         public Item()
         {
             InitializeComponent();

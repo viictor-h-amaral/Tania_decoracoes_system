@@ -11,6 +11,7 @@ using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
 using TaniaDecoracoes.WPFLibrary.ViewModel;
 using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
+using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoMenu;
 
 namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
 {
@@ -22,6 +23,9 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
             get => _dataGridVM;
             set => SetProperty(ref _dataGridVM, value);
         }
+
+        
+
         public DependentesClientesPageViewModel()
         {
             var gridConfig = new GridConfigObject(title: "Dependentes de clientes",
@@ -31,6 +35,8 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
 
             DataGridVM = new CommonDataGridViewModel<DependenteCliente>(gridConfig) { };
             DataGridVM.AddDefaultTableButtons();
+
+            
         }
     }
 }

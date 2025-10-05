@@ -5,15 +5,28 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TaniaDecoracoes.WPFApp.Pages.Clientes"
       xmlns:userControls="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls;assembly=TaniaDecoracoes.WPFLibrary"
+      xmlns:engenhoMenu="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls.EngenhoMenuUserControls;assembly=TaniaDecoracoes.WPFLibrary"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ClientesMainPage">
 
     <Grid>
-        <userControls:CommonDataGrid
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            DataContext="{Binding DataGridVM}" 
-            ColumnsSource="{Binding DataGridColumns}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <engenhoMenu:ItensMenu 
+                DataContext="{Binding MenuVM}" 
+                Grid.Row="0"/>
+
+        <!-- <Button Content="Ir para Tipos de Eventos" Command="{Binding NavegarParaTiposEventosCommand}" /> -->
+
+            <userControls:CommonDataGrid
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                DataContext="{Binding DataGridVM}" 
+                ColumnsSource="{Binding DataGridColumns}"/>
     </Grid>
 </Page>

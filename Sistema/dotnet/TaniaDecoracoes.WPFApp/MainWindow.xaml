@@ -75,7 +75,7 @@
                     <Grid Grid.Row="0" x:Name="ConfigOptions" Background="#8A446C">
                         <userControls:MenuSuperiorConfiguracoes />
                     </Grid>
-                    
+
                     <Grid Grid.Row="1" x:Name="ContudoGrid">
                         <Frame x:Name="frmModulos" 
                                NavigationUIVisibility="Automatic" 

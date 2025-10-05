@@ -22,8 +22,21 @@
             </ResourceDictionary>
         </Grid.Resources>
 
+        
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            
+
+            <Menu>
+                <MenuItem Header="_File" IsSubmenuOpen="True">
+                    <MenuItem Header="_New" IsSubmenuOpen="True"/>
+                    <MenuItem Header="_Open"/>
+                    <MenuItem Header="_Save"/>
+                    <Separator/>
+                    <MenuItem Header="_Print"/>
+                    <MenuItem Header="_Exit"/>
+                </MenuItem>
+            </Menu>
+
             <userControls:CommonDataGrid
             HorizontalAlignment="Center"
             VerticalAlignment="Center"

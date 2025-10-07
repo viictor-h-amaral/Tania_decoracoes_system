@@ -6,7 +6,12 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoMenu
 {
     public class ItemViewModel : ViewModelBase
     {
-        public int Camada { get; set; }
+        private int _camada = 1;
+        public int Camada 
+        {
+            get => _camada;
+            set => _camada = value;
+        }
         public Thickness Margin => new Thickness(5 * Camada);
 
         private string titulo = "título";

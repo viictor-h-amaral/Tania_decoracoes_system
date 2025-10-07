@@ -33,15 +33,15 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
             set => SetProperty(ref _menuVM, value);
         }
 
-        public ICommand NavegarParaTiposEventosCommand { get; }
+        public ICommand NavegarParaDependentesClientesCommand { get; }
 
-        public event Action? OnNavegarParaTiposEventos;
+        public event Action? OnNavegarParaDependentes;
 
         public ClientesMainPageViewModel()
         {
-            NavegarParaTiposEventosCommand = new RelayCommand<object>(_ =>
+            NavegarParaDependentesClientesCommand = new RelayCommand<object>(_ =>
             {
-                OnNavegarParaTiposEventos?.Invoke();
+                OnNavegarParaDependentes?.Invoke();
             });
 
             _dbContext = new TaniaDecoracoesDbContext();
@@ -59,100 +59,20 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
 
             var grupoDependentes = new GrupoViewModel()
             {
-                Titulo = "Dependentes",
+                Titulo = "Dependentes de clientes",
                 Itens = new List<ItemViewModel>()
                 {
                     new ItemViewModel()
                     {
-                        Titulo = "Item 1",
-                        SubItens = new List<ItemViewModel>()
-                        {
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 1"
-                            },
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 2"
-                            }
-                        }
-                    },
-                    new ItemViewModel()
-                    {
-                        Titulo = "Item 2",
-                        SubItens = new List<ItemViewModel>()
-                        {
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 1"
-                            },
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 2"
-                            },
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 3"
-                            },
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 4"
-                            }
-                        }
-                    }
-                }
-            };
-
-            var grupoDependentes2 = new GrupoViewModel()
-            {
-                Titulo = "Dependentes 2",
-                Itens = new List<ItemViewModel>()
-                {
-                    new ItemViewModel()
-                    {
-                        Titulo = "Item 1",
-                        SubItens = new List<ItemViewModel>()
-                        {
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 1"
-                            },
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 2"
-                            }
-                        }
-                    },
-                    new ItemViewModel()
-                    {
-                        Titulo = "Item 2",
-                        SubItens = new List<ItemViewModel>()
-                        {
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 1"
-                            },
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 2"
-                            },
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 3"
-                            },
-                            new ItemViewModel()
-                            {
-                                Titulo = "subitem 4"
-                            }
-                        }
+                        Titulo = "Consultar/cadastrar dependente",
+                        Comando = NavegarParaDependentesClientesCommand
                     }
                 }
             };
 
             menuVm.Grupos = new List<GrupoViewModel>()
             {
-                grupoDependentes,
-                grupoDependentes2
+                grupoDependentes
             };
 
             MenuVM = menuVm;

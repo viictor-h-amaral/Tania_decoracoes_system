@@ -16,10 +16,10 @@ namespace TaniaDecoracoes.WPFApp.Pages.Clientes
             var vm = new ClientesMainPageViewModel();
             this.DataContext = vm;
 
-            vm.OnNavegarParaTiposEventos += () =>
+            vm.OnNavegarParaDependentes += () =>
             {
                 var mainWindow = Application.Current.MainWindow as MainWindow;
-                mainWindow?.NavegarPara(PagesLink.TiposEventosPage);
+                mainWindow?.NavegarPara(PagesLink.DependentesClientesPage);
             };
         }
     }

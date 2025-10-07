@@ -21,7 +21,10 @@
             
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" Width="Auto" MaxWidth="300"/>
+                    <WrapPanel Orientation="Horizontal" 
+                               Width="Auto"
+                               HorizontalAlignment="Left"
+                               MaxWidth="300"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 

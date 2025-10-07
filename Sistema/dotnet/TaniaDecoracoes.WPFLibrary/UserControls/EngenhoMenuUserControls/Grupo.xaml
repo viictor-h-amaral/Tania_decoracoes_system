@@ -6,8 +6,12 @@
              xmlns:local="clr-namespace:TaniaDecoracoes.WPFLibrary.UserControls.EngenhoMenuUserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <Label Content="{Binding Titulo}"/>
+    <StackPanel 
+        Margin="10">
+        
+        <Label Content="{Binding Titulo}"
+               FontFamily="Quicksand"
+               FontSize="18"/>
 
         <ItemsControl ItemsSource="{Binding Itens}">
             <ItemsControl.ItemTemplate>

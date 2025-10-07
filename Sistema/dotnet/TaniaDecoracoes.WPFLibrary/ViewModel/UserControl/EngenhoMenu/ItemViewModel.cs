@@ -1,9 +1,14 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
+using System.Linq;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoMenu
 {
     public class ItemViewModel : ViewModelBase
     {
+        public int Camada { get; set; }
+        public Thickness Margin => new Thickness(5 * Camada);
+
         private string titulo = "título";
         public string Titulo
         {
@@ -15,7 +20,14 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoMenu
         public IEnumerable<ItemViewModel>? SubItens
         {
             get => _subItens;
-            set => _subItens = value;
+            set 
+            {
+                foreach (var item in value ?? [])
+                {
+                    item.Camada = Camada + 1;
+                }
+                _subItens = value;
+            } 
         }
 
         private ICommand? _comando;

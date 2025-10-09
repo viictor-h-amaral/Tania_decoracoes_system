@@ -12,18 +12,24 @@ using TaniaDecoracoes.WPFLibrary.Utils.GridUtils;
 using TaniaDecoracoes.WPFLibrary.ViewModel;
 using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
+using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoMenu;
 
 namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
 {
     public class DecoracoesMainPageViewModel : ViewModelBase
     {
-        private DbContext _dbContext;
-
         private IGridViewModel? _dataGridVM;
         public IGridViewModel? DataGridVM
         {
             get => _dataGridVM;
             set => SetProperty(ref _dataGridVM, value);
+        }
+
+        private MenuViewModel? _menuVM;
+        public MenuViewModel? MenuVM
+        {
+            get => _menuVM;
+            set => SetProperty(ref _menuVM, value);
         }
 
         public DecoracoesMainPageViewModel()
@@ -33,20 +39,70 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Decoracoes
                 OnNavegarParaTiposEventos?.Invoke();
             });
 
-            _dbContext = new TaniaDecoracoesDbContext();
-            var gridConfig = new GridConfigObject(  title: "Decorações",
+            NavegarParaTemasAniversariosCommand = new RelayCommand<object>(_ =>
+            {
+                OnNavegarParaTemasAniversarios?.Invoke();
+            });
+
+            ConfigurarGrid();
+            ConfigurarMenu();
+            
+        }
+
+        private void ConfigurarGrid()
+        {
+            var gridConfig = new GridConfigObject(title: "Decorações",
                                                     readOnly: true,
                                                     autoGenerateColumns: true,
-                                                    (DefaultActionButtons.All)); 
+                                                    (DefaultActionButtons.All));
 
             DataGridVM = new CommonDataGridViewModel<Decoracao>(gridConfig) { };
 
             DataGridVM.AddDefaultTableButtons();
         }
 
+        private void ConfigurarMenu()
+        {
+            var menuVm = new MenuViewModel();
+            menuVm.Titulo = "Decorações";
+            menuVm.Grupos = new List<GrupoViewModel>()
+            {
+                new GrupoViewModel()
+                {
+                    Titulo = "Eventos",
+                    Itens = new List<ItemViewModel>()
+                    {
+                        new ItemViewModel()
+                        {
+                            Titulo = "Tipos de Eventos",
+                            Comando = NavegarParaTiposEventosCommand
+                        }
+                    }
+                },
+                new GrupoViewModel()
+                {
+                    Titulo = "Aniversários",
+                    Itens = new List<ItemViewModel>()
+                    {
+                        new ItemViewModel()
+                        {
+                            Titulo = "Temas de aniversários",
+                            Comando = NavegarParaTemasAniversariosCommand
+                        }
+                    }
+                }
+            };
+
+            MenuVM = menuVm;
+        }
+
         public ICommand NavegarParaTiposEventosCommand { get; }
 
         public event Action? OnNavegarParaTiposEventos;
+
+        public ICommand NavegarParaTemasAniversariosCommand { get; }
+
+        public event Action? OnNavegarParaTemasAniversarios;
 
     }
 }

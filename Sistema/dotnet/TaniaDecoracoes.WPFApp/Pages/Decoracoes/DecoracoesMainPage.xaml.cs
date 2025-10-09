@@ -21,6 +21,12 @@ namespace TaniaDecoracoes.WPFApp.Pages.Decoracoes
                 var mainWindow = Application.Current.MainWindow as MainWindow;
                 mainWindow?.NavegarPara(PagesLink.TiposEventosPage);
             };
+
+            vm.OnNavegarParaTemasAniversarios += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.TemasAniversariosPage);
+            };
         }
     }
 }

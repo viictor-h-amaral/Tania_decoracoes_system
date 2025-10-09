@@ -16,5 +16,6 @@ namespace TaniaDecoracoes.WPFApp.Pages
         public static Page TiposEventosPage => new TiposEventosPage();
         public static Page ClientesMainPage => new ClientesMainPage();
         public static Page DependentesClientesPage => new DependentesClientesPage();
+        public static Page TemasAniversariosPage => new TemasAniversariosPage();
     }
 }

@@ -6,7 +6,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoMenu
 {
     public class ItemViewModel : ViewModelBase
     {
-        private int _camada = 1;
+        private int _camada = 2;
         public int Camada 
         {
             get => _camada;

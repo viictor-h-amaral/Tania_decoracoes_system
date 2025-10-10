@@ -70,9 +70,23 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
                 }
             };
 
+            var grupoEnderecos = new GrupoViewModel()
+            {
+                Titulo = "Endereços de clientes",
+                Itens = new List<ItemViewModel>()
+                {
+                    new ItemViewModel()
+                    {
+                        Titulo = "Consultar/cadastrar endereço",
+                        Comando = NavegarParaDependentesClientesCommand
+                    }
+                }
+            };
+
             menuVm.Grupos = new List<GrupoViewModel>()
             {
-                grupoDependentes
+                grupoDependentes, 
+                grupoEnderecos,
             };
 
             MenuVM = menuVm;

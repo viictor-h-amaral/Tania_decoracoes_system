@@ -25,7 +25,7 @@
 
         
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
 
             <menu:ItensMenu DataContext="{Binding MenuVM}" />
 

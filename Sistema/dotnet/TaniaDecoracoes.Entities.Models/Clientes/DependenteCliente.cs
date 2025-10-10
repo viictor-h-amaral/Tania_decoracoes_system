@@ -56,6 +56,7 @@ namespace TaniaDecoracoes.Entities.Models.Clientes
         [TitleAttribute(title: "Gênero")]
         public virtual required Genero GeneroInstance { get; set; }
 
+        [IgnoreOnForm]
         public string Identificacao => $"{Nome}, {ResponsavelInstance.Nome}";
         /// <summary>
         /// Retorna a lista de decorações associadas a este dependente

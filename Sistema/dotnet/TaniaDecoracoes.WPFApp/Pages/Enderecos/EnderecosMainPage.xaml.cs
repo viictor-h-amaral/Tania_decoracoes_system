@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaniaDecoracoes.WPFApp.ViewModel.Pages.Enderecos;
 
 namespace TaniaDecoracoes.WPFApp.Pages.Enderecos
 {
@@ -23,6 +24,8 @@ namespace TaniaDecoracoes.WPFApp.Pages.Enderecos
         public EnderecosMainPage()
         {
             InitializeComponent();
+
+            this.DataContext = new EnderecosMainPageViewModel();
         }
     }
 }

@@ -34,11 +34,14 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Enderecos
                 {
                     new ItemViewModel()
                     {
-                        Titulo = "Tipo de logradouro"
-                    },
-                    new ItemViewModel()
-                    {
-                        Titulo = "Logradouro"
+                        Titulo = "Logradouro",
+                        SubItens = new List<ItemViewModel>()
+                        {
+                            new ItemViewModel()
+                            {
+                                Titulo = "Tipos de logradouro"
+                            }
+                        }
                     },
                     new ItemViewModel()
                     {

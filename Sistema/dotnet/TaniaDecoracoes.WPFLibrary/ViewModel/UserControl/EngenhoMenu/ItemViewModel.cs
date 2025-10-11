@@ -12,7 +12,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoMenu
             get => _camada;
             set => _camada = value;
         }
-        public Thickness Margin => new Thickness(5 * Camada);
+
+        public bool EhSubItem => Camada > 2;
+
+        public Thickness Margin => new Thickness(EhSubItem? 10 * Camada : 15, EhSubItem ? 2:7, 0, 2);
+        public int FontSize => EhSubItem ? 16 : 18;
 
         private string titulo = "título";
         public string Titulo

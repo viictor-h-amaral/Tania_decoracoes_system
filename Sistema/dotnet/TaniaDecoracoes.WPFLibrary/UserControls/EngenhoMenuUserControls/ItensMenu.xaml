@@ -16,13 +16,13 @@
         <Label Content = "{Binding Titulo}"
                Grid.Row="0"
                FontFamily="Quicksand"
-               FontSize="35"
+               FontSize="40"
                Foreground="#7A3A5C"
                Background="Transparent"
                FontWeight="Bold"/>
 
         <ItemsControl ItemsSource="{Binding Grupos}"
-                    Grid.Row="1">
+                    Grid.Row="1" VerticalAlignment="Top">
             
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

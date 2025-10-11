@@ -13,7 +13,7 @@
         
         <Label Content="{Binding Titulo}"
                FontFamily="Quicksand"
-               FontSize="18"
+               FontSize="28"
                FontWeight="Bold"
                HorizontalAlignment="Left"
                Margin="0, 10, 10, 10"

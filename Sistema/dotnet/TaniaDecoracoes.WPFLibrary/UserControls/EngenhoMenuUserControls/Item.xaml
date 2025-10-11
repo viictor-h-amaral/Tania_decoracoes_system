@@ -20,7 +20,8 @@
             Content="{Binding Titulo}"
             Command="{Binding Comando}"
             Style="{StaticResource ItemButtonStyle}"
-            Margin="{Binding Margin}"/>
+            Margin="{Binding Margin}"
+            FontSize="{Binding FontSize}"/>
 
         <ItemsControl ItemsSource="{Binding SubItens}">
             <ItemsControl.ItemTemplate>

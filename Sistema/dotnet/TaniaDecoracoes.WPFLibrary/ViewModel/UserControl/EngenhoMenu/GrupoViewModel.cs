@@ -12,7 +12,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoMenu
         private string titulo = "título";
         public string Titulo
         {
-            get => titulo;
+            get => titulo + "     ";
             set => titulo = value;
         }
 

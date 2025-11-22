@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace TaniaDecoracoes.Entities.Data
 {
@@ -9,7 +10,7 @@ namespace TaniaDecoracoes.Entities.Data
         static AppSettings()
         {
             Configuration = new ConfigurationBuilder()
-                .SetBasePath("C:\\Desenvolvimento\\TaniaDecoracoes_System\\Projeto\\Sistema\\dotnet\\TaniaDecoracoes.Entities.Data")
+                .SetBasePath(AppContext.BaseDirectory)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
         }

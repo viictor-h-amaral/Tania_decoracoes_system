@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using TaniaDecoracoes.WPFApp.Pages.Clientes;
 using TaniaDecoracoes.WPFApp.Pages.Decoracoes;
+using TaniaDecoracoes.WPFApp.Pages.Enderecos;
 
 namespace TaniaDecoracoes.WPFApp.Pages
 {
@@ -16,6 +17,7 @@ namespace TaniaDecoracoes.WPFApp.Pages
         public static Page TiposEventosPage => new TiposEventosPage();
         public static Page ClientesMainPage => new ClientesMainPage();
         public static Page DependentesClientesPage => new DependentesClientesPage();
+        public static Page EnderecosClientesPage => new EnderecosClientesPage();
         public static Page TemasAniversariosPage => new TemasAniversariosPage();
     }
 }

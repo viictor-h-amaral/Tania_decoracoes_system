@@ -37,11 +37,20 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
 
         public event Action? OnNavegarParaDependentes;
 
+        public ICommand NavegarParaEnderecosClientesCommand { get; }
+
+        public event Action? OnNavegarParaEnderecos;
+
         public ClientesMainPageViewModel()
         {
             NavegarParaDependentesClientesCommand = new RelayCommand<object>(_ =>
             {
                 OnNavegarParaDependentes?.Invoke();
+            });
+
+            NavegarParaEnderecosClientesCommand = new RelayCommand<object>(_ =>
+            {
+                OnNavegarParaEnderecos?.Invoke();
             });
 
             _dbContext = new TaniaDecoracoesDbContext();
@@ -78,7 +87,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Clientes
                     new ItemViewModel()
                     {
                         Titulo = "Consultar/cadastrar endereço",
-                        Comando = NavegarParaDependentesClientesCommand
+                        Comando = NavegarParaEnderecosClientesCommand
                     }
                 }
             };

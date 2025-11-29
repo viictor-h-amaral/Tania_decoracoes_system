@@ -21,6 +21,12 @@ namespace TaniaDecoracoes.WPFApp.Pages.Clientes
                 var mainWindow = Application.Current.MainWindow as MainWindow;
                 mainWindow?.NavegarPara(PagesLink.DependentesClientesPage);
             };
+
+            vm.OnNavegarParaEnderecos += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.EnderecosClientesPage);
+            };
         }
     }
 }

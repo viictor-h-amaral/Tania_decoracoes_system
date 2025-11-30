@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TaniaDecoracoes.WPFApp.ViewModel.Pages.Enderecos;
 
 namespace TaniaDecoracoes.WPFApp.Pages.Enderecos
@@ -25,7 +13,62 @@ namespace TaniaDecoracoes.WPFApp.Pages.Enderecos
         {
             InitializeComponent();
 
-            this.DataContext = new EnderecosMainPageViewModel();
+            var vm = new EnderecosMainPageViewModel();
+            this.DataContext = vm;
+
+            vm.OnNavegarParaLogradouros += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.LogradourosPage);
+            };
+
+            vm.OnNavegarParaTiposLogradouros += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.TiposLogradourosPage);
+            };
+
+            vm.OnNavegarParaBairros += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.BairrosPage);
+            };
+
+            vm.OnNavegarParaMunicipios += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.MunicipiosPage);
+            };
+
+            vm.OnNavegarParaEstados += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.EstadosPage);
+            };
+
+            vm.OnNavegarParaEnderecosEventos += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.EnderecosEventosPage);
+            };
+
+            vm.OnNavegarParaTiposEnderecosEventos += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.TiposEnderecosEventosPage);
+            };
+
+            vm.OnNavegarParaEnderecosClientes += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.EnderecosClientesPage);
+            };
+
+            vm.OnNavegarParaTiposEnderecosClientes += () =>
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavegarPara(PagesLink.TiposEnderecosClientesPage);
+            };
         }
     }
 }

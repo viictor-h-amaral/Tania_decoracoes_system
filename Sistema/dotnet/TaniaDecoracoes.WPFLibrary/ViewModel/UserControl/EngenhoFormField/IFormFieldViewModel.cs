@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces
+namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoFormField
 {
     public interface IFormFieldViewModel
     {

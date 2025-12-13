@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
 using TaniaDecoracoes.EntitiesLibrary.Interfaces;
-using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 
-namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
+namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoFormField
 {
     public class FormFieldViewModel<T> : ViewModelBase, IFormFieldViewModel
     {
@@ -55,7 +54,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         public string ErrorMessage { get; private set; }
         public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
 
-        public FormFieldViewModel(PropertyInfo prop, object sourceObject, object value)
+        public FormFieldViewModel(PropertyInfo prop, object sourceObject)
         {
             Property = prop;
             SourceObject = sourceObject;

@@ -2,9 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
-using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl;
+using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoFormField;
 
 namespace TaniaDecoracoes.WPFLibrary.UserControls
 {

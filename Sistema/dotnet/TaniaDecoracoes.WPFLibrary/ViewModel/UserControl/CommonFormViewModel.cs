@@ -11,7 +11,9 @@ using TaniaDecoracoes.EntitiesLibrary;
 using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 using TaniaDecoracoes.WPFLibrary.Utils;
 using TaniaDecoracoes.WPFLibrary.Utils.FormUtils;
+using TaniaDecoracoes.WPFLibrary.ViewModel.Implementacoes;
 using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
+using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoFormField;
 
 namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 {
@@ -96,49 +98,15 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         private IFormFieldViewModel CreateFormFieldViewModel(PropertyInfo prop)
         {
-            Type? tipoField = null;
-            if (prop.PropertyType == typeof(string))
-                tipoField = typeof(FormFieldViewModel<>);
-            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(int?))
-                tipoField = typeof(FormFieldViewModel<>);
-            else if (prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(decimal?))
-                tipoField = typeof(FormFieldViewModel<>);
-            else if (prop.PropertyType == typeof(bool) || prop.PropertyType == typeof(bool?))
-                tipoField = typeof(FormFieldViewModel<>);
-            else if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?))
-                tipoField = typeof(FormFieldViewModel<>);
-            else if (typeof(IEntityModel).IsAssignableFrom(prop.PropertyType) ||
-                     (prop.PropertyType.IsGenericType &&
-                      prop.PropertyType.GetGenericArguments().Length == 1 &&
-                      typeof(IEntityModel).IsAssignableFrom(prop.PropertyType.GetGenericArguments()[0])))
-                tipoField = typeof(InstanceFormFieldViewModel<>);
-            else
-                tipoField = typeof(FormFieldViewModel<>);
-
-            object? value = prop.GetValue(SourceObject);
-
-            int? idValue = null;
-            if (value is IEntityModel entityModel)
-            {
-                idValue = entityModel.Id;
-            }
-
-            object? objForm = Activator.CreateInstance(
-                    tipoField.MakeGenericType(prop.PropertyType),
-                    prop,
-                    SourceObject,
-                    idValue
-                );
-
-            IFormFieldViewModel? field =
-                objForm as IFormFieldViewModel
-                ?? throw new InvalidOperationException($"Não foi possível criar a instância de IFormFieldViewModel para a propriedade {prop} de tipo {prop.PropertyType}.");
+            IFormFieldViewModel field = FormFieldViewModelSolver.Resolve(prop, SourceObject); 
 
             field.Label = FormatPropertyLabelHelper.GetPropertyLabel(prop);
             field.IsReadOnly = Mode == FormMode.View;
 
             return field;
         }
+
+        
 
         private IEnumerable<ValidationRule> GetValidationRules(PropertyInfo prop)
         {
@@ -185,38 +153,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         }
 
         #endregion
-
-        /*private void CreateFormCommands()
-        {
-            if(Mode == FormMode.Create)
-            {
-                SaveCommand = new RelayCommand(() =>
-                {
-                    _entityBase.Save(SourceObject);
-                });
-            }
-            else
-            {
-                SaveCommand = new RelayCommand(() =>
-                {
-                    _entityBase.Update(SourceObject);
-                });
-            }
-
-            var SaveButton = new CustomFormButton()
-            {
-                Conteudo = "Salvar",
-                Icone = "\uf0c7",
-                Foreground = Brushes.White,
-                Background = Brushes.Green,
-                Comando = SaveCommand
-            };
-
-            FormCommands = new List<CustomFormButton>
-            {
-                SaveButton
-            };
-        } */
 
         private void CreateFormCommands()
         {

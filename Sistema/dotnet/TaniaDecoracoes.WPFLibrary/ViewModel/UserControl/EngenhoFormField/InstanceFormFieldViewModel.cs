@@ -6,7 +6,7 @@ using TaniaDecoracoes.Entities.Models.Attributes;
 using TaniaDecoracoes.EntitiesLibrary;
 using TaniaDecoracoes.EntitiesLibrary.Interfaces;
 using TaniaDecoracoes.WPFLibrary.ViewModel;
-using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
+using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoFormField;
 
 public class InstanceFormFieldViewModel<T> : ViewModelBase, IFormFieldViewModel where T : class, IEntityModel
 {

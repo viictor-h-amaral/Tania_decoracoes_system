@@ -22,7 +22,7 @@ namespace TaniaDecoracoes.WPFApp.ViewModel.Pages.Enderecos
 
         public BairrosPageViewModel()
         {
-            var gridConfig = new GridConfigObject(title: "Endereços de clientes",
+            var gridConfig = new GridConfigObject(title: "Bairros",
                                                     readOnly: true,
                                                     autoGenerateColumns: true,
                                                     (DefaultActionButtons.All));

@@ -10,5 +10,6 @@ namespace TaniaDecoracoes.EntitiesLibrary.Interfaces
         bool Save(T entity);
         bool Delete(T entity);
         bool Update(T entity);
+        int Count(Expression<Func<T, bool>>? predicado = null);
     }
 }

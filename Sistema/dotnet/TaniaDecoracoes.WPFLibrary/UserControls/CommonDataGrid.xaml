@@ -80,6 +80,9 @@
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Width="Auto">
+            <Label x:Name="lblPaginacao"
+                   Content="{Binding TextoPaginacao}"/>
+
             <Button x:Name="gridBtnVoltar"
                 Style="{StaticResource GridButtonsStyle}"
                 Tag="&#xf060;"

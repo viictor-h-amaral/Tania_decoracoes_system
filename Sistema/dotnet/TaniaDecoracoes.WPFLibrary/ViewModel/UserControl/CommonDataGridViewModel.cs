@@ -51,6 +51,26 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             set => SetProperty(ref _selectedItem, value);
         }
 
+        public int MaxItensPerPage { get; set; }
+        
+        private int _currentPage = 1;
+        public int CurrentPage
+        {
+            get => _currentPage;
+            set
+            {
+                if (value > 0)
+                    _currentPage = value;
+                else
+                    _currentPage = 1;
+
+                OnPropertyChanged(nameof(TextoPaginacao));
+            }
+        }
+
+        private readonly int _quantidadeTotalPaginas;
+        public string TextoPaginacao => "Página " + CurrentPage + " de " + _quantidadeTotalPaginas;
+
         #region COMANDOS PERSONALIZADOS
 
         private ObservableCollection<CustomGridButton> _dataGridTableButtons = [];
@@ -235,21 +255,50 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 return list;
             }
 
-            #endregion ACTION COLUMN
+            private void CarregarComandosAvancarEVoltar()
+            {
+                AvancarCommand = new RelayCommand(() =>
+                {
+                    int totalRegistrosJaExibidos = (CurrentPage - 1) * MaxItensPerPage + Items.Count;
+                    int totalRegistrosDaTabela = _entityBase.Count();
+
+                    bool semRegistrosParaExibir = !(totalRegistrosDaTabela > totalRegistrosJaExibidos);
+                    if (semRegistrosParaExibir)
+                        return;
+
+                    CurrentPage++;
+                    LoadSource();
+                });
+
+                VoltarCommand = new RelayCommand(() =>
+                {
+                    if (CurrentPage <= 1)
+                        return;
+
+                    CurrentPage--;
+                    LoadSource();
+                });
+            }
+        
+        #endregion ACTION COLUMN
 
         #endregion COLUNAS
 
         #region COMANDOS
 
-        public ICommand VoltarCommand = new RelayCommand(() =>
+        private ICommand _voltarCommand;
+        public ICommand VoltarCommand
         {
-            // TODO Implementar lógica de voltar
-        });
+            get => _voltarCommand;
+            set => SetProperty(ref _voltarCommand, value);
+        }
 
-        public ICommand AvancarCommand = new RelayCommand(() =>
+        private ICommand _avancarCommand;
+        public ICommand AvancarCommand
         {
-            // TODO Implementar lógica de avancar
-        });
+            get => _avancarCommand;
+            set => SetProperty(ref _avancarCommand, value);
+        }
 
         private ICommand _editCommand;
         public ICommand EditCommand
@@ -282,6 +331,8 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             _entityBase = new EntityBase<T>(_context);
 
             Titulo = configObj.Title;
+            MaxItensPerPage = configObj.MaxItensPerPage;
+            _quantidadeTotalPaginas = (int)Math.Ceiling((double)_entityBase.Count() / MaxItensPerPage);
 
             LoadSource();
 
@@ -296,6 +347,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             if (!hasNOActionButton)
                 AddActionColumn(configObj.DefaultActionButtonsToAdd, configObj.CustomActionButtons);
 
+            CarregarComandosAvancarEVoltar();
         }
         
         private void GenerateColumns()
@@ -332,8 +384,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
         {
             try
             {
-                Items?.Clear();
-                Items = _entityBase.GetMany() as IList<T>;
+                var quantidadeItensAtePaginaAnterior = (CurrentPage - 1) * MaxItensPerPage;
+                Items = _entityBase
+                                .GetMany()?
+                                .Skip(quantidadeItensAtePaginaAnterior)
+                                .Take(MaxItensPerPage) as IList<T>;
             }
             catch (Exception ex)
             {
@@ -341,19 +396,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 Items = null;
             }
         }
-
-        /*private void CreateEntityBase()
-        {
-            _context = new TaniaDecoracoesDbContext();
-
-            var entityBaseType = typeof(EntityBase<>).MakeGenericType(ElementsType);
-            var entity = Activator.CreateInstance(entityBaseType, _context);
-
-            if (entity == null)
-                throw new InvalidOperationException($"Não foi possível criar uma instância de EntityBase para o tipo {entityBaseType} do EntityBase do Grid.");
-
-            _entityBase = entity;
-        }*/
 
         #endregion CONSTRUTOR
     }

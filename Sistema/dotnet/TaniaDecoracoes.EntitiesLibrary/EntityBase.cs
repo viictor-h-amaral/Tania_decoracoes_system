@@ -124,26 +124,30 @@ namespace TaniaDecoracoes.EntitiesLibrary
             }
         }
 
-        /*public static bool Delete(int id)
+        /// <summary>
+        /// Usado para contagem de registros na tabela <typeparamref name="T"/> que satisfazem as restrições fornecidas.
+        /// </summary>
+        /// <param name="predicado">Parâmetro opcional que define a cláusula where para contagem os registros. Se <see langword="null"/>, todos registros de <typeparamref name="T"/> são contabilizados.</param>
+        /// <returns>Quantidade de registros na tabela conforme critério.</returns>
+        public int Count(Expression<Func<T, bool>>? predicado = null)
         {
-            using (var context = new TaniaDecoracoesDbContext())
+            try
             {
-                try
-                {
-                    var entity = FirstOrDefault
-                    context.Set<T>().Remove(entity);
-                    return context.SaveChanges() > 0;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"OPS: trace em {ex.StackTrace} - mensagem {ex.Message}");
-                }
-                finally
-                {
-                    context.Dispose();
-                }
+                int result = predicado is null ?
+                    _dbContext.Set<T>().Count()
+                    : _dbContext.Set<T>().Count(predicado);
+                return result;
             }
-        }*/
+            catch (Exception ex)
+            {
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
+            }
+        }
 
     }
 }

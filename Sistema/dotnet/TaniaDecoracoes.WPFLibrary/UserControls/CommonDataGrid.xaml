@@ -81,7 +81,11 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Width="Auto">
             <Label x:Name="lblPaginacao"
-                   Content="{Binding TextoPaginacao}"/>
+                   Content="{Binding TextoPaginacao}"
+                   FontFamily="Quicksand"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   FontSize="20"/>
 
             <Button x:Name="gridBtnVoltar"
                 Style="{StaticResource GridButtonsStyle}"

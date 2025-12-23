@@ -98,7 +98,17 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         private IFormFieldViewModel CreateFormFieldViewModel(PropertyInfo prop)
         {
-            IFormFieldViewModel field = FormFieldViewModelSolver.Resolve(prop, SourceObject); 
+            IFormFieldViewModel field;
+            if (this.Mode == FormMode.View)
+            {
+                var sourceWithNoTracking = _entityBase.FirstWithNoTracking(e => e.Id == SourceObject.Id);
+                field = FormFieldViewModelSolver.Resolve(prop, sourceWithNoTracking);
+            }
+            else
+            {
+                field = FormFieldViewModelSolver.Resolve(prop, SourceObject);
+            }
+
 
             field.Label = FormatPropertyLabelHelper.GetPropertyLabel(prop);
             field.IsReadOnly = Mode == FormMode.View;
@@ -124,7 +134,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         #region CONSTRUTORES
 
-        public CommonFormViewModel(string titulo, FormMode estado, T objeto, DbContext context, bool autoGenerateFields)
+        public CommonFormViewModel(string titulo, FormMode estado, int objetoId, DbContext context, bool autoGenerateFields)
         {
             if (estado == FormMode.Create)
                 throw new ArgumentException("O estado 'Create' não deve ser usado com um objeto fonte.");
@@ -132,7 +142,27 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             Titulo = titulo;
             Mode = estado;
             _entityBase = new EntityBase<T>(context);
-            SourceObject = objeto;
+
+            if (estado == FormMode.Edit)
+            {
+                // Primeiro, limpar qualquer entidade duplicada
+                var existingEntry = context
+                                        .ChangeTracker
+                                        .Entries<T>()
+                                        .FirstOrDefault(e => 
+                                            ((IEntityModel)e.Entity).Id == objetoId);
+
+                if (existingEntry != null)
+                    existingEntry.State = EntityState.Detached;
+
+                // Agora buscar a entidade com tracking
+                SourceObject = _entityBase.First(e => e.Id == objetoId);
+            }
+            else
+            {
+                SourceObject = _entityBase.FirstWithNoTracking(e => e.Id == objetoId);
+            }
+                
 
             if (autoGenerateFields) GenerateFields();
 

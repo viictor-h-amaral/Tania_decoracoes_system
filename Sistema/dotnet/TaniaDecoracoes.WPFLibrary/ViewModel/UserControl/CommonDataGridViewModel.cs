@@ -205,7 +205,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 {
                     ViewCommand = new RelayCommand<T>(registro =>
                     {
-                        var formVm = new CommonFormViewModel<T>(Titulo, FormMode.View, registro, _context, true) as IFormViewModel;
+                        var formVm = new CommonFormViewModel<T>(Titulo, FormMode.View, registro.Id, _context, true) as IFormViewModel;
 
                         var formWindowVM = new FormWindowViewModel(formVm);
 
@@ -219,7 +219,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
                 {
                     EditCommand = new RelayCommand<T>(registro =>
                     {
-                        var formVm = new CommonFormViewModel<T>(Titulo, FormMode.Edit, registro, _context, true) as IFormViewModel;
+                        var formVm = new CommonFormViewModel<T>(Titulo, FormMode.Edit, registro.Id, _context, true) as IFormViewModel;
 
                         var formWindowVM = new FormWindowViewModel(formVm);
 
@@ -386,7 +386,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             {
                 var quantidadeItensAtePaginaAnterior = (CurrentPage - 1) * MaxItensPerPage;
                 Items = _entityBase
-                                .GetMany()?
+                                .GetManyWithNoTracking()?
                                 .Skip(quantidadeItensAtePaginaAnterior)
                                 .Take(MaxItensPerPage) as IList<T>;
             }

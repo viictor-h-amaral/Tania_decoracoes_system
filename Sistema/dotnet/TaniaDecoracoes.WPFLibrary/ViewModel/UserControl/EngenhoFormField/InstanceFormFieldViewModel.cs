@@ -14,6 +14,21 @@ public class InstanceFormFieldViewModel<T> : ViewModelBase, IFormFieldViewModel 
     public object SourceObject { get; set; }
     public PropertyInfo Property { get; set; }
 
+    private int? GetPropId()
+    {
+        var fkPropertyName = Property.Name.EndsWith("Instance")
+                ? Property.Name.Replace("Instance", "Id")
+                : Property.Name + "Id";
+
+        var fkProperty = SourceObject.GetType().GetProperty(fkPropertyName);
+        if (fkProperty == null) return null;
+
+        var id = fkProperty.GetValue(SourceObject) as int?;
+        if (!id.HasValue || id.Value <= 0) return null;
+
+        return id.Value;
+    }
+
     private T? GetPropValue()
     {
         return Property.GetValue(SourceObject) as T;
@@ -27,9 +42,7 @@ public class InstanceFormFieldViewModel<T> : ViewModelBase, IFormFieldViewModel 
             return;
         }
 
-        // IMPORTANTE: Não buscar do banco novamente - usar o objeto já carregado
         var selectedObj_a = InstanceValues?
-            //.OfType<T>() // Buscar o objeto real da lista
             .FirstOrDefault(x => x.Id == value.Id);
         var selectedObj = selectedObj_a?.OriginalObject;
 
@@ -43,12 +56,13 @@ public class InstanceFormFieldViewModel<T> : ViewModelBase, IFormFieldViewModel 
     {
         get
         {
-            var propValue = GetPropValue();
-            if (propValue is null) return null;
-
-            // Buscar o DataTransfer correspondente na lista
-            return InstanceValues?
-                .FirstOrDefault(x => x.Id == propValue.Id);
+            if (GetPropId() is int id)
+            {
+                return InstanceValues?
+                    .FirstOrDefault(x => x.Id == id);
+            }
+            else
+                return null;
         }
         set
         {
@@ -107,16 +121,16 @@ public class InstanceFormFieldViewModel<T> : ViewModelBase, IFormFieldViewModel 
     public InstanceFormFieldViewModel(PropertyInfo prop, IEntityModel sourceObject, int? valueId)
     {
         Property = prop;
-        SourceObject = sourceObject;
         var context = new TaniaDecoracoesDbContext();
         _entityBase = new EntityBase<T>(context);
+        SourceObject = sourceObject;
 
         CarregarInstancias(valueId);
     }
 
     private void CarregarInstancias(int? valueId)
     {
-        var objs = _entityBase.GetMany();
+        var objs = _entityBase.GetManyWithNoTracking();
 
         // Criar lista de DataTransfer mantendo referência aos objetos originais
         var dataTransfers = objs?.Select(x =>
@@ -131,12 +145,11 @@ public class InstanceFormFieldViewModel<T> : ViewModelBase, IFormFieldViewModel 
         // Configurar o valor selecionado após carregar a lista
         if (valueId.HasValue && valueId.Value > 0)
         {
-            var currentValue = GetPropValue();
-            if (currentValue != null)
+            if (GetPropId() is int id)
             {
                 // Encontrar o DataTransfer correspondente ao objeto atual
                 var selectedDataTransfer = InstanceValues
-                    .FirstOrDefault(x => x.Id == currentValue.Id);
+                    .FirstOrDefault(x => x.Id == id);
 
                 if (selectedDataTransfer != null)
                 {

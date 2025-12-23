@@ -41,6 +41,38 @@ namespace TaniaDecoracoes.EntitiesLibrary
         }
 
         /// <summary>
+        /// Usado para retornar uma lista de entidades em modo leitura do tipo <typeparamref name="T"/> que satisfazem as restrições fornecidas.
+        /// </summary>
+        /// <param name="predicado">Parâmetro opcional que define a cláusula where para buscar os registros. Se <see langword="null"/>, todos registros de <typeparamref name="T"/> são retornados.</param>
+        /// <returns>Uma lista de elementos do tipo <typeparamref name="T"/> que satisfazem o critério passado como parâmetro. Retorna <see langword="null"/> Se nenhum registro for encontrado.</returns>
+        public IEnumerable<T>? GetManyWithNoTracking(Expression<Func<T, bool>>? predicado = null)
+        {
+            try
+            {
+                var registros = predicado is null ?
+                    _dbContext
+                        .Set<T>()
+                        .AsNoTracking()
+                        .ToList() as IEnumerable<T>
+                    : _dbContext
+                        .Set<T>()
+                        .Where(predicado)
+                        .AsNoTracking()
+                        .ToList() as IEnumerable<T>;
+                return registros;
+            }
+            catch (Exception ex)
+            {
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
+            }
+        }
+
+        /// <summary>
         /// Usado para retornar a primeira entidade do tipo <typeparamref name="T"/> que satisfaz as restrições fornecidas.
         /// </summary>
         /// <param name="predicado">Parâmetro opcional que define a cláusula where para buscar os registros. Se <see langword="null"/>, todos registros de <typeparamref name="T"/> são considerados.</param>
@@ -65,6 +97,99 @@ namespace TaniaDecoracoes.EntitiesLibrary
             }
         }
 
+        /// <summary>
+        /// Usado para retornar a primeira entidade não rastreada no contexto do tipo <typeparamref name="T"/> que satisfaz as restrições fornecidas.
+        /// </summary>
+        /// <param name="predicado">Parâmetro opcional que define a cláusula where para buscar os registros. Se <see langword="null"/>, todos registros de <typeparamref name="T"/> são considerados.</param>
+        /// <returns>O primeiro registro na forma de elementos do tipo <typeparamref name="T"/> que satisfaz o critério passado como parâmetro. Retorna <see langword="null"/> Se nenhum registro for encontrado.</returns>
+        public T? FirstOrDefaultWithNoTracking(Expression<Func<T, bool>>? predicado = null)
+        {
+            try
+            {
+                var registro = predicado is null ?
+                                        _dbContext
+                                            .Set<T>()
+                                            .AsNoTracking()
+                                            .FirstOrDefault()
+                                        : 
+                                        _dbContext
+                                            .Set<T>()
+                                            .AsNoTracking()
+                                            .FirstOrDefault(predicado);
+                return registro;
+            }
+            catch (Exception ex)
+            {
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
+            }
+        }
+
+        /// <summary>
+        /// Usado para retornar a primeira entidade do tipo <typeparamref name="T"/> que satisfaz as restrições fornecidas.
+        /// </summary>
+        /// <param name="predicado">Parâmetro opcional que define a cláusula where para buscar os registros. Se <see langword="null"/>, todos registros de <typeparamref name="T"/> são considerados.</param>
+        /// <returns>O primeiro registro na forma de elementos do tipo <typeparamref name="T"/> que satisfaz o critério passado como parâmetro.</returns>
+        public T First(Expression<Func<T, bool>>? predicado = null)
+        {
+            try
+            {
+                var registro = predicado is null ?
+                                        _dbContext
+                                            .Set<T>()
+                                            .First()
+                                        : 
+                                        _dbContext
+                                            .Set<T>()
+                                            .First(predicado);
+                return registro;
+            }
+            catch (Exception ex)
+            {
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
+            }
+        }
+
+        /// <summary>
+        /// Usado para retornar a primeira entidade não rastreada pelo contexto do tipo <typeparamref name="T"/> que satisfaz as restrições fornecidas.
+        /// </summary>
+        /// <param name="predicado">Parâmetro opcional que define a cláusula where para buscar os registros. Se <see langword="null"/>, todos registros de <typeparamref name="T"/> são considerados.</param>
+        /// <returns>O primeiro registro na forma de elementos do tipo <typeparamref name="T"/> que satisfaz o critério passado como parâmetro.</returns>
+        public T FirstWithNoTracking(Expression<Func<T, bool>>? predicado = null)
+        {
+            try
+            {
+                var registro = predicado is null ?
+                                        _dbContext
+                                            .Set<T>()
+                                            .AsNoTracking()
+                                            .First()
+                                        :
+                                        _dbContext
+                                            .Set<T>()
+                                            .AsNoTracking()
+                                            .First(predicado);
+                return registro;
+            }
+            catch (Exception ex)
+            {
+                var innerMessage = ex.InnerException?.Message ?? "";
+                var innerStack = ex.InnerException?.StackTrace ?? "";
+                throw new Exception(
+                    $"OPS: trace em {ex.StackTrace} - mensagem {ex.Message} " +
+                    $"| InnerException: {innerMessage} - InnerTrace: {innerStack}"
+                );
+            }
+        }
 
         /// <summary>
         /// Salva a entidade do tipo <typeparamref name="T"/> no banco.

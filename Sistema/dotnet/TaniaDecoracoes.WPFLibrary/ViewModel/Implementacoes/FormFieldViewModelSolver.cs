@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Windows.Markup;
 using TaniaDecoracoes.Entities.Models;
 using TaniaDecoracoes.WPFLibrary.ViewModel.Interfaces;
 using TaniaDecoracoes.WPFLibrary.ViewModel.UserControl.EngenhoFormField;
@@ -12,7 +13,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.Implementacoes
         public static IFormFieldViewModel Resolve(PropertyInfo prop, IEntityModel source)
         {
             FormFieldCreator creator;
-            object? value = prop.GetValue(source);
+            //object? value = prop.GetValue(source);
 
             var fieldType = ResolveFormFieldViewModelType(prop.PropertyType);
 
@@ -21,7 +22,7 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.Implementacoes
                 case FieldType.Instance:
                     {
                         creator = GerarInstanceCreator(prop.PropertyType);
-                        int? idValue = (value as IEntityModel)?.Id ?? null;
+                        int? idValue = BuscarForeignKeyId(prop.Name, source);//(value as IEntityModel)?.Id ?? null;
 
                         return creator.CreateFormField(
                                     new InstanceFormFieldParams(prop, source, idValue)
@@ -31,7 +32,11 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.Implementacoes
                 case FieldType.Generic:
                     {
                         creator = GerarInstanceCreator(prop.PropertyType.GetGenericArguments()[0]);
-                        return CreateFieldViewModel(creator, prop, source);
+                        int? idValue = BuscarForeignKeyId(prop.Name, source);
+
+                        return creator.CreateFormField(
+                                    new InstanceFormFieldParams(prop, source, idValue)
+                                );
                     }
 
                 case FieldType.Primitive:
@@ -88,6 +93,23 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.Implementacoes
             return FieldType.Primitive;
         }
 
+        private static int? BuscarForeignKeyId(string propertyName, IEntityModel source)
+        {
+            // Converte "ComemorandoInstance" → "ComemorandoId"
+            // Converte "ClienteInstance" → "ClienteId"
+            string fkPropertyName = propertyName.EndsWith("Instance")
+                ? propertyName.Replace("Instance", "Id")
+                : propertyName + "Id";
+
+            var fkProperty = source.GetType().GetProperty(fkPropertyName);
+            if (fkProperty != null)
+            {
+                return fkProperty.GetValue(source) as int?;
+            }
+
+            return null;
+        }
+
         private static FormFieldCreator GerarInstanceCreator(Type type)
         {
             var genericType = typeof(InstanceFormFieldCreator<>).MakeGenericType(type);
@@ -98,13 +120,6 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.Implementacoes
         {
             var genericType = typeof(PrimitiveFormFieldCreator<>).MakeGenericType(type);
             return (FormFieldCreator)Activator.CreateInstance(genericType)!;
-        }
-
-        private static IFormFieldViewModel CreateFieldViewModel(FormFieldCreator creator, PropertyInfo prop, IEntityModel source)
-        {
-            object? value = prop.GetValue(source);
-            int? idValue = (value as IEntityModel)?.Id ?? null;
-            return creator.CreateFormField(new InstanceFormFieldParams(prop, source, idValue));
         }
     }
 

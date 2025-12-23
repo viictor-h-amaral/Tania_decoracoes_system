@@ -114,7 +114,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
 
         [IgnoreOnForm]
         [IgnoreOnGrid]
-        public string Identificacao => $"{LogradouroInstance.TipoLogradouroInstance?.Nome} {LogradouroInstance.Nome} - N{NumeroEndereco}, {BairroInstance.Nome}, {MunicipioInstance.Nome}-{EstadoInstance.Sigla}";
+        public string Identificacao => $"{LogradouroInstance.Nome} - N{NumeroEndereco}, {BairroInstance.Nome}, {MunicipioInstance.Nome}-{EstadoInstance.Sigla}";
 
         /// <summary>
         /// Coleção de clientes associados a este endereço

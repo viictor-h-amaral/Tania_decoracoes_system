@@ -118,7 +118,6 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         [BindingAttribute(fieldName: "Apelido")]
         [TitleAttribute(title: "Carro utilizado")]
         [IgnoreOnGrid]
-        [IgnoreOnForm]
         public virtual required Carro CarroUtilizadoInstance { get; set; }
 
         /// <summary>

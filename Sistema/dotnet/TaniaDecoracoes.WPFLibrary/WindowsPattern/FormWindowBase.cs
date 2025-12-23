@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shell;
-using TaniaDecoracoes.WPFLibrary.Utils;
 
 namespace TaniaDecoracoes.WPFLibrary.WindowsPattern
 {
@@ -21,15 +15,16 @@ namespace TaniaDecoracoes.WPFLibrary.WindowsPattern
         {
             this.WindowStyle = WindowStyle.None;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.Height = 700;
-            this.Width = 500;
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.AllowsTransparency = true;
+            this.Background = Brushes.Transparent;
 
             this.Style = (Style)_resourceWindowStyleDictionary["FormWindow"];
 
             var chrome = new WindowChrome
             {
                 CornerRadius = new CornerRadius(20),
-                GlassFrameThickness = new Thickness(-1),
+                GlassFrameThickness = new Thickness(0),
                 ResizeBorderThickness = new Thickness(0),
                 CaptionHeight = 0
             };

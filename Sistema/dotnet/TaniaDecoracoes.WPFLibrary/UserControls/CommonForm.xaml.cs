@@ -45,43 +45,62 @@ namespace TaniaDecoracoes.WPFLibrary.UserControls
 
     public class FieldTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate? StringTemplate { get; set; }
-        public DataTemplate? BooleanTemplate { get; set; }
-        public DataTemplate? ObjectsTemplate { get; set; }
+        public required DataTemplate StringTemplate     { get; set; }
+        public required DataTemplate IntegerTemplate    { get; set; }
+        public required DataTemplate CurrencyTemplate   { get; set; }
+        public required DataTemplate DoubleTemplate     { get; set; }
+        public required DataTemplate FloatTemplate      { get; set; }
+        public required DataTemplate DateTimeTemplate   { get; set; }
+        public required DataTemplate DateOnlyTemplate   { get; set; }
+        public required DataTemplate BooleanTemplate    { get; set; }
+        public required DataTemplate ObjectsTemplate    { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is not IFormFieldViewModel) return base.SelectTemplate(item, container);
 
-            // Para tipos genéricos
-            if (item.GetType().IsGenericType)
+            var itemType = item.GetType();
+            if (itemType.IsGenericType)
             {
-                var genericType = item.GetType().GetGenericTypeDefinition();
+                var genericType = itemType.GetGenericTypeDefinition();
 
                 if (genericType == typeof(FormFieldViewModel<>))
                 {
-                    return StringTemplate ?? throw new Exception("StringTemplate não encontrado.");
+                    var typeArg = itemType.GetGenericArguments()[0];
+
+                    if (typeArg == typeof(string))
+                        return StringTemplate;
+
+                    else if (typeArg == typeof(int) || typeArg == typeof(int?))
+                        return IntegerTemplate;
+
+                    else if (typeArg == typeof(decimal) || typeArg == typeof(decimal?))
+                        return CurrencyTemplate;
+
+                    else if (typeArg == typeof(float) || typeArg == typeof(float?))
+                        return FloatTemplate;
+
+                    else if (typeArg == typeof(double) || typeArg == typeof(double?))
+                        return DoubleTemplate;
+
+                    else if (typeArg == typeof(DateTime) || typeArg == typeof(DateTime?))
+                        return DateTimeTemplate;
+
+                    else if (typeArg == typeof(DateOnly) || typeArg == typeof(DateOnly?))
+                        return DateOnlyTemplate;
+
+                    else if (typeArg == typeof(bool) || typeArg == typeof(bool?))
+                        return BooleanTemplate;
+
+                    return ObjectsTemplate;
                 }
                 else if (genericType == typeof(InstanceFormFieldViewModel<>))
                 {
-                    return ObjectsTemplate ?? throw new Exception("ObjectsTemplate não encontrado.");
+                    return ObjectsTemplate;
                 }
             }
 
             return base.SelectTemplate(item, container);
-        }
-    }
-
-    public class InverseBooleanConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return !(value is bool && (bool)value);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return Convert(value, targetType, parameter, culture);
         }
     }
 }

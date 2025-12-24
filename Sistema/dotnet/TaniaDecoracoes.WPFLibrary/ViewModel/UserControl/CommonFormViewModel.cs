@@ -134,13 +134,14 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
 
         #region CONSTRUTORES
 
-        public CommonFormViewModel(string titulo, FormMode estado, int objetoId, DbContext context, bool autoGenerateFields)
+        public CommonFormViewModel(string titulo, FormMode estado, int objetoId, bool autoGenerateFields)
         {
             if (estado == FormMode.Create)
                 throw new ArgumentException("O estado 'Create' não deve ser usado com um objeto fonte.");
 
             Titulo = titulo;
             Mode = estado;
+            var context = new TaniaDecoracoesDbContext();
             _entityBase = new EntityBase<T>(context);
 
             if (estado == FormMode.Edit)
@@ -243,30 +244,53 @@ namespace TaniaDecoracoes.WPFLibrary.ViewModel.UserControl
             {
                 using (var context = new TaniaDecoracoesDbContext())
                 {
-                    var entityBase = new EntityBase<T>(context);
+                    context.Attach(SourceObject);
 
-                    // Buscar a entidade existente no banco
-                    var existingEntity = context.Set<T>().Find(SourceObject.Id);
-                    if (existingEntity == null)
-                    {
-                        MessageBox.Show("Registro não encontrado!");
-                        return;
-                    }
+                    // 3. Marcar como modificado
+                    context.Entry(SourceObject).State = EntityState.Modified;
 
-                    // Copiar propriedades escalares
-                    context.Entry(existingEntity).CurrentValues.SetValues(SourceObject);
+                    // 4. Para navegações: precisamos anexar entidades relacionadas também
+                    AttachRelatedEntities(context, SourceObject);
 
-                    // Gerenciar entidades relacionadas
-                    GerenciarEntidadesRelacionadas(context, existingEntity, SourceObject);
-
-                    entityBase.Update(existingEntity);
-
+                    context.SaveChanges();
+                    context.Entry(SourceObject).State = EntityState.Detached;
+                    context.Dispose();
                     MessageBox.Show("Registro atualizado com sucesso!");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Erro ao atualizar: {ex.Message}");
+            }
+        }
+
+        private void AttachRelatedEntities(DbContext context, T entity)
+        {
+            var navigationProperties = typeof(T).GetProperties()
+                .Where(p => typeof(IEntityModel).IsAssignableFrom(p.PropertyType));
+
+            foreach (var navProp in navigationProperties)
+            {
+                var relatedEntity = navProp.GetValue(entity) as IEntityModel;
+                if (relatedEntity != null && relatedEntity.Id > 0)
+                {
+                    // Verificar se já está no contexto
+                    var existingEntry = context.ChangeTracker.Entries()
+                        .FirstOrDefault(e => e.Entity is IEntityModel trackedEntity &&
+                                           trackedEntity.GetType() == relatedEntity.GetType() &&
+                                           trackedEntity.Id == relatedEntity.Id);
+
+                    if (existingEntry != null)
+                    {
+                        // Usar a já existente
+                        navProp.SetValue(entity, existingEntry.Entity);
+                    }
+                    else
+                    {
+                        // Anexar a nova
+                        context.Attach(relatedEntity);
+                    }
+                }
             }
         }
 

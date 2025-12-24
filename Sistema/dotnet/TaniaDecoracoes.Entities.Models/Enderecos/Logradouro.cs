@@ -48,7 +48,7 @@ namespace TaniaDecoracoes.Entities.Models.Enderecos
 
         [IgnoreOnForm]
         [IgnoreOnGrid]
-        public string Identificacao => $"{(TipoLogradouroInstance?.Nome+" ") ?? string.Empty}{Nome}";
+        public string Identificacao => $"{Nome}";
 
         /// <summary>
         /// Coleção de CEPs associados a este logradouro

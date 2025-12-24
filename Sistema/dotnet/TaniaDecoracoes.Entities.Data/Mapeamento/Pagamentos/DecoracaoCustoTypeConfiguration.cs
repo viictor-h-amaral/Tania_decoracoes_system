@@ -81,8 +81,8 @@ namespace TaniaDecoracoes.Entities.Data.Mapeamento.Pagamentos
 
             entity
                 .HasOne(dc => dc.DecoracaoInstance)
-                .WithOne(d => d.DecoracaoCustosInstance)
-                .HasForeignKey<DecoracaoCustos>(dc => dc.DecoracaoId)
+                .WithMany(d => d.DecoracaoCustos)
+                .HasForeignKey(dc => dc.DecoracaoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             #endregion Relacionamentos

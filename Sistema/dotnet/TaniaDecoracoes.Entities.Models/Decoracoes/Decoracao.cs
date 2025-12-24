@@ -170,20 +170,6 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
         public bool PegueEMonte { get; set; }
 
         /// <summary>
-        /// Instância do pagamento da decoração
-        /// </summary>
-        [IgnoreOnForm]
-        [IgnoreOnGrid]
-        public virtual DecoracaoPagamento? DecoracaoPagamentosInstance { get; set; }
-
-        /// <summary>
-        /// Instância dos custos da decoração
-        /// </summary>
-        [IgnoreOnForm]
-        [IgnoreOnGrid]
-        public virtual DecoracaoCustos? DecoracaoCustosInstance { get; set; }
-
-        /// <summary>
         /// Retorna uma string com identificação básica da decoração
         /// </summary>
         [IgnoreOnForm]
@@ -193,6 +179,20 @@ namespace TaniaDecoracoes.Entities.Models.Decoracoes
                                                         DataEvento.Value.ToString("dd/MM/yy")
                                                         : DataCadastro.ToString("dd/MM/yy"))}
                                                 - {TipoEventoInstance.Nome}";
+
+        /// <summary>
+        /// Instância do pagamento da decoração
+        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
+        public virtual ICollection<DecoracaoPagamento>? DecoracaoPagamentos { get; set; }
+
+        /// <summary>
+        /// Instância dos custos da decoração
+        /// </summary>
+        [IgnoreOnForm]
+        [IgnoreOnGrid]
+        public virtual ICollection<DecoracaoCustos>? DecoracaoCustos { get; set; }
 
         /// <summary>
         /// Associações entre decoração e flores
